@@ -1,4 +1,84 @@
+
 export const PAGES_MENU = [
+
+  {
+    path: 'pages',
+    children: [
+      {
+        path: 'dashboard',
+        data: {
+          menu: {
+            title: 'Escritorio',
+            icon: 'ion-android-home',
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        }
+      },
+      {
+        path: 'profile',
+        data: {
+          menu: {
+            title: 'Mi perfil',
+            icon: 'ion-gear-a',
+            selected: false,
+            expanded: false,
+            order: 650,
+          }
+        }
+      },
+      {
+        path: 'customer',
+        data: {
+          menu: {
+            title: 'Clientes',
+            icon: 'ion-gear-a',
+            selected: false,
+            expanded: false,
+            order: 650,
+          }
+        }
+      },
+      {
+        path: 'propierty',
+        data: {
+          menu: {
+            title: 'Propiedades',
+            icon: 'ion-gear-a',
+            selected: false,
+            expanded: false,
+            order: 650,
+          }
+        }
+      }
+    ]
+  },
+  {
+    path: '',
+    data: {
+      menu: {
+        title: 'Paginas',
+        icon: 'ion-gear-a',
+        selected: false,
+        expanded: false,
+        order: 650,
+      }
+    },
+    children: [
+      {
+        path: ['/login'],
+        data: {
+          menu: {
+            title: 'Login'
+          }
+        }
+      }
+    ]
+  }
+];
+
+/*export const PAGES_MENU = [
   {
     path: 'pages',
     children: [
@@ -328,3 +408,5 @@ export const PAGES_MENU = [
     ]
   }
 ];
+*/
+

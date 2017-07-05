@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
-
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -17,6 +16,9 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
+import { LoginService } from './pages/login/login.service';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { MyCommonModule } from './mycommon.module';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -46,11 +48,13 @@ export type StoreType = {
     ReactiveFormsModule,
     NgaModule.forRoot(),
     PagesModule,
-    routing
+    Ng2SmartTableModule,
+    routing,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    LoginService
   ]
 })
 

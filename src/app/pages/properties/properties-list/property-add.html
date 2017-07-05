@@ -1,0 +1,427 @@
+<div class="widgets">
+
+  <form class="form-horizontal" #propertyAddForm="ngForm" (keydown.enter)="$event.preventDefault()" novalidate style="position: relative" *ngIf="addFormFlag">
+
+    <div class="overlayDiv" *ngIf="loadingIcon">
+      <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <fieldset>
+
+          <legend>Informacion Basica</legend>
+
+          <div class="col-md-12">
+
+            <div class="form-group row">
+
+              <label for="title" class="col-sm-2 form-control-label">Título: *</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Titulo de la propiedad" [(ngModel)]="propertyData.title" required #title="ngModel">
+
+                <div *ngIf="!title.valid && submitted" class="alert alert-danger">
+                  * Titulo es requerido
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="form-group row">
+
+              <label for="description" class="col-sm-2 form-control-label">Descripción: *</label>
+              <div class="col-sm-10">
+                <textarea class="form-control"  name="description" id="description" cols="30" rows="3" [(ngModel)]="propertyData.description" required #description="ngModel"></textarea>
+
+                <div *ngIf="!description.valid && submitted" class="alert alert-danger">
+                  * Descripcion es requerido
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="col-md-12">
+
+            <div class="form-group row">
+
+              <label for="area" class="col-sm-1 form-control-label">Area: *</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="area" id="area" placeholder="180 mts2" [(ngModel)]="propertyData.area" required #area="ngModel">
+
+                <div *ngIf="!area.valid && submitted" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+
+              </div>
+
+              <label for="price" class="col-sm-1 form-control-label">Precio: *</label>
+
+              <div class="col-sm-1">
+                <select name="coin" id="coin" class="form-control" [(ngModel)]="selectedPropertyCoin">
+                  <option *ngFor="let item of propertyCoin" [ngValue]="item">{{item.symbol}}</option>
+                </select>
+              </div>
+
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="price" id="price" placeholder="$$" [(ngModel)]="propertyData.price" (ngModelChange)="updateCommisionAmmount()" required #price="ngModel">
+
+                <div *ngIf="!price.valid && submitted" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+
+              </div>
+
+              <label for="commission" class="col-sm-1 form-control-label">Comision(%): *</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="commission_percentage" id="commission" placeholder="4" [(ngModel)]="propertyData.commission_percentage" (ngModelChange)="updateCommisionAmmount()" required #commissionPercentage="ngModel">
+
+                <div *ngIf="!commissionPercentage.valid && submitted" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+
+              </div>
+
+              <label for="commission_amount" class="col-sm-1 form-control-label">Total: </label>
+              <div class="col-sm-1">
+                <input type="text" class="form-control" name="commissionAmmount" id="commission_amount" disabled [(ngModel)]="propertyData.commission_amount">
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-md-4">
+
+            <div class="form-group row">
+              <label for="propertyContract" class="col-sm-2 form-control-label">Situacion:</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="propertyContract" name="propertyContract" [(ngModel)]="selectedPropertyContract">
+                  <option *ngFor="let item of propertyContract" [ngValue]="item">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-4">
+
+            <div class="form-group row">
+              <label for="propertyStatus" class="col-sm-2 form-control-label">Estado: </label>
+              <div class="col-sm-10">
+                <select class="form-control" id="propertyStatus" name="propertyStatus" [(ngModel)]="selectedPropertyStatus">
+                  <option *ngFor="let item of propertyStatus" [ngValue]="item">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-4">
+
+            <div class="form-group row">
+              <label for="propertyType" class="col-sm-2 form-control-label">Tipo:</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="propertyType" name="propertyType" [(ngModel)]="selectedPropertyType">
+                  <option *ngFor="let item of propertyType" [ngValue]="item">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-12">
+
+            <div class="col-md-4">
+
+              <div class="form-group row">
+                <label for="bedrooms" class="col-sm-3 form-control-label">Habitaciones:</label>
+                <div class="col-sm-9">
+
+                  <input type="number" class="form-control" name="bedrooms" id="bedrooms" [(ngModel)]="propertyData.bedrooms" #bedrooms="ngModel" required>
+
+                  <div *ngIf="!bedrooms.valid && submitted" class="alert alert-danger">
+                    * Campo requerido
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+              <div class="form-group row">
+                <label for="bathrooms" class="col-sm-3 form-control-label">Baños: </label>
+                <div class="col-sm-9">
+
+                  <input type="number"  class="form-control" name="bathrooms" id="bathrooms" [(ngModel)]="propertyData.bathrooms" required #bathrooms="ngModel">
+
+                  <div *ngIf="!bathrooms.valid && submitted" class="alert alert-danger">
+                    * Campo requerido
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+              <div class="form-group row">
+                <label for="floors" class="col-sm-2 form-control-label">Pisos:</label>
+                <div class="col-sm-10">
+
+                  <input type="number" name="floors" id="floors" class="form-control" [(ngModel)]="propertyData.floors" required #floors="ngModel">
+
+                  <div *ngIf="!floors.valid && submitted" class="alert alert-danger">
+                    * Campo requerido
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-md-12">
+
+            <div class="col-md-4">
+
+              <div class="form-group row">
+                <label for="years" class="col-sm-2 form-control-label">Antiguedad:</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" name="years" id="years" placeholder="1 - 2 - 3" [(ngModel)]="propertyData.years" required #years="ngModel">
+
+                  <div *ngIf="!years.valid && submitted" class="alert alert-danger">
+                    * Campo requerido
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+              <div class="form-group row">
+                <label for="parkings" class="col-sm-3 form-control-label">Estacionamientos:</label>
+                <div class="col-sm-9">
+                  <select class="form-control" name="parkings" id="parkings" [(ngModel)]="propertyData.parkings" required #parkings="ngModel">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+
+                  <div *ngIf="!parkings.valid && submitted" class="alert alert-danger">
+                    * Campo requerido
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </fieldset>
+
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+      <div class="col-md-12">
+        <fieldset>
+          <legend> Ubicacion    </legend>
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label for="department" class="col-sm-3 form-control-label">Departamento</label>
+              <div class="col-sm-9">
+                <select class="form-control" name='department' id="department" [(ngModel)]="selectedDepartment" (ngModelChange)="onChangeDepartment($event)">
+                  <option *ngFor="let item of departments"  [ngValue]="item"> {{item.name}} </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label for="province" class="col-sm-2 form-control-label">Provincia</label>
+              <div class="col-sm-10">
+                <select class="form-control" name="province" id="province" [(ngModel)]="selectedProvince" (ngModelChange)="onChangeProvince($event)">
+                  <option *ngFor="let item of provinces" [ngValue]="item">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label for="district" class="col-sm-2 form-control-label">Distrito</label>
+              <div class="col-sm-10">
+                <select class="form-control" name="district"  id="district" [(ngModel)]="selectedDistrict">
+                  <option *ngFor="let item of districts" [ngValue]="item">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label for="address" class="col-sm-2 form-control-label">Direccion: </label>
+              <div class="col-sm-10">
+
+                <input type="text" class="form-control" name="address" id="address" placeholder="Av ...." [(ngModel)]="propertyData.address" required #address="ngModel">
+
+                <div *ngIf="!address.valid && submitted" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="reference" class="col-sm-2 form-control-label">Referencia: </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="reference" id="reference" placeholder="Escriba alguna referencia" [(ngModel)]="propertyData.reference">
+              </div>
+            </div>
+
+
+          </div>
+
+          <input id="pac-input" class="pac-input controls" type="text" placeholder="Buscar direccion" name="searchAddressMap">
+
+          <div class="google-maps"></div>
+
+          <div *ngIf="!selectedLocationFlag" class="alert alert-danger">
+            * Seleccione una ubicacion en el mapa
+          </div>
+
+        </fieldset>
+      </div>
+    </div>
+
+    <br><br>
+
+    <div class="row">
+      <div class="col-md-12">
+        <fieldset>
+          <legend> Informacion del propietario </legend>
+
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label for="customerName" class="col-sm-2 form-control-label">Nombre: * </label>
+              <div class="col-sm-10">
+
+                <input  ngui-auto-complete class="form-control" id="customerName" name="customerName"
+                        [(ngModel)]="selected"
+                        [source]="observableSource.bind(this)"
+                        list-formatter="name"
+                        no-match-found-text="No hay resultados"
+                        (valueChanged)="onCustomerSelected($event)" required #customerName="ngModel"/>
+
+                <div *ngIf="!customerName.valid && submitted" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="customerEmail" class="col-sm-2 form-control-label">Email: </label>
+              <div class="col-sm-10">
+                <input  type="text" class="form-control" name="customerEmail" id="customerEmail" disabled [(ngModel)]="selectedCustomer.email"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="customerPhone" class="col-sm-2 form-control-label">Telefono: </label>
+              <div class="col-sm-10">
+                <input  type="text" class="form-control" name="customerPhone" id="customerPhone" disabled [(ngModel)]="selectedCustomer.first_phone"/>
+              </div>
+            </div>
+          </div>
+
+
+        </fieldset>
+
+      </div>
+    </div>
+
+    <br>
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="form-group">
+          <div class="offset-sm-10 col-sm-12">
+            <button type="submit" class="btn btn-success" (click)="addProperty(propertyAddForm)">Guardar</button>
+            <button class="btn btn-danger" routerLink="/pages/properties/properties_list">Atras</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+
+  <div class="row" *ngIf="uploadImageFlag">
+
+    <div class="col-md-12">
+
+      <fieldset>
+        <legend>Subir images</legend>
+
+        <div>
+          <label for="files-pb" class="upload-button btn btn-success">
+            <i class="ion-document-text icon"></i>
+            Seleccionar imagenes
+          </label>
+          <input type="file"
+                 id="files-pb"
+                 style="display:none;"
+                 [ng-file-select]="options"
+                 (onUpload)="handleUpload($event)"
+                 multiple>
+        </div>
+
+        <div class="ui divider"></div>
+
+        <div *ngFor='let progressObj of uploadProgresses'>
+          <div class="ui indicating olive progress">
+            <div class="bar" [style.width]="progressObj.percent + '%'"></div>
+            <div class="progress-bar progress-bar-warning" style="line-height: 20px; color: black; padding: 2px 10px; background: #e5c969;">Cargando imagen ({{ progressObj.percent }}%)</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <button class="btn btn-danger pull-right" routerLink="/pages/properties/properties_list">Atras</button>
+          </div>
+        </div>
+
+      </fieldset>
+
+    </div>
+
+  </div>
+
+</div>
+
+<br><br><br>

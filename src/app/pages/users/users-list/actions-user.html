@@ -1,0 +1,175 @@
+<button class="btn btn-success btn-icon" type="button" tooltip="Ver" (click)="showUserViewModal()">
+  <i class="ion-search"></i>
+</button>
+
+<button class="btn btn-info btn-icon" type="button" tooltip="Editar" (click)="showUserEditModal()">
+  <i class="ion-edit"></i>
+</button>
+
+<button class="btn btn-danger btn-icon" type="button" tooltip="Eliminar" (click)="showUserDeleteModal()">
+  <i class="ion-trash-a"></i>
+</button>
+
+
+
+<!-- User View Modal -->
+
+<div bsModal #userViewModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideUserViewModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Ver Usuario</h4>
+      </div>
+      <div class="modal-body">
+
+          <img src="{{userData.path_user_photo}}" class="img-thumbnail img-center" alt="{{userData.name}}" width="304" height="236">
+          <br>
+
+          <form>
+
+            <div class="form-group">
+              <label for="name">Nombre:</label>
+              <input type="text" class="form-control" name='name' [(ngModel)]="userData.name" disabled>
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="email">Email:</label>
+              <input type="text" class="form-control" name='email' [(ngModel)]="userData.email" disabled>
+
+            </div>
+
+            <div class="form-group">
+              <label for="phone1">Telefono:</label>
+              <input type="text" class="form-control" name='phone1' [(ngModel)]="userData.phone" disabled>
+            </div>
+
+            <div class="form-group">
+              <label for="createdAt">Fecha de registro:</label>
+              <input type="text" class="form-control" id="createdAt" name='createdAt' [(ngModel)]="userData.createdAt" disabled>
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+              <button type="button" class="btn btn-danger" (click)="hideUserViewModal()">Cerrar</button>
+            </div>
+
+          </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- User Edit Modal -->
+
+<div bsModal #userEditModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideUserEditModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Editar Usuario</h4>
+      </div>
+      <div class="modal-body">
+
+          <form #userEditForm="ngForm" novalidate style="position: relative;">
+            <!--*ngIf="!loadingSendEmail"-->
+            <div class="overlayDiv" *ngIf="loadingIcon">
+              <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+              <span class="sr-only">Loading...</span>
+            </div>
+
+            <img [src]="userData.path_user_photo" class="img-thumbnail img-center" alt={{userData.name}} width="304" height="236">
+            <br>
+
+            <div class="form-group">
+
+
+              <label for="imageUpload" class="btn btn-success labelFileContainer">Seleccionar imagen
+
+                <input type="file" id="imageUpload"
+                     [ng-file-select]="options"
+                     (onUpload)="handleUpload($event)">
+
+              </label>
+
+            </div>
+
+            <div class="form-group">
+              <label for="name">Nombre *</label>
+              <input type="text" class="form-control"  id="name" placeholder="Nombre y apellidos" name="name" [(ngModel)]="userData.name" required #name="ngModel">
+
+              <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                * Nombre es requerido
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="name">Cambiar contraseña:  </label>
+              <button class="btn btn-info" (click)="onSendPasswordToUser(userData.id)" *ngIf="!loadingIcon"> Enviar contraseña</button>
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="email">Email *</label>
+              <input type="text" class="form-control" id="email" placeholder="Correo electronico" name="email" [(ngModel)]="userData.email" required #email="ngModel">
+
+              <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+                * Email es requerido
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Telefono:</label>
+              <input type="text" class="form-control" id="phone" placeholder="Telefono celular" name="phone" [(ngModel)]="userData.phone">
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+              <button type="button" class="btn btn-success confirm-btn" [disabled]="!userEditForm.form.valid" (click)="onEditUser(userData)">Guardar</button>
+              <button type="button" class="btn btn-danger" (click)="hideUserEditModal()">Cancelar</button>
+            </div>
+
+          </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Delete modal -->
+<div bsModal #userDeleteModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideUserDeleteModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Eliminar registro</h4>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro que desea eliminar a <strong>{{userData.name}}</strong>?
+      </div>
+      <div class="modal-footer">
+
+        <button class="btn btn-success" (click)="onDeleteUser(userData.id)">Aceptar</button>
+        <button class="btn btn-danger confirm-btn" (click)="hideUserDeleteModal()">Cancelar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+

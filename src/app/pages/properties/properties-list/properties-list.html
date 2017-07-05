@@ -1,0 +1,214 @@
+
+<div class="widgets">
+
+  <div class="overlayDiv" *ngIf="loadingIcon">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+  </div>
+
+   <div class="col-md-12">
+     <button class="btn btn-success pull-right" routerLink="/pages/properties/add_property"><i class="ion-plus-round"></i> Agregar Propiedad</button>
+   </div>
+
+  <div class="row">
+
+      <fieldset>
+        <legend>Filtro de busqueda</legend>
+
+        <div class="col-md-12">
+
+          <div class="col-md-3">
+
+            <div class="form-group">
+              <label class="col-sm-4 form-control-label" name="allUusers">Agentes</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="allUusers" [(ngModel)]="selectedUser" (ngModelChange)="onChangeUser($event)">
+                  <option *ngFor="let item of users" [ngValue]="item"> {{item.name}} </option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-5">
+
+            <div class="form-group">
+              <label class="col-sm-3 form-control-label">Busqueda</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" placeholder="Buscar propiedad...">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-3">
+
+            <div class="form-group">
+              <label class="col-sm-4 form-control-label" name="userType">Filtro</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="userType" [(ngModel)]="filterOption" (change)="onChangeUserFilter($event.target.value)">
+                  <option value="1"> Mis propiedades </option>
+                  <option value="2"> Todas </option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-1">
+
+            <div class="form-group">
+
+              <button class="btn btn-danger" (click)="resetFilters()"> <i class="ion-refresh"></i> Reset </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="col-md-12">
+          <hr>
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label for="departments" class="col-sm-3 form-control-label">Departamento</label>
+              <div class="col-sm-9">
+                <select class="form-control" id="departments" [(ngModel)]="selectedDepartment" (ngModelChange)="onChangeDepartment($event)">
+                  <option *ngFor="let item of departments"  [ngValue]="item"> {{item.name}} </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label for="province" class="col-sm-2 form-control-label">Provincia</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="province" [(ngModel)]="selectedProvince" (ngModelChange)="onChangeProvince($event)">
+                  <option *ngFor="let item of provinces" [ngValue]="item">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label for="district" class="col-sm-2 form-control-label">Distrito</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="district" [(ngModel)]="selectedDistrict">
+                  <option *ngFor="let item of districts" [ngValue]="item">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-1">
+            <div class="form-group row">
+             <button class="btn btn-success" (click)="onLocationFilter()">Filtrar</button>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="col-md-12">
+          <hr>
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label for="property_type" class="col-sm-2 form-control-label">Tipo</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="property_type" [(ngModel)]="selectedPropertyType" (ngModelChange)="onChangeFilterProperty()">
+                  <option *ngFor="let item of propertyType"  [ngValue]="item"> {{item.name}} </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label for="property_status" class="col-sm-2 form-control-label">Estado</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="property_status" [(ngModel)]="selectedPropertyStatus" (ngModelChange)="onChangeFilterProperty()">
+                  <option *ngFor="let item of propertyStatus" [ngValue]="item">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label for="property_contract" class="col-sm-2 form-control-label">Situacion</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="property_contract" [(ngModel)]="selectedPropertyContract" (ngModelChange)="onChangeFilterProperty()">
+                  <option *ngFor="let item of propertyContract" [ngValue]="item">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-12">
+
+          <hr>
+
+          <label class="col-sm-2 form-control-label">Rango de precios</label>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label for="coin" class="col-sm-3 form-control-label">Moneda</label>
+              <div class="col-sm-9">
+                <select class="form-control" name="coin" id="coin" [(ngModel)]="selectedPropertyCoin" (ngModelChange)="onChangeCoin($event)">
+                  <option *ngFor="let item of propertyCoin" [ngValue]="item"> {{item.symbol}}    {{item.name}} </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label for="minimum" class="col-sm-2 form-control-label">Desde</label>
+
+              <div class="col-sm-10">
+                <input type="number" name="minimum"  id="minimum" class="form-control" [(ngModel)]="minimumPrice">
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label for="maximum" class="col-sm-2 form-control-label">Hasta</label>
+
+              <div class="col-sm-10">
+                <input type="number" name="maximum"  id="maximum" class="form-control" [(ngModel)]="maximumPrice">
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-md-1">
+            <div class="form-group row">
+              <button class="btn btn-success" (click)="onPriceFilter()">Filtrar</button>
+            </div>
+          </div>
+
+        </div>
+
+      </fieldset>
+
+    <br><br>
+
+    <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+
+  </div>
+
+</div>
+
+
+

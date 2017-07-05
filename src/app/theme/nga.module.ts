@@ -55,6 +55,9 @@ import {
   EqualPasswordsValidator
 } from './validators';
 
+import { ModalModule } from 'ng2-bootstrap';
+import { MyCommonModule } from '../mycommon.module';
+
 const NGA_COMPONENTS = [
   BaAmChart,
   BaBackTop,
@@ -109,6 +112,8 @@ const NGA_VALIDATORS = [
     FormsModule,
     ReactiveFormsModule,
     NgUploaderModule,
+    ModalModule.forRoot(),
+    MyCommonModule
   ],
   exports: [
     ...NGA_PIPES,

@@ -1,0 +1,169 @@
+
+<button class="btn btn-success btn-icon" type="button" tooltip="Ver" (click)="showViewModal(customerData)">
+  <i class="ion-search"></i>
+</button>
+
+<button *ngIf='showPermissionFlag' class="btn btn-info btn-icon" type="button" tooltip="Editar" (click)="showEditModal(customerData)">
+  <i class="ion-edit"></i>
+</button>
+
+<button *ngIf='showPermissionFlag' class="btn btn-danger btn-icon" type="button" tooltip="Eliminar" (click)="showDeleteModal()">
+  <i class="ion-trash-a"></i>
+</button>
+
+
+<!-- View modal -->
+<div bsModal #viewModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideViewModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Ver Cliente</h4>
+      </div>
+      <div class="modal-body">
+
+        <form #customerEditForm="ngForm" novalidate>
+
+          <div class="form-group">
+            <label for="name">Nombre *</label>
+            <input type="text" class="form-control" name="name" [(ngModel)]="customerData.name" disabled>
+          </div>
+
+          <div class="form-group">
+
+            <label for="email">Email *</label>
+            <input type="text" class="form-control"  name="email" [(ngModel)]="customerData.email" disabled>
+
+          </div>
+
+          <div class="form-group">
+            <label for="phone1">Telefono 1</label>
+            <input type="text" class="form-control" name="first_phone" [(ngModel)]="customerData.first_phone" disabled>
+          </div>
+
+          <div class="form-group">
+            <label for="phone2">Telefono 2</label>
+            <input type="text" class="form-control" name="second_phone" [(ngModel)]="customerData.second_phone" disabled>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Direccion</label>
+            <input type="text" class="form-control"  name="address" [(ngModel)]="customerData.address" disabled>
+          </div>
+
+          <div class="form-group">
+            <label for="customer_type">Tipo de usuario</label>
+            <input type="text" class="form-control" name="customerType" [(ngModel)]="customerData.customerType.name" disabled>
+          </div>
+
+          <hr>
+
+          <div class="form-group">
+            <button type="button" class="btn btn-danger" (click)="hideViewModal()">Cerrar</button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Edit modal -->
+<div bsModal #editModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideEditModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Editar Cliente</h4>
+      </div>
+      <div class="modal-body">
+
+          <form #customerEditForm="ngForm" novalidate>
+
+            <div class="form-group">
+              <label for="name">Nombre *</label>
+              <input type="text" class="form-control"  id="name" placeholder="Nombre y apellidos" name="name" [(ngModel)]="customerData.name" required #name="ngModel">
+
+              <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                * Nombre es requerido
+              </div>
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="email">Email *</label>
+              <input type="text" class="form-control" id="email" placeholder="Correo electronico" name="email" [(ngModel)]="customerData.email" required #email="ngModel">
+
+              <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+                * Email es requerido
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="phone1">Telefono 1</label>
+              <input type="text" class="form-control" id="phone1" placeholder="Telefono celular" name="first_phone" [(ngModel)]="customerData.first_phone">
+            </div>
+
+            <div class="form-group">
+              <label for="phone2">Telefono 2</label>
+              <input type="text" class="form-control" id="phone2" placeholder="Telefono fijo" name="second_phone" [(ngModel)]="customerData.second_phone">
+            </div>
+
+            <div class="form-group">
+              <label for="address">Direccion</label>
+              <input type="text" class="form-control" id="address" placeholder="Direccion" name="address" [(ngModel)]="customerData.address">
+            </div>
+
+            <div class="form-group">
+              <label for="customer_type">Tipo de usuario</label>
+              <select id="customer_type" class="form-control" [(ngModel)]="customerData.customerType.id" name="customerType" required>
+                <option *ngFor="let item of customerTypes" [ngValue]="item.id">{{item.name}}</option>
+              </select>
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+              <button type="button" class="btn btn-success confirm-btn" [disabled]="!customerEditForm.form.valid" (click)="onEditCustomer(customerData)">Guardar</button>
+              <button type="button" class="btn btn-danger" (click)="hideEditModal()">Cancelar</button>
+            </div>
+
+          </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete modal -->
+<div bsModal #deleteModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideDeleteModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Eliminar registro</h4>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro que desea eliminar a {{customerData.name}}?
+      </div>
+      <div class="modal-footer">
+
+        <button class="btn btn-success" (click)="onDeleteCustomer(customerData.id)">Aceptar</button>
+        <button class="btn btn-danger confirm-btn" (click)="hideDeleteModal()">Cancelar</button>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,8 @@
 import { Routes, RouterModule }  from '@angular/router';
 import { Pages } from './pages.component';
 import { ModuleWithProviders } from '@angular/core';
+import { Login } from './login/login.component';
+import { AccessGuard } from './access-guard';
 // noinspection TypeScriptValidateTypes
 
 // export function loadChildren(path) { return System.import(path); };
@@ -8,6 +10,7 @@ import { ModuleWithProviders } from '@angular/core';
 export const routes: Routes = [
   {
     path: 'login',
+    // component: Login
     loadChildren: 'app/pages/login/login.module#LoginModule'
   },
   {
@@ -17,6 +20,7 @@ export const routes: Routes = [
   {
     path: 'pages',
     component: Pages,
+    canActivate: [AccessGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule' },
@@ -26,7 +30,10 @@ export const routes: Routes = [
       { path: 'ui', loadChildren: 'app/pages/ui/ui.module#UiModule' },
       { path: 'forms', loadChildren: 'app/pages/forms/forms.module#FormsModule' },
       { path: 'tables', loadChildren: 'app/pages/tables/tables.module#TablesModule' },
-      { path: 'maps', loadChildren: 'app/pages/maps/maps.module#MapsModule' }
+      { path: 'maps', loadChildren: 'app/pages/maps/maps.module#MapsModule' },
+      { path: 'customers', loadChildren: 'app/pages/customers/customers.module#CustomerModule' },
+      { path: 'properties', loadChildren: 'app/pages/properties/properties.module#PropertiesModule' },
+      { path: 'users', loadChildren: 'app/pages/users/users.module#UsersModule' }
     ]
   }
 ];

@@ -1,17 +1,32 @@
-import {Injectable} from '@angular/core';
-import {Router, Routes} from '@angular/router';
+import  {Injectable, OnInit } from '@angular/core';
+import { Router, Routes } from '@angular/router';
 import * as _ from 'lodash';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { CONFIG_ENV } from '../../../app.config';
+import { Http } from '@angular/http';
+import { AuthService } from '../../../pages/auth-service';
 
 @Injectable()
 export class BaMenuService {
   menuItems = new BehaviorSubject<any[]>([]);
 
   protected _currentMenuItem = {};
+  private PATH_SERVER = CONFIG_ENV._SERVER;
+  private MENU_ROUTES: any;
 
-  constructor(private _router:Router) { }
+  constructor(private _router: Router, private _http: Http, private _authService: AuthService) {
+    console.log('Init Sidebar menu');
+    this.getRolMenu();
+  }
 
+  public getRolMenu() {
+
+    let userData: any;
+    userData = this._authService.getUserData();
+    let userRoldId = userData.rol_id;
+    return this._http.get(this.PATH_SERVER + '&c=user&m=get_rol_menu&rol_id=' + userRoldId).map(res => res.json());
+  }
   /**
    * Updates the routes in the menu
    *
@@ -22,7 +37,7 @@ export class BaMenuService {
     this.menuItems.next(convertedRoutes);
   }
 
-  public convertRoutesToMenus(routes:Routes):any[] {
+  public convertRoutesToMenus(routes: Routes): any[] {
     let items = this._convertArrayToItems(routes);
     return this._skipEmpty(items);
   }

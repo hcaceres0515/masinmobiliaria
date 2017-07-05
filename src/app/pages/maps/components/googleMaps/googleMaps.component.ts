@@ -8,7 +8,7 @@ import * as GoogleMapsLoader from 'google-maps';
 })
 export class GoogleMaps {
 
-  constructor(private _elementRef:ElementRef) {
+  constructor(private _elementRef: ElementRef) {
   }
 
   ngAfterViewInit() {

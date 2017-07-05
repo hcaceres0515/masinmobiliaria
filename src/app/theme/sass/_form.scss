@@ -41,9 +41,9 @@
 
 .form-control {
   color: $content-text;
-  @include placeholderStyle($content-text, 0.7);
+  @include placeholderStyle($default-text-placeholder, 2.0);
   border: 1px solid $input-border;
-  border-radius: 5px;
+  border-radius: 0!important;
   background-color: $input-background;
   box-shadow: none;
   font-size: 14px;
@@ -57,6 +57,7 @@
 
 select.form-control {
   padding-left: 8px;
+  height: inherit!important;
 }
 
 select.form-control:not([multiple]) option {
@@ -385,10 +386,10 @@ label.custom-input-danger {
 }
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
-  background-color: $input-background;
-  color: $disabled;
+  // background-color: $input-background;
+  // color: $disabled;
   border-color: $disabled-bg;
-  @include placeholderStyle($default-text, 0.5);
+  @include placeholderStyle($default-text-placeholder, 0.5);
 }
 
 .form-control-rounded {
@@ -526,7 +527,7 @@ label.custom-input-danger {
     background-color: $input-background;
     border: 1px solid $input-border;
     border-radius: 5px;
-    @include placeholderStyle($default-text, 0.8);
+    @include placeholderStyle($default-text-placeholder, 0.8);
     line-height: 22px;
     font-size: 11px;
     min-width: 53px;

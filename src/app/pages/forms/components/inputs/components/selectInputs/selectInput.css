@@ -1,0 +1,7 @@
+select.form-control[multiple] {
+  overflow-y: scroll; }
+
+select.form-control {
+  color: black; }
+
+/*# sourceMappingURL=selectInput.css.map */

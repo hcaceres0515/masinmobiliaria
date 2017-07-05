@@ -1,0 +1,37 @@
+.ng2-smart-table-container table.ng2-smart-table {
+  color: black; }
+  .ng2-smart-table-container table.ng2-smart-table th, .ng2-smart-table-container table.ng2-smart-table td {
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    line-height: 35px;
+    vertical-align: middle; }
+  .ng2-smart-table-container table.ng2-smart-table input {
+    line-height: 1.5 !important; }
+  .ng2-smart-table-container table.ng2-smart-table tbody tr:hover {
+    background: rgba(0, 0, 0, 0.03); }
+  .ng2-smart-table-container table.ng2-smart-table a.ng2-smart-sort-link {
+    font-size: 14px !important;
+    color: black;
+    font-weight: 500; }
+    .ng2-smart-table-container table.ng2-smart-table a.ng2-smart-sort-link.sort {
+      font-weight: 500 !important; }
+      .ng2-smart-table-container table.ng2-smart-table a.ng2-smart-sort-link.sort::after {
+        border-bottom-color: black !important; }
+  .ng2-smart-table-container table.ng2-smart-table .ng2-smart-actions {
+    width: 70px;
+    text-align: center; }
+    .ng2-smart-table-container table.ng2-smart-table .ng2-smart-actions .actions {
+      float: none;
+      text-align: center; }
+  .ng2-smart-table-container table.ng2-smart-table a.ng2-smart-action {
+    font-size: 14px !important;
+    color: black;
+    padding: 0 5px;
+    display: inline-block; }
+    .ng2-smart-table-container table.ng2-smart-table a.ng2-smart-action.ng2-smart-action-add-add {
+      font-size: 25px !important; }
+
+nav.ng2-smart-pagination-nav {
+  display: flex;
+  justify-content: center; }
+
+/*# sourceMappingURL=smartTables.css.map */

@@ -1,0 +1,136 @@
+<div class="widgets">
+
+  <div class="row">
+
+    <div class="col-md-7">
+
+      <div class="form-group">
+        <label class="col-sm-3 form-control-label">Busqueda</label>
+        <div class="col-sm-9">
+          <input #search class="form-control" type="text" placeholder="Buscar..." (keyup)="onSearch(search.value)">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+      <div class="form-group">
+        <label class="col-sm-4 form-control-label" name="userType">Filtro</label>
+        <div class="col-sm-8">
+          <select class="form-control" id="userType" (change)="onChangeUserFilter($event.target.value)">
+            <option value="1"> Mis clientes </option>
+            <option value="2" *ngIf="showPermissionFlag"> Todos </option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <!--
+    <div class="col-md-3">
+
+      <div class="form-group">
+        <label class="col-sm-4 form-control-label" name="userType">Tipo</label>
+        <div class="col-sm-8">
+          <select class="form-control" id="userType" (change)="onChangeUserType($event.target.value)">
+            <option value=""> Todos </option>
+            <option value="1"> Vendedor </option>
+            <option value="2"> Comprador </option>
+          </select>
+        </div>
+      </div>
+
+    </div>-->
+
+    <div class="col-md-2">
+
+      <button class="btn btn-success" (click)="showAddModal()">
+        <i class="ion-plus-round"></i>  Agregar Cliente
+      </button>
+    </div>
+
+  </div>
+
+  <br>
+
+  <div class="row">
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (userRowSelect)="onUserRowSelect($event)"></ng2-smart-table>
+  </div>
+
+</div>
+
+
+<!-- Large modal -->
+<div bsModal #addModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideAddModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Agregar Cliente</h4>
+      </div>
+      <div class="modal-body">
+
+        <form #customerAddForm="ngForm" novalidate>
+
+          <div class="form-group">
+            <label for="name">Nombre *</label>
+            <input type="text" class="form-control"  id="name" placeholder="Nombre y apellidos" name="name" [(ngModel)]="newCustomerData.name" required #name="ngModel">
+
+            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+              * Nombre es requerido
+            </div>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="email">Email *</label>
+            <input type="text" class="form-control" id="email" placeholder="Correo electronico" name="email" [(ngModel)]="newCustomerData.email" required #email="ngModel">
+
+            <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+              * Email es requerido
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="phone1">Telefono 1</label>
+            <input type="text" class="form-control" id="phone1" placeholder="Telefono celular" name="first_phone" [(ngModel)]="newCustomerData.first_phone">
+          </div>
+
+          <div class="form-group">
+            <label for="phone2">Telefono 2</label>
+            <input type="text" class="form-control" id="phone2" placeholder="Telefono fijo" name="second_phone" [(ngModel)]="newCustomerData.second_phone">
+          </div>
+
+          <div class="form-group">
+            <label for="address">Direccion</label>
+            <input type="text" class="form-control" id="address" placeholder="Direccion" name="address" [(ngModel)]="newCustomerData.address">
+          </div>
+
+          <div class="form-group">
+            <label for="customer_type">Tipo de usuario</label>
+            <select id="customer_type" class="form-control">
+              <option *ngFor="let item of customerTypes" [ngValue]="item.id">{{item.name}}</option>
+            </select>
+          </div>
+
+          <hr>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-success confirm-btn" [disabled]="!customerAddForm.form.valid" (click)="onAddCustomer(newCustomerData)">Guardar</button>
+            <button class="btn btn-danger" style="">Cancelar</button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

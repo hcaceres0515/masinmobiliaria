@@ -1,0 +1,298 @@
+<button class="btn btn-primary btn-icon" type="button" tooltip="Enviar" (click)="showSendPropertyModal()">
+  <i class="ion-email"></i>
+</button>
+
+<button class="btn btn-success btn-icon" type="button" tooltip="Ver" (click)="showViewModal(property.id)">
+  <i class="ion-search"></i>
+</button>
+
+<button *ngIf="actionPermission" class="btn btn-info btn-icon" type="button" tooltip="Editar" [routerLink]="['/pages/properties/edit_property', property.id]">
+  <i class="ion-edit"></i>
+</button>
+
+<button *ngIf="actionPermission" class="btn btn-danger btn-icon" type="button" tooltip="Eliminar" (click)="showPropertyDeleteModal()">
+  <i class="ion-trash-a"></i>
+</button>
+
+<!-- View modal -->
+<div bsModal #viewPropertyModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideViewModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Ver Propiedad</h4>
+      </div>
+      <div class="modal-body">
+
+        <tabset>
+          <tab heading="Informacion basica">
+
+            <form #customerEditForm="ngForm" novalidate>
+
+              <div class="form-group">
+                <label for="username">Agente: </label>
+                <input type="text" class="form-control" id="username" name="name" [(ngModel)]="propertyData.username" disabled>
+              </div>
+
+              <div class="form-group">
+
+                <label for="customerName">Cliente: </label>
+                <input type="text" class="form-control" id="customerName" name="customerName" [(ngModel)]="propertyData.customer_name" disabled>
+
+              </div>
+
+              <div class="form-group">
+
+                <label for="customerEmail">Email del cliente: </label>
+                <input type="text" class="form-control"  id="customerEmail" name="customerEmail" [(ngModel)]="propertyData.customer_email" disabled>
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+                  <label for="departmentName">Departamento: </label>
+                  <input type="text" class="form-control" id="departmentName"  name="departmentName" [(ngModel)]="propertyData.department_name" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+                  <label for="provinceName">Provincia: </label>
+                  <input type="text" class="form-control" id="provinceName" name="provinceName" [(ngModel)]="propertyData.province_name" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+                  <label for="districtName">Distrito: </label>
+                  <input type="text" class="form-control" id="districtName" name="districtName" [(ngModel)]="propertyData.district_name" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+                  <label for="property_type">Tipo de propiedad: </label>
+                  <input type="text" class="form-control" id="property_type" name="property_type" [(ngModel)]="propertyData.property_type_name" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+                  <label for="property_status">Estado de la propiedad: </label>
+                  <input type="text" class="form-control" id="property_status" name="property_status" [(ngModel)]="propertyData.property_status_name" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+                  <label for="property_contract">Situacion de la propiedad: </label>
+                  <input type="text" class="form-control" id="property_contract" name="property_contract" [(ngModel)]="propertyData.property_contract_name" disabled>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label for="title">Nombre: </label>
+                <input type="text" class="form-control"  id="title" name="title" [(ngModel)]="propertyData.title" disabled>
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+                  <label for="price">Precio: {{propertyData.property_coin_symbol}}</label>
+                  <input type="text" class="form-control" id="price" name="price" [(ngModel)]="propertyData.price" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+                  <label for="commission_percentage">Porcentaje de comision: </label>
+                  <input type="text" class="form-control" id="commission_percentage" name="commission_percentage" [(ngModel)]="propertyData.commission_percentage" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="form-group">
+                  <label for="commission_amount">Monto de comision: </label>
+                  <input type="text" class="form-control" id="commission_amount" name="commission_amount" [(ngModel)]="propertyData.commission_amount" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                <div class="form-group">
+                  <label for="bedrooms">Cuartos: </label>
+                  <input type="text" class="form-control" id="bedrooms" name="bedrooms" [(ngModel)]="propertyData.bedrooms" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                <div class="form-group">
+                  <label for="bathrooms">Baños: </label>
+                  <input type="text" class="form-control" id="bathrooms" name="bathrooms" [(ngModel)]="propertyData.bathrooms" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                <div class="form-group">
+                  <label for="floors">Pisos: </label>
+                  <input type="text" class="form-control" id="floors" name="floors" [(ngModel)]="propertyData.floors" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-3">
+
+                <div class="form-group">
+                  <label for="parkings">Estacionamientos: </label>
+                  <input type="text" class="form-control" id="parkings" name="parkings" [(ngModel)]="propertyData.parkings" disabled>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label for="address">Direccion: </label>
+                <input type="text" class="form-control" id="address" name="address" [(ngModel)]="propertyData.address" disabled>
+              </div>
+
+              <div class="form-group">
+                <label for="reference">Referencia: </label>
+                <input type="text" class="form-control" id="reference" name="reference" [(ngModel)]="propertyData.reference" disabled>
+              </div>
+
+              <div class="col-md-6">
+
+                <div class="form-group">
+                  <label for="area">Area: </label>
+                  <input type="text" class="form-control" id="area" name="area" [(ngModel)]="propertyData.area" disabled>
+                </div>
+
+              </div>
+
+              <div class="col-md-6">
+
+                <div class="form-group">
+                  <label for="createdAt">Fecha de registro: </label>
+                  <input type="text" class="form-control" id="createdAt" name="createdAt" [(ngModel)]="propertyData.createdAt" disabled>
+                </div>
+
+              </div>
+
+              <hr>
+
+            </form>
+          </tab>
+
+          <tab heading="Imagenes">
+
+            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+
+          </tab>
+
+        </tabset>
+
+        <div class="form-group">
+          <button type="button" class="btn btn-danger" (click)="hideViewModal()">Cerrar</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Send property by email modal -->
+<div bsModal #sendPropertyModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideSendPropertyModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Enviar propiedad</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label for="property_name">Propiedad: </label>
+          <input type="text" class="form-control" id="property_name" name="property_name" [(ngModel)]="property.title" disabled>
+        </div>
+
+        <div class="form-group">
+          <label for="recipientEmail">Destinatario: </label>
+          <input  ngui-auto-complete class="form-control" id="recipientEmail"
+                  [(ngModel)]="selected"
+                  [source]="observableSource.bind(this)"
+                  list-formatter="name"
+                  no-match-found-text="No hay resultados"
+                  (valueChanged)="onCustomerSelected($event)"/>
+          <!-- <br/>selected model: {{selected | json}}<br/><br/> -->
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email: </label>
+          <input type="text" class="form-control" id="email" name="email" [(ngModel)]="dataSendProperty.customer_email" disabled>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Mensaje: </label>
+          <textarea class="form-control" name="message" id="message" cols="30" rows="5" [(ngModel)]="dataSendProperty.message"></textarea>
+        </div>
+
+        <div class="form-group">
+          <button type="button " class="btn btn-success" (click)="onSendProperty()">Enviar</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Poperty modal -->
+<div bsModal #deletePropertyModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hidePropertyDeleteModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Eliminar propiedad</h4>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro que desea eliminar la propiedad {{property.title}}?
+      </div>
+      <div class="modal-footer">
+
+        <button class="btn btn-success" (click)="onDeleteProperty(property.id)">Aceptar</button>
+        <button class="btn btn-danger confirm-btn" (click)="hidePropertyDeleteModal()">Cancelar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
