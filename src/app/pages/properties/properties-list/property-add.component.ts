@@ -1,4 +1,4 @@
-import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
 import { PropertyService } from '../property.service';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
@@ -14,6 +14,9 @@ import * as GoogleMapsLoader from 'google-maps';
 export class PropertyAddComponent implements  OnInit{
 
   PATH_SERVER = CONFIG_ENV._SERVER;
+
+  userData: any;
+  propertyData: Property;
 
   departments: any[];
   provinces: any[];
@@ -35,7 +38,6 @@ export class PropertyAddComponent implements  OnInit{
   selectedLat: string;
   selectedLng: string;
 
-  propertyData: Property;
   loadingIcon: boolean = false;
   submitted: boolean = false;
   uploadImageFlag: boolean = false;
@@ -50,6 +52,7 @@ export class PropertyAddComponent implements  OnInit{
 
   constructor(private _propertyService: PropertyService, private _http: Http, private _elementRef: ElementRef) {
     this.zone = new NgZone({ enableLongStackTrace: false });
+    this.userData = JSON.parse(localStorage.getItem('userData'));
   }
 
   ngOnInit() {
@@ -71,7 +74,7 @@ export class PropertyAddComponent implements  OnInit{
 
   observableSource = (keyword: any): Observable<any[]> => {
     let url: string =
-      this.PATH_SERVER + '&c=customer&m=get_customer_by_keyword&user_id=' + 1 + '&keyword=' + keyword
+      this.PATH_SERVER + '&c=customer&m=get_customer_by_keyword&user_id=' + this.userData.id + '&keyword=' + keyword
     if (keyword) {
       let json;
       return this._http.get(url)

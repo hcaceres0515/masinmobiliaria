@@ -134,7 +134,7 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
 
   observableSource = (keyword: any): Observable<any[]> => {
     let url: string =
-      this.PATH_SERVER + '&c=customer&m=get_customer_by_keyword&user_id=' + 1 + '&keyword=' + keyword
+      this.PATH_SERVER + '&c=customer&m=get_customer_by_keyword&user_id=' + this.userData.id + '&keyword=' + keyword
     if (keyword) {
       let json;
       return this._http.get(url)

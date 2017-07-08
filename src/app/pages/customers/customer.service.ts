@@ -24,7 +24,7 @@ export class CustomerService {
   }
 
   addCustomer(customer) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
     let options = new RequestOptions({ headers: headers, method: 'post' });
     let customerData = JSON.stringify(customer);
     return this._http.post(this.PATH_SERVER + '&c=customer&m=add_customer', customerData, options)
@@ -33,7 +33,7 @@ export class CustomerService {
 
   editCustomer(customer) {
 
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
     let options = new RequestOptions({ headers: headers, method: 'post' });
     let customerData = JSON.stringify(customer);
     return this._http.post(this.PATH_SERVER + '&c=customer&m=edit_customer', customerData, options)

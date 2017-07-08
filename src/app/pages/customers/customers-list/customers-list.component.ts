@@ -181,6 +181,10 @@ export class CustomersListComponent implements OnInit {
       this.showPermissionFlag = true;
     }
 
+    this.getCustomersData();
+  }
+
+  getCustomersData() {
     this._customerService.getCustomersByUser(this.userData.id).subscribe(
       data => this.customers = (data),
       error => alert(error),
@@ -246,7 +250,7 @@ export class CustomersListComponent implements OnInit {
       error => alert(error),
       () => {
         this.addModal.hide();
-        location.reload();
+        this.getCustomersData();
       },
     );
   }

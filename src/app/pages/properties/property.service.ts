@@ -61,7 +61,7 @@ export  class PropertyService {
   }
 
   addProperty(property) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
     let options = new RequestOptions({ headers: headers, method: 'post' });
     let propertyData = JSON.stringify(property);
     return this._http.post(this.PATH_SERVER + '&c=property&m=add_property', propertyData, options)

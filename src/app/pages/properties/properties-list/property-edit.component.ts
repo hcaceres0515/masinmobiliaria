@@ -36,6 +36,7 @@ export class PropertyEditComponent implements  OnInit {
   public sub;
   public propertyId: number;
   public propertyData: Property;
+  public userData: any;
 
   public PATH_SERVER = CONFIG_ENV._SERVER;
 
@@ -67,7 +68,9 @@ export class PropertyEditComponent implements  OnInit {
   public zone: NgZone;
   public options: any;
 
-  constructor(private _activeRoute: ActivatedRoute, private _propertyService: PropertyService, private _http: Http, private _elementRef: ElementRef) {}
+  constructor(private _activeRoute: ActivatedRoute, private _propertyService: PropertyService, private _http: Http, private _elementRef: ElementRef) {
+    this.userData = JSON.parse(localStorage.getItem('userData'));
+  }
 
   ngOnInit() {
 
@@ -213,7 +216,7 @@ export class PropertyEditComponent implements  OnInit {
 
   observableSource = (keyword: any): Observable<any[]> => {
     let url: string =
-      this.PATH_SERVER + '&c=customer&m=get_customer_by_keyword&user_id=' + 1 + '&keyword=' + keyword
+      this.PATH_SERVER + '&c=customer&m=get_customer_by_keyword&user_id=' + this.userData.id + '&keyword=' + keyword
     if (keyword) {
       let json;
       return this._http.get(url)
