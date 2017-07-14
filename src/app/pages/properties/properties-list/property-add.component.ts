@@ -255,8 +255,8 @@ export class PropertyAddComponent implements  OnInit{
 
     let propertyId;
 
-    console.log(this.propertyData);
-    /*
+    // console.log(this.propertyData);
+
     if (addForm.valid && this.selectedLocationFlag) {
 
       this.loadingIcon = true;
@@ -265,7 +265,6 @@ export class PropertyAddComponent implements  OnInit{
         data => propertyId = (data),
         (error) => alert(error),
         () => {
-          console.log(propertyId);
 
           this.options.params.property_id = propertyId;
           this.propertyData.id = propertyId;
@@ -274,7 +273,7 @@ export class PropertyAddComponent implements  OnInit{
           this.addFormFlag = false;
         }
       );
-    }*/
+    }
   }
 
   updateCommisionAmmount() {
