@@ -17,6 +17,7 @@ import { CustomerService } from '../customers/customer.service';
 import { MyCommonModule } from '../../mycommon.module';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { PropertyEditComponent } from './properties-list/property-edit.component';
+import { ValuationComponent } from './properties-list/valuation.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { PropertyEditComponent } from './properties-list/property-edit.component
     PropertiesComponent,
     PropertiesListComponent,
     PropertyAddComponent,
-    PropertyEditComponent
+    PropertyEditComponent,
+    ValuationComponent
   ],
   providers: [
     PropertyService,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { CONFIG_ENV } from '../../app.config';
+import {Subject} from "rxjs";
 
 @Injectable()
 
@@ -9,8 +10,19 @@ export class CustomerService {
 
   PATH_SERVER = CONFIG_ENV._SERVER;
 
+  // Observable string sources
+  public componentMethodCallSource = new Subject<any>();
+
+  // Observable string streams
+  componentMethodCalled$ = this.componentMethodCallSource.asObservable();
+
   constructor (private _http: Http, private _router: Router) {
     console.log('Init customer service');
+  }
+
+  // Service message commands
+  callUpdateTableService() {
+    this.componentMethodCallSource.next();
   }
 
   getCustomersByUser(userId) {

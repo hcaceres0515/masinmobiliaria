@@ -39,6 +39,7 @@ export class Property {
     public lat: string,
     public lng: string,
     public createdAt: string,
+    public expirationAt: string,
     public images: PropertyImage[]
   ){}
 

@@ -13,7 +13,7 @@
       <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
         <li class="dropdown-item"><i class="dropdown-arr"></i></li>
         <li class="dropdown-item"><a (click)="showUserEditModal()" style="cursor:pointer"><i class="fa fa-user"></i>Perfil</a></li>
-        <!-- <li class="dropdown-item"><a href><i class="fa fa-cog"></i>Configuracion</a></li> -->
+        <li *ngIf="actionPermission" class="dropdown-item"><a (click)="showOfficeEditModal()"> <i class="fa fa-cog"></i>Oficina</a></li>
         <li class="dropdown-item" >
           <a (click)="logout()" class="signout">
             <i class="fa fa-power-off"></i>Salir
@@ -108,6 +108,135 @@
           <div class="form-group">
             <button type="button" class="btn btn-success confirm-btn" [disabled]="!userEditForm.form.valid" (click)="onEditUser(userData)">Guardar</button>
             <button type="button" class="btn btn-danger" (click)="hideUserEditModal()">Cancelar</button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Office Edit Modal -->
+
+<div bsModal #officeEditModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideOfficeEditModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Editar Oficina</h4>
+      </div>
+      <div class="modal-body">
+
+        <form #officeEditForm="ngForm" novalidate style="position: relative;">
+          <!--*ngIf="!loadingSendEmail"-->
+          <div class="overlayDiv" *ngIf="loadingIcon">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+          </div>
+
+          <fieldset>
+            <legend>Datos de la oficina</legend>
+
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label" for="officeName">Nombre *</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control"  id="officeName" name="officeName" [(ngModel)]="officeData.name" required #officeName="ngModel">
+
+                <div *ngIf="officeName.errors && (officeName.dirty || officeName.touched)" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label" for="officeAddress">Dirección *</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control"  id="officeAddress" name="officeAddress" [(ngModel)]="officeData.address" required #officeAddress="ngModel">
+
+                <div *ngIf="officeAddress.errors && (officeAddress.dirty || officeAddress.touched)" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label" for="officePhone">Teléfono *</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control"  id="officePhone" name="officePhone" [(ngModel)]="officeData.phone" required #officePhone="ngModel">
+
+                <div *ngIf="officePhone.errors && (officePhone.dirty || officePhone.touched)" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label" for="officeEmail">Email *</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control"  id="officeEmail" name="officeEmail" [(ngModel)]="officeData.email" required #officeEmail="ngModel">
+
+                <div *ngIf="officeEmail.errors && (officeEmail.dirty || officeEmail.touched)" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+
+          <br>
+
+          <fieldset>
+            <legend>Datos del administrador</legend>
+
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label" for="managerName">Nombre *</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control"  id="managerName" name="managerName" [(ngModel)]="officeData.manager_name" required #managerName="ngModel">
+
+                <div *ngIf="managerName.errors && (managerName.dirty || managerName.touched)" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label" for="managerPhone">Teléfono *</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control"  id="managerPhone" name="managerPhone" [(ngModel)]="officeData.manager_phone" required #managerPhone="ngModel">
+
+                <div *ngIf="managerPhone.errors && (managerPhone.dirty || managerPhone.touched)" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-2 form-control-label" for="managerEmail">Email *</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control"  id="managerEmail" name="managerEmail" [(ngModel)]="officeData.manager_email" required #managerEmail="ngModel">
+
+                <div *ngIf="managerEmail.errors && (managerEmail.dirty || managerEmail.touched)" class="alert alert-danger">
+                  * Campo requerido
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+
+          <hr>
+
+          <div class="form-group">
+            <button type="button" class="btn btn-success confirm-btn" [disabled]="!officeEditForm.form.valid" (click)="onEditOffice(officeData)">Guardar</button>
+            <button type="button" class="btn btn-danger" (click)="hideOfficeEditModal()">Cancelar</button>
           </div>
 
         </form>

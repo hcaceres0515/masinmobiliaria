@@ -9,7 +9,7 @@ import { CustomerService } from '../../customers/customer.service';
 import { CONFIG_ENV } from '../../../app.config';
 import { AuthService } from '../../auth-service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
-import {UserService} from "../../users/user.service";
+import { UserService } from '../../users/user.service';
 
 @Component({
   selector: 'actions-property-table',
@@ -31,6 +31,7 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
   propertyData: Property;
   userData: any;
   actionPermission: boolean = false;
+  loadingIcon: boolean = true;
 
   dataSendProperty = {property_id: '', customer_id: '', customer_email: '', message: ''};
 
@@ -38,7 +39,7 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
   galleryImages: NgxGalleryImage[] = [];
 
   constructor(private _http: Http, private _customerService: CustomerService, private _propertyService: PropertyService, private _authService: AuthService) {
-    this.propertyData = new Property(1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', []);
+    this.propertyData = new Property(1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
 
     this.userData = this._authService.getUserData();
   }
@@ -86,7 +87,6 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
       () => {
         console.log(this.propertyData);
         this.setFormatImages(this.propertyData);
-        console.log(this.propertyData.address);
       }
     );
   }
@@ -243,7 +243,7 @@ export class PropertiesListComponent implements  OnInit {
         filter: false
       },
       createdAt: {
-        title: 'Fecha',
+        title: 'Fecha de registro',
         type: 'string',
         filter: false
       },
@@ -281,7 +281,7 @@ export class PropertiesListComponent implements  OnInit {
   selectedUser: any;
 
   filterOption: any = '1'; // For filter my properties or all properties
-  loadingIcon: boolean = false;
+  loadingIcon: boolean = true;
   minimumPrice: number;
   maximumPrice: number;
 
@@ -312,6 +312,7 @@ export class PropertiesListComponent implements  OnInit {
         // console.log(propertiesfilter);
         this.properties = this.sourceLoadTable(this.properties);
         this.source.load(this.properties);
+        this.loadingIcon = false;
       }
     );
   }

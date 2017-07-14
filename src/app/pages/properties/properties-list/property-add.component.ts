@@ -62,7 +62,7 @@ export class PropertyAddComponent implements  OnInit{
     this.getPropertyType();
     this.getPropertyCoin();
 
-    this.propertyData = new Property(1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', []);
+    this.propertyData = new Property(1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
 
     this.options = {
       url: this.PATH_SERVER + '&c=property&m=upload_image',
@@ -255,8 +255,8 @@ export class PropertyAddComponent implements  OnInit{
 
     let propertyId;
 
-  //  console.log(this.propertyData);
-
+    console.log(this.propertyData);
+    /*
     if (addForm.valid && this.selectedLocationFlag) {
 
       this.loadingIcon = true;
@@ -274,7 +274,7 @@ export class PropertyAddComponent implements  OnInit{
           this.addFormFlag = false;
         }
       );
-    }
+    }*/
   }
 
   updateCommisionAmmount() {

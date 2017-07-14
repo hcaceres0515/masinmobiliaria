@@ -196,8 +196,8 @@
             <div class="col-md-4">
 
               <div class="form-group row">
-                <label for="years" class="col-sm-2 form-control-label">Antiguedad:</label>
-                <div class="col-sm-10">
+                <label for="years" class="col-sm-4 form-control-label">Antiguedad:</label>
+                <div class="col-sm-8">
                   <input type="number" class="form-control" name="years" id="years" placeholder="1 - 2 - 3" [(ngModel)]="propertyData.years" required #years="ngModel">
 
                   <div *ngIf="!years.valid && submitted" class="alert alert-danger">
@@ -212,17 +212,27 @@
             <div class="col-md-4">
 
               <div class="form-group row">
-                <label for="parkings" class="col-sm-3 form-control-label">Estacionamientos:</label>
-                <div class="col-sm-9">
-                  <select name="parkings" id="parkings" class="form-control" [(ngModel)]="propertyData.parkings" required #parkings="ngModel">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
+                <label for="parkings" class="col-sm-4 form-control-label">Estacionamientos:</label>
+                <div class="col-sm-6">
+                  <input type="number" class="form-control" name="years" id="parkings" placeholder="1 - 2 - 3" [(ngModel)]="propertyData.parkins" required #parkings="ngModel">
 
                   <div *ngIf="!parkings.valid && submitted" class="alert alert-danger">
+                    * Campo requerido
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+              <div class="form-group row">
+                <label for="expirationAt" class="col-sm-6 form-control-label">Termino de contrato:</label>
+                <div class="col-sm-6">
+                  <input type="date" class="form-control" name="expirationAt" id="expirationAt" [(ngModel)]="propertyData.expirationAt" required #expirationAt="ngModel">
+
+                  <div *ngIf="!expirationAt.valid && submitted" class="alert alert-danger">
                     * Campo requerido
                   </div>
 

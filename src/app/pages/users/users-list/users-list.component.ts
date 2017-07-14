@@ -73,6 +73,7 @@ export class ActionsUsersTableComponent implements ViewCell, OnInit {
       () => {
         this.loadingIcon = false;
         this.hideUserEditModal();
+        this._userService.callUpdateTableService();
       }
     );
   }
@@ -82,7 +83,7 @@ export class ActionsUsersTableComponent implements ViewCell, OnInit {
       error => alert(error),
       () => {
         this.hideUserDeleteModal();
-        this._router.navigateByUrl('/pages/users');
+        this._userService.callUpdateTableService();
       }
     );
   }
@@ -190,7 +191,15 @@ export class UsersListComponent implements OnInit{
 
   loadingIcon: boolean = false; // For show loading icon
 
-  constructor(private _userService: UserService, private _router: Router) {}
+  constructor(private _userService: UserService, private _router: Router) {
+
+    this._userService.componentMethodCalled$.subscribe(
+      () => {
+        this.loadTable();
+      }
+    );
+
+  }
 
   ngOnInit() {
 
@@ -208,7 +217,7 @@ export class UsersListComponent implements OnInit{
       error => alert(error),
       () => {
 
-        console.log(this.users);
+        // console.log(this.users);
         (this.users).forEach((value) => {
           value.item = new User(value.id, 1, 1, value.name, value.email, value.phone, value.path_user_photo, '', value.createdAt, value.path_user_photo);
         })

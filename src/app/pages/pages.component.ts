@@ -38,6 +38,19 @@ export class Pages {
 
         const ROL_MENU: any = [{ path: 'pages', children: [] }];
 
+        ROL_MENU[0].children.push( {
+          path: 'dashboard',
+          data: {
+            menu: {
+              title: 'Dashboard',
+              icon: 'ion-android-home',
+              selected: false,
+              expanded: false,
+              order: 0
+            }
+          }
+        });
+
         Object.keys(this.MENU_ROUTES).forEach((value) => {
 
           if ('children' in this.MENU_ROUTES[value]) {
@@ -49,7 +62,7 @@ export class Pages {
                 path: child.path,
                 data: {
                   menu: {
-                    title: child.title,
+                    title: child.title
                   }
                 }
               });
@@ -60,7 +73,7 @@ export class Pages {
               data: {
                 menu: {
                   title: this.MENU_ROUTES[value].title,
-                  icon: 'ion-gear-a',
+                  icon: this.MENU_ROUTES[value].icon,
                   selected: false,
                   expanded: false,
                   order: 0
@@ -74,7 +87,7 @@ export class Pages {
               data: {
                 menu: {
                   title: this.MENU_ROUTES[value].title,
-                  icon: 'ion-gear-a',
+                  icon: this.MENU_ROUTES[value].icon,
                   selected: false,
                   expanded: false,
                   order: 0
@@ -89,7 +102,7 @@ export class Pages {
             data: {
           menu: {
             title: 'Paginas',
-              icon: 'ion-gear-a',
+              icon: 'ion-document-text',
               selected: false,
               expanded: false,
               order: 650,

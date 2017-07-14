@@ -12,7 +12,7 @@ import { Customer, CustomerType } from '../customers';
   templateUrl: './actions-list.html',
   styles: ['.alert-danger { padding: 5px 10px; margin-top: 5px; font-size: 10px} ']
 })
-export class ActionsTableComponent implements ViewCell, OnInit {
+export class ActionsTableComponent implements OnInit {
 
   @ViewChild('editModal') editModal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
@@ -41,6 +41,11 @@ export class ActionsTableComponent implements ViewCell, OnInit {
     }
   }
 
+  deleteUser() {
+    this._customerService.callUpdateTableService();
+  }
+
+
   showEditModal(): void {
 
     this.customerSelected = Object.assign({}, this.customerData);
@@ -50,7 +55,6 @@ export class ActionsTableComponent implements ViewCell, OnInit {
 
   hideEditModal(): void {
     this.customerData = this.customerSelected;
-    // this.customerData.name = 'ronny';
     this.editModal.hide();
   }
 
@@ -71,15 +75,12 @@ export class ActionsTableComponent implements ViewCell, OnInit {
   }
 
   onEditCustomer(customerData) {
-    // console.log(JSON.stringify(customerData));
-    // return;
     let postData;
     this._customerService.editCustomer(customerData).subscribe(
       error => alert(error),
       () => {
         this.editModal.hide();
-        location.reload();
-        // console.log(postData);
+        this._customerService.callUpdateTableService();
       },
     );
   }
@@ -89,7 +90,7 @@ export class ActionsTableComponent implements ViewCell, OnInit {
       error => alert(error),
       () => {
         this.deleteModal.hide();
-        location.reload();
+        this._customerService.callUpdateTableService();
       }
     );
   }
@@ -168,7 +169,15 @@ export class CustomersListComponent implements OnInit {
 
   showPermissionFlag: boolean = false;
 
-  constructor(protected service: SmartTablesService, private _customerService: CustomerService, private _router: Router) {}
+  constructor(protected service: SmartTablesService, private _customerService: CustomerService, private _router: Router) {
+
+    this._customerService.componentMethodCalled$.subscribe(
+      () => {
+        this.getCustomersData();
+      }
+    );
+
+  }
 
   ngOnInit() {
 
@@ -182,6 +191,10 @@ export class CustomersListComponent implements OnInit {
     }
 
     this.getCustomersData();
+  }
+
+  updateList() {
+    alert('update List');
   }
 
   getCustomersData() {
@@ -251,6 +264,7 @@ export class CustomersListComponent implements OnInit {
       () => {
         this.addModal.hide();
         this.getCustomersData();
+        // location.reload();
       },
     );
   }

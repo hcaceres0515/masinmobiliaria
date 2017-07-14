@@ -87,7 +87,7 @@ export class PropertyEditComponent implements  OnInit {
     this.uploadResponse = {};
     this.zone = new NgZone({ enableLongStackTrace: false });
 
-    this.propertyData = new Property(1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', []);
+    this.propertyData = new Property(1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
 
     this._propertyService.getPropertyInfoById(this.propertyId).subscribe(
       data => this.propertyData = data,
