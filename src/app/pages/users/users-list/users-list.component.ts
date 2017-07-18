@@ -261,6 +261,9 @@ export class UsersListComponent implements OnInit{
   }
 
   hideUserAddModal(): void {
+    this.userData.name = '';
+    this.userData.email = '';
+    this.userData.phone = '';
     this.userAddModal.hide();
   }
 }

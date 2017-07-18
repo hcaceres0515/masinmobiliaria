@@ -98,7 +98,11 @@
 
           <div class="form-group">
             <label for="phone1">Telefono 1</label>
-            <input type="text" class="form-control" id="phone1" placeholder="Telefono celular" name="first_phone" [(ngModel)]="newCustomerData.first_phone">
+            <input type="text" class="form-control" id="phone1" placeholder="Telefono celular" name="first_phone" [(ngModel)]="newCustomerData.first_phone" required #first_phone="ngModel">
+
+            <div [hidden]="first_phone.valid || first_phone.pristine" class="alert alert-danger">
+              * Telefono es requerido
+            </div>
           </div>
 
           <div class="form-group">

@@ -60,6 +60,10 @@ export  class PropertyService {
     return this._http.get(this.PATH_SERVER + '&c=property&m=get_property_coin').map(res => res.json());
   }
 
+  getPropertyVisits(propertyId, dateFrom, dateTo) {
+    return this._http.get(this.PATH_SERVER + '&c=property&m=get_property_visits&propertyId' + propertyId + '&dateFrom=' + dateFrom + '&dateTo=' + dateTo).map(res => res.json());
+  }
+
   addProperty(property) {
     let headers = new Headers({ 'Content-Type': 'text/plain' });
     let options = new RequestOptions({ headers: headers, method: 'post' });

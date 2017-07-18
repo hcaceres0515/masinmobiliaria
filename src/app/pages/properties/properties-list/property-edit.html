@@ -79,7 +79,7 @@
               </div>
 
               <label for="commission" class="col-sm-1 form-control-label">Comision(%): *</label>
-              <div class="col-sm-2">
+              <div class="col-sm-1">
                 <input type="text" class="form-control" name="commission_percentage" id="commission" placeholder="4" [(ngModel)]="propertyData.commission_percentage" (ngModelChange)="updateCommisionAmmount()" required #commissionPercentage="ngModel">
 
                 <div *ngIf="!commissionPercentage.valid && submitted" class="alert alert-danger">
@@ -89,7 +89,7 @@
               </div>
 
               <label for="commission_amount" class="col-sm-1 form-control-label">Total: </label>
-              <div class="col-sm-1">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" name="commissionAmmount" id="commission_amount" disabled [(ngModel)]="propertyData.commission_amount">
               </div>
 

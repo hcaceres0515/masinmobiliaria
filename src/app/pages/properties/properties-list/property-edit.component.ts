@@ -1,5 +1,5 @@
 import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
 import { Property } from '../property';
 import { PropertyService } from '../property.service';
 import { Observable } from 'rxjs';
@@ -68,7 +68,7 @@ export class PropertyEditComponent implements  OnInit {
   public zone: NgZone;
   public options: any;
 
-  constructor(private _activeRoute: ActivatedRoute, private _propertyService: PropertyService, private _http: Http, private _elementRef: ElementRef) {
+  constructor(private _activeRoute: ActivatedRoute, private _propertyService: PropertyService, private _http: Http, private _elementRef: ElementRef, private _router: Router) {
     this.userData = JSON.parse(localStorage.getItem('userData'));
   }
 
@@ -93,10 +93,16 @@ export class PropertyEditComponent implements  OnInit {
       data => this.propertyData = data,
       (error) => alert(error),
       () => {
-        this.loadedData = true;
-        this.selectedCustomer.id = this.propertyData.customer_id;
-        this.selectedCustomer.name = this.propertyData.customer_name;
-        this.selectedCustomer.email = this.propertyData.customer_email;
+
+        if (this.propertyData.user_id !== this.userData.id && this.userData.rol_name === 'agent') {
+          this._router.navigate(['/pages/properties']);
+
+        } else {
+          this.loadedData = true;
+          this.selectedCustomer.id = this.propertyData.customer_id;
+          this.selectedCustomer.name = this.propertyData.customer_name;
+          this.selectedCustomer.email = this.propertyData.customer_email;
+        }
       }
     );
 
