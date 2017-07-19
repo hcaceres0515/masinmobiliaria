@@ -31,7 +31,7 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
   propertyData: Property;
   userData: any;
   actionPermission: boolean = false;
-  loadingIcon: boolean = true;
+  loadingIcon: boolean = false;
 
   dataSendProperty = {property_id: '', customer_id: '', customer_email: '', message: ''};
 
@@ -155,6 +155,8 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
 
   onSendProperty() {
 
+    this.loadingIcon = true;
+
     let propertyId = this.dataSendProperty.property_id;
     let customerId = this.dataSendProperty.customer_id;
     let userId = this.userData.id;
@@ -164,6 +166,7 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
       error => alert(error),
       () => {
         this.dataSendProperty = {property_id: '', customer_id: '', customer_email: '', message: ''};
+        this.loadingIcon = false;
         this.hideSendPropertyModal();
       }
     );

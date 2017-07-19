@@ -103,6 +103,8 @@ export class PropertyEditComponent implements  OnInit {
           this.selectedCustomer.name = this.propertyData.customer_name;
           this.selectedCustomer.email = this.propertyData.customer_email;
         }
+
+        this.ngloadMap();
       }
     );
 
@@ -114,7 +116,7 @@ export class PropertyEditComponent implements  OnInit {
 
   }
 
-  ngAfterViewInit() {
+  ngloadMap() {
 
     let el = this._elementRef.nativeElement.querySelector('.google-maps');
 
@@ -136,7 +138,6 @@ export class PropertyEditComponent implements  OnInit {
       map.addListener('bounds_changed', function() {
         searchBox.setBounds(map.getBounds());
       });
-
 
       let marker = new google.maps.Marker({
         position: myLatlng,

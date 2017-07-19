@@ -5,6 +5,7 @@ import { PropertyAddComponent } from './properties-list/property-add.component';
 import { PropertyEditComponent } from './properties-list/property-edit.component';
 import { ValuationComponent } from './properties-list/valuation.component';
 import {PropertyVisitComponent} from "./properties-list/property-visit.component";
+import {PropertiesMapComponent} from "./properties-list/properties-map.component";
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'add_property', component: PropertyAddComponent },
       { path: 'edit_property/:property_id', component: PropertyEditComponent },
       { path: 'valuation', component: ValuationComponent },
+      { path: 'map', component: PropertiesMapComponent },
       { path: 'visits', component: PropertyVisitComponent }
     ]
   }

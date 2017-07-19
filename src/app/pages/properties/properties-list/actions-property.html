@@ -247,6 +247,11 @@
       </div>
       <div class="modal-body">
 
+        <div class="overlayDiv" *ngIf="loadingIcon">
+          <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+          <span class="sr-only">Loading...</span>
+        </div>
+
         <div class="form-group">
           <label for="property_name">Propiedad: </label>
           <input type="text" class="form-control" id="property_name" name="property_name" [(ngModel)]="property.title" disabled>

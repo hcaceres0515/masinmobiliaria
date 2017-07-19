@@ -19,6 +19,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { PropertyEditComponent } from './properties-list/property-edit.component';
 import { ValuationComponent } from './properties-list/valuation.component';
 import {PropertyVisitComponent} from "./properties-list/property-visit.component";
+import {PropertiesMapComponent} from "./properties-list/properties-map.component";
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import {PropertyVisitComponent} from "./properties-list/property-visit.component
     PropertiesListComponent,
     PropertyAddComponent,
     PropertyEditComponent,
+    PropertiesMapComponent,
     ValuationComponent,
     PropertyVisitComponent
   ],

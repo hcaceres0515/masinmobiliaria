@@ -29,6 +29,11 @@ export  class PropertyService {
       .map(res => res.json());
   }
 
+  getPropertiesByLocation(lat, lng) {
+    return this._http.get(this.PATH_SERVER + '&c=property&m=get_properties_by_location&lat=' + lat + '&lng=' + lng)
+      .map(res => res.json());
+  }
+
   getDepartments() {
     return this._http.get(this.PATH_SERVER + '&c=property&m=get_departments')
       .map(res => res.json());

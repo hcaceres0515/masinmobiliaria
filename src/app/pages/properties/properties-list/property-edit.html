@@ -1,6 +1,6 @@
 <div class="widgets">
 
-  <form class="form-horizontal" #propertyEditForm="ngForm" novalidate style="position: relative">
+  <form class="form-horizontal" #propertyEditForm="ngForm" (keydown.enter)="$event.preventDefault()" novalidate style="position: relative">
 
     <div class="overlayDiv" *ngIf="loadingIcon">
       <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
@@ -209,7 +209,7 @@
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
 
               <div class="form-group row">
                 <label for="parkings" class="col-sm-4 form-control-label">Estacionamientos:</label>
@@ -225,7 +225,7 @@
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-5">
 
               <div class="form-group row">
                 <label for="expirationAt" class="col-sm-6 form-control-label">Termino de contrato:</label>
