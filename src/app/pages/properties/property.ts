@@ -5,6 +5,7 @@ export class Property {
   constructor(
     public id: number,
     public user_id: number,
+    public office_id: number,
     public username: string,
     public customer_id: number,
     public department_id: number,

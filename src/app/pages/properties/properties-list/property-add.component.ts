@@ -62,7 +62,7 @@ export class PropertyAddComponent implements  OnInit{
     this.getPropertyType();
     this.getPropertyCoin();
 
-    this.propertyData = new Property(1, this.userData.id, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
+    this.propertyData = new Property(1, this.userData.id, this.userData.office_id, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
 
     this.options = {
       url: this.PATH_SERVER + '&c=property&m=upload_image',

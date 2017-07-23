@@ -87,7 +87,7 @@ export class PropertyEditComponent implements  OnInit {
     this.uploadResponse = {};
     this.zone = new NgZone({ enableLongStackTrace: false });
 
-    this.propertyData = new Property(1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
+    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
 
     this._propertyService.getPropertyInfoById(this.propertyId).subscribe(
       data => this.propertyData = data,
@@ -105,15 +105,13 @@ export class PropertyEditComponent implements  OnInit {
         }
 
         this.ngloadMap();
+        this.getDepartments();
+        this.getPropertyContract();
+        this.getPropertyStatus();
+        this.getPropertyType();
+        this.getPropertyCoin();
       }
     );
-
-    this.getDepartments();
-    this.getPropertyContract();
-    this.getPropertyStatus();
-    this.getPropertyType();
-    this.getPropertyCoin();
-
   }
 
   ngloadMap() {

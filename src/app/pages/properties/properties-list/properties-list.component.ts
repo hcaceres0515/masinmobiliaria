@@ -39,7 +39,7 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
   galleryImages: NgxGalleryImage[] = [];
 
   constructor(private _http: Http, private _customerService: CustomerService, private _propertyService: PropertyService, private _authService: AuthService) {
-    this.propertyData = new Property(1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
+    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
 
     this.userData = this._authService.getUserData();
   }
