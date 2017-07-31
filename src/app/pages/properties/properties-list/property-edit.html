@@ -144,7 +144,7 @@
                 <label for="bedrooms" class="col-sm-3 form-control-label">Habitaciones:</label>
                 <div class="col-sm-9">
 
-                  <input type="number" name="bedrooms" class="form-control" id="bedrooms" [(ngModel)]="propertyData.bedrooms" #bedrooms="ngModel" required>
+                  <input type="number" name="bedrooms" class="form-control" id="bedrooms" min="0" [(ngModel)]="propertyData.bedrooms" #bedrooms="ngModel" required>
 
                   <div *ngIf="!bedrooms.valid && submitted" class="alert alert-danger">
                     * Campo requerido
@@ -161,7 +161,7 @@
                 <label for="bathrooms" class="col-sm-3 form-control-label">Baños: </label>
                 <div class="col-sm-9">
 
-                  <input type="number" name="bathrooms" id="bathrooms" class="form-control" [(ngModel)]="propertyData.bathrooms" required #bathrooms="ngModel">
+                  <input type="number" name="bathrooms" id="bathrooms" class="form-control" min="0" [(ngModel)]="propertyData.bathrooms" required #bathrooms="ngModel">
 
                   <div *ngIf="!bathrooms.valid && submitted" class="alert alert-danger">
                     * Campo requerido
@@ -178,7 +178,7 @@
                 <label for="floors" class="col-sm-2 form-control-label">Pisos:</label>
                 <div class="col-sm-10">
 
-                  <input type="number" name="floors" id="floors" class="form-control" [(ngModel)]="propertyData.floors" required #floors="ngModel">
+                  <input type="number" name="floors" id="floors" class="form-control" min="0" [(ngModel)]="propertyData.floors" required #floors="ngModel">
 
                   <div *ngIf="!floors.valid && submitted" class="alert alert-danger">
                     * Campo requerido
@@ -193,12 +193,12 @@
 
           <div class="col-md-12">
 
-            <div class="col-md-4">
+            <div class="col-md-3">
 
               <div class="form-group row">
                 <label for="years" class="col-sm-4 form-control-label">Antiguedad:</label>
                 <div class="col-sm-8">
-                  <input type="number" class="form-control" name="years" id="years" placeholder="1 - 2 - 3" [(ngModel)]="propertyData.years" required #years="ngModel">
+                  <input type="number" class="form-control" name="years" id="years" placeholder="1 - 2 - 3" min="0" [(ngModel)]="propertyData.years" required #years="ngModel">
 
                   <div *ngIf="!years.valid && submitted" class="alert alert-danger">
                     * Campo requerido
@@ -209,12 +209,12 @@
 
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
 
               <div class="form-group row">
                 <label for="parkings" class="col-sm-4 form-control-label">Estacionamientos:</label>
                 <div class="col-sm-6">
-                  <input type="number" class="form-control" name="years" id="parkings" placeholder="1 - 2 - 3" [(ngModel)]="propertyData.parkins" required #parkings="ngModel">
+                  <input type="number" class="form-control" name="years" id="parkings" placeholder="1 - 2 - 3" min="0" [(ngModel)]="propertyData.parkins" required #parkings="ngModel">
 
                   <div *ngIf="!parkings.valid && submitted" class="alert alert-danger">
                     * Campo requerido
@@ -364,6 +364,51 @@
             </div>
           </div>
 
+          <div class="col-md-12">
+            <hr>
+            <h4>Configurar notificaciones</h4>
+
+            <div class="col-md-4">
+
+              <div class="col-md-3">
+                <label class="radio-inline custom-radio nowrap">
+                  <input type="radio" name="notifications" id="ntfTrue" [value]="1" [(ngModel)]="propertyData.report_visits" (ngModelChange)="handleChangeNotifications($event)">
+                  <span>Si</span>
+                </label>
+              </div>
+              <div class="col-md-6">
+                <label class="radio-inline custom-radio nowrap">
+                  <input type="radio" name="notifications" id="ntfFalse" [value]="0" [(ngModel)]="propertyData.report_visits" (ngModelChange)="handleChangeNotifications($event)">
+                  <span>No</span>
+                </label>
+              </div>
+
+            </div>
+
+            <div class="col-md-8" *ngIf="notificationsConfig">
+              <div class="form-group row">
+                <label class="col-sm-3 form-control-label" for="timePeriod">Periodo de días:</label>
+                <div class="col-sm-4">
+                  <select class="form-control" name="timePeriod" id="timePeriod" [(ngModel)]="propertyData.report_days" required #timePeriod="ngModel" (ngModelChange)="updateNotificationDate($event)">
+                    <option value="7">7 - cada semana</option>
+                    <option value="15">15 - cada 2 semanas</option>
+                    <option value="22">22  - cada 3 semanas</option>
+                    <option value="30">30  - cada mes</option>
+                    <option value="45">45  - cada mes y medio</option>
+                    <option value="60">60  - cada 2 meses </option>
+                  </select>
+                  <div *ngIf="!timePeriod.valid && submitted" class="alert alert-danger">
+                    * Campo requerido
+                  </div>
+
+                </div>
+
+                <label class="col-sm-4 form-control-label" for="timePeriod">Próxima notificación: {{propertyData.report_date}}</label>
+
+              </div>
+            </div>
+
+          </div>
 
         </fieldset>
 
@@ -405,7 +450,7 @@
 
               <img src="{{item.src}}" class="img-thumbnail" alt="" width="300" height="250">
 
-              <button class="btn btn-danger btn-sm del_photo" (click)="deletePropertyImage(item.id)">Eliminar</button>
+              <button class="btn btn-danger btn-xs del_photo" (click)="deletePropertyImage(item.id)">Eliminar</button>
 
             </div>
           </div>
@@ -418,7 +463,7 @@
     <br><br>
     <div class="row">
 
-      <div class="alert alert-success" role="alert" *ngIf="edited">Datos guarddos! La propiedad ha sido actualizada.</div>
+      <div class="alert alert-success" role="alert" *ngIf="edited">Datos guardados! La propiedad ha sido actualizada.</div>
 
       <div class="col-md-12">
         <div class="form-group">

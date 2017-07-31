@@ -12,11 +12,11 @@ import * as GoogleMapsLoader from 'google-maps';
   templateUrl: 'property-edit.html',
   styles: [`
     #images {
-      display: inline-block;
-      float: left;
+      display: inline-block;      
       width: 300px;
       height: auto;
       position: relative;
+      max-height: 400px;
     }
 
     .del_photo {
@@ -61,6 +61,7 @@ export class PropertyEditComponent implements  OnInit {
   public loadedData: boolean = false;
   public submitted: boolean = false;
   public edited: boolean = false;
+  public notificationsConfig: boolean = false;
 
   public uploadFile: any;
   public uploadProgress: number;
@@ -87,7 +88,7 @@ export class PropertyEditComponent implements  OnInit {
     this.uploadResponse = {};
     this.zone = new NgZone({ enableLongStackTrace: false });
 
-    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
+    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
 
     this._propertyService.getPropertyInfoById(this.propertyId).subscribe(
       data => this.propertyData = data,
@@ -98,18 +99,22 @@ export class PropertyEditComponent implements  OnInit {
           this._router.navigate(['/pages/properties']);
 
         } else {
+
           this.loadedData = true;
           this.selectedCustomer.id = this.propertyData.customer_id;
           this.selectedCustomer.name = this.propertyData.customer_name;
           this.selectedCustomer.email = this.propertyData.customer_email;
+          this.propertyData.report_visits = Number(this.propertyData.report_visits);
+          this.propertyData.report_date = (!this.propertyData.report_visits) ? this.calculateNewDate('0') : this.propertyData.report_date;
+          this.notificationsConfig = (this.propertyData.report_visits) ? true : false;
+          this.ngloadMap();
+          this.getDepartments();
+          this.getPropertyContract();
+          this.getPropertyStatus();
+          this.getPropertyType();
+          this.getPropertyCoin();
+          console.log(this.propertyData);
         }
-
-        this.ngloadMap();
-        this.getDepartments();
-        this.getPropertyContract();
-        this.getPropertyStatus();
-        this.getPropertyType();
-        this.getPropertyCoin();
       }
     );
   }
@@ -130,7 +135,7 @@ export class PropertyEditComponent implements  OnInit {
       let latitude;
       let longitude;
 
-      let infoWindow = new google.maps.InfoWindow({map: map});
+      // let infoWindow = new google.maps.InfoWindow({map: map});
 
       // Bias the SearchBox results towards current map's viewport.
       map.addListener('bounds_changed', function() {
@@ -245,6 +250,46 @@ export class PropertyEditComponent implements  OnInit {
       this.uploadResponse = resp;
       this.propertyData.images.push(resp);
     }
+  }
+
+  handleChangeNotifications(value) {
+
+    // this.propertyData.report_date = this.calculateNewDate('0');
+    if (value) {
+      this.notificationsConfig = true;
+    } else {
+      // this.propertyData.report_days = '0';
+      this.notificationsConfig = false;
+    }
+  }
+
+  updateNotificationDate(days) {
+    let formatDate = this.calculateNewDate(days);
+    this.propertyData.report_date = formatDate;
+  }
+
+  calculateNewDate(days: string) {
+
+    let newdays = Number(days);
+    // let date = new Date(stringDate);
+    let date = new Date();
+    let newDate = new Date(date.setDate(date.getDate() + newdays));
+    let formatted = this.formatDate(newDate);
+
+    return formatted;
+  }
+
+  formatDate(date) {
+
+    let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 
   getDepartments() {

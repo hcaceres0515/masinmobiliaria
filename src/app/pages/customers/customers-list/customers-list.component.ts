@@ -185,6 +185,7 @@ export class CustomersListComponent implements OnInit {
     this.newCustomerData = new Customer(1, this.userData.id, this.userData.office_id, '', '', '', '', '', '', new CustomerType(1, ''));
 
     this.customerTypes = this._customerService.getCustomerTypes();
+    this.newCustomerData.customerType = this.customerTypes[0];
 
     if (this.userData.rol_name === 'admin') {
       this.showPermissionFlag = true;

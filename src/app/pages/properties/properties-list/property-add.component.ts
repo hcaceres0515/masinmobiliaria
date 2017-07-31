@@ -43,6 +43,7 @@ export class PropertyAddComponent implements  OnInit{
   uploadImageFlag: boolean = false;
   addFormFlag: boolean = true;
   selectedLocationFlag: boolean = false;
+  notificationsConfig: boolean = false;
 
   uploadFiles: any[];
   uploadProgresses: any[] = [];
@@ -62,14 +63,15 @@ export class PropertyAddComponent implements  OnInit{
     this.getPropertyType();
     this.getPropertyCoin();
 
-    this.propertyData = new Property(1, this.userData.id, this.userData.office_id, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
+    this.propertyData = new Property(1, this.userData.id, this.userData.office_id, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, 0, null, null, []);
+    this.propertyData.report_date = this.calculateNewDate('0'); // set date now
 
     this.options = {
       url: this.PATH_SERVER + '&c=property&m=upload_image',
       params: { 'property_id': this.propertyData.id }
     };
 
-    console.log('Init PropertyAddComponent', this.propertyData);
+    // console.log('Init PropertyAddComponent', this.propertyData);
   }
 
   observableSource = (keyword: any): Observable<any[]> => {
@@ -241,7 +243,6 @@ export class PropertyAddComponent implements  OnInit{
 
   addProperty(addForm) {
 
-
     this.propertyData.property_type_id = this.selectedPropertyType.id;
     this.propertyData.property_status_id = this.selectedPropertyStatus.id;
     this.propertyData.property_contract_id = this.selectedPropertyContract.id;
@@ -259,6 +260,7 @@ export class PropertyAddComponent implements  OnInit{
 
     if (addForm.valid && this.selectedLocationFlag) {
 
+      this.propertyData.report_date = this.calculateNewDate(this.propertyData.report_days);
       this.loadingIcon = true;
 
       this._propertyService.addProperty(this.propertyData).subscribe(
@@ -284,6 +286,46 @@ export class PropertyAddComponent implements  OnInit{
     } else {
       this.propertyData.commission_amount = '';
     }
+  }
+
+  handleChangeNotifications(value) {
+
+    this.propertyData.report_date = this.calculateNewDate('0');
+    if (value) {
+      this.notificationsConfig = true;
+    } else {
+      this.propertyData.report_days = null;
+      this.notificationsConfig = false;
+    }
+  }
+
+  updateNotificationDate(days) {
+    let formatDate = this.calculateNewDate(days);
+    this.propertyData.report_date = formatDate;
+  }
+
+  calculateNewDate(days: string) {
+
+    let newdays = Number(days);
+    // let date = new Date(stringDate);
+    let date = new Date();
+    let newDate = new Date(date.setDate(date.getDate() + newdays));
+    let formatted = this.formatDate(newDate);
+
+    return formatted;
+  }
+
+  formatDate(date) {
+
+    let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 
   handleUpload(data): void {

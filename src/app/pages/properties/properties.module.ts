@@ -18,8 +18,12 @@ import { MyCommonModule } from '../../mycommon.module';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { PropertyEditComponent } from './properties-list/property-edit.component';
 import { ValuationComponent } from './properties-list/valuation.component';
-import {PropertyVisitComponent} from "./properties-list/property-visit.component";
+import {
+  ActionsPropertyVisitTableComponent, PropertyVisitComponent,
+  PropertyVisitDeleteComponent, PropertyVisitEditComponent, PropertyVisitViewComponent
+} from "./properties-list/property-visit.component";
 import {PropertiesMapComponent} from "./properties-list/properties-map.component";
+import {PropertyViewComponent} from "./properties-list/property-view.component";
 
 @NgModule({
   imports: [
@@ -36,17 +40,23 @@ import {PropertiesMapComponent} from "./properties-list/properties-map.component
     routing
   ],
   entryComponents: [
-    ActionsPropertyTableComponent
+    ActionsPropertyTableComponent,
+    ActionsPropertyVisitTableComponent
   ],
   declarations: [
     ActionsPropertyTableComponent,
+    ActionsPropertyVisitTableComponent,
+    PropertyVisitEditComponent,
     PropertiesComponent,
     PropertiesListComponent,
     PropertyAddComponent,
     PropertyEditComponent,
     PropertiesMapComponent,
     ValuationComponent,
-    PropertyVisitComponent
+    PropertyVisitComponent,
+    PropertyViewComponent,
+    PropertyVisitDeleteComponent,
+    PropertyVisitViewComponent
   ],
   providers: [
     PropertyService,

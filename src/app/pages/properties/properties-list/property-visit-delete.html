@@ -1,0 +1,22 @@
+<!-- Delete Poperty modal -->
+<div bsModal #deletePropertyVisitModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hidePropertyVisitDeleteModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Eliminar visita de la propiedad</h4>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro que desea eliminar la visita a la propiedad {{propertyVisit.title}}?
+      </div>
+      <div class="modal-footer">
+
+        <button class="btn btn-success" (click)="onDeletePropertyVisit(propertyVisit.id)">Aceptar</button>
+        <button class="btn btn-danger confirm-btn" (click)="hidePropertyVisitDeleteModal()">Cancelar</button>
+
+      </div>
+    </div>
+  </div>
+</div>

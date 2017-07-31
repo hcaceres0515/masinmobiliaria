@@ -41,6 +41,9 @@ export class Property {
     public lng: string,
     public createdAt: string,
     public expirationAt: string,
+    public report_visits: number,
+    public report_days: string,
+    public report_date: string,
     public images: PropertyImage[]
   ){}
 

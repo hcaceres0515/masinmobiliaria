@@ -59,7 +59,7 @@ div.blurCalendar {
   text-align: right; }
 
 .fc-unthemed th, .fc-unthemed td, .fc-unthemed hr, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
-  border-color: rgba(255, 255, 255, 0.3); }
+  border-color: rgba(204, 204, 204, 0.3); }
 .fc-unthemed .fc-popover {
   background-color: black;
   border: 1px solid; }

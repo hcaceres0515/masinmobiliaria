@@ -1,13 +1,48 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { CONFIG_ENV } from '../../app.config';
+import {Subject} from "rxjs";
 
 @Injectable()
 export  class PropertyService {
 
   PATH_SERVER = CONFIG_ENV._SERVER;
 
+  // Observable string sources
+  public componentMethodCallSource = new Subject<any>();
+  public componentMethodCallSourcePropertyVisit = new Subject<any>();
+  public componentMethodCallSourceProperty = new Subject<any>();
+  public methodCallSourcePropertyVisitEdit = new Subject<any>();
+
+  // Observable string streams
+  componentMethodCalled$ = this.componentMethodCallSource.asObservable();
+  componentMethodCallPropertyVisit$ = this.componentMethodCallSourcePropertyVisit.asObservable();
+  componentMethodCallProperty$ = this.componentMethodCallSourceProperty.asObservable();
+  methodCallPropertyVisitEdit$ = this.methodCallSourcePropertyVisitEdit.asObservable();
+
   constructor(private _http: Http) {}
+
+  // Service message commands
+  callShowViewModalService(propertyId) {
+    this.componentMethodCallSource.next(propertyId);
+  }
+
+  // Service message commands
+  callShowDeleteModalPropertyVisit(visitId) {
+    this.componentMethodCallSource.next(visitId);
+  }
+
+  callShowEditPropertyVisit(visitId) {
+    this.methodCallSourcePropertyVisitEdit.next(visitId);
+  }
+
+  callReloadListPropertyVisit(){
+    this.componentMethodCallSourcePropertyVisit.next();
+  }
+
+  callReloadListProperty(){
+    this.componentMethodCallSourceProperty.next();
+  }
 
   getPropertiesByUser(userId) {
     return this._http.get(this.PATH_SERVER + '&c=property&m=get_properties_by_user&user_id=' + userId)
@@ -65,8 +100,8 @@ export  class PropertyService {
     return this._http.get(this.PATH_SERVER + '&c=property&m=get_property_coin').map(res => res.json());
   }
 
-  getPropertyVisits(propertyId, dateFrom, dateTo) {
-    return this._http.get(this.PATH_SERVER + '&c=property&m=get_property_visits&propertyId' + propertyId + '&dateFrom=' + dateFrom + '&dateTo=' + dateTo).map(res => res.json());
+  getPropertyVisits(userId, propertyId, dateFrom, dateTo) {
+    return this._http.get(this.PATH_SERVER + '&c=property&m=get_property_visits&userId=' + userId + '&propertyId=' + propertyId + '&dateFrom=' + dateFrom + '&dateTo=' + dateTo).map(res => res.json());
   }
 
   addProperty(property) {
@@ -85,10 +120,10 @@ export  class PropertyService {
       .map(res => res.json());
   }
 
-  deleteProperty(property) {
+  deleteProperty(propertyId) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers, method: 'post' });
-    let propertyData = JSON.stringify(property);
+    let propertyData = JSON.stringify({property_id: propertyId});
     return this._http.post(this.PATH_SERVER + '&c=property&m=delete_property', propertyData, options)
       .map(res => res.json());
   }
@@ -106,4 +141,34 @@ export  class PropertyService {
       .map(res => res.json());
   }
 
+  addPropertyVisit(visit) {
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
+    let options = new RequestOptions({ headers: headers, method: 'post' });
+    let propertyData = JSON.stringify(visit);
+    return this._http.post(this.PATH_SERVER + '&c=property&m=add_property_visit', propertyData, options)
+      .map(res => res.json());
+  }
+
+  getPropertyVisit(propertyVisit) {
+    return this._http.get(this.PATH_SERVER + '&c=property&m=get_property_visit&visit_id=' + propertyVisit)
+      .map(res => res.json());
+  }
+
+  editPropertyVisit(propertyVisit) {
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
+    let options = new RequestOptions({ headers: headers, method: 'post' });
+    let propertyVisitData = JSON.stringify(propertyVisit);
+    console.log(propertyVisitData);
+    return this._http.post(this.PATH_SERVER + '&c=property&m=edit_property_visit', propertyVisitData, options)
+      .map(res => res.json());
+  }
+
+  deletePropertyVisit(propertyVisitId) {
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
+    let options = new RequestOptions({ headers: headers, method: 'post' });
+    let propertyVisitData = JSON.stringify({property_visit_id: propertyVisitId});
+    console.log(propertyVisitData);
+    return this._http.post(this.PATH_SERVER + '&c=property&m=delete_property_visit', propertyVisitData, options)
+      .map(res => res.json());
+  }
 };

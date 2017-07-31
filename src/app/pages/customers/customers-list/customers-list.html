@@ -117,8 +117,8 @@
 
           <div class="form-group">
             <label for="customer_type">Tipo de usuario</label>
-            <select id="customer_type" class="form-control">
-              <option *ngFor="let item of customerTypes" [ngValue]="item.id">{{item.name}}</option>
+            <select id="customer_type" class="form-control" name="customer_type" [(ngModel)]="newCustomerData.customerType">
+              <option *ngFor="let item of customerTypes" [ngValue]="item">{{item.name}}</option>
             </select>
           </div>
 

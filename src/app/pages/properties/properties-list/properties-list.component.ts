@@ -33,13 +33,12 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
   actionPermission: boolean = false;
   loadingIcon: boolean = false;
 
+  selected: any;
+
   dataSendProperty = {property_id: '', customer_id: '', customer_email: '', message: ''};
 
-  galleryOptions: NgxGalleryOptions[] = [];
-  galleryImages: NgxGalleryImage[] = [];
-
   constructor(private _http: Http, private _customerService: CustomerService, private _propertyService: PropertyService, private _authService: AuthService) {
-    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, []);
+    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
 
     this.userData = this._authService.getUserData();
   }
@@ -51,63 +50,10 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
       this.actionPermission = true;
     }
 
-    this.galleryOptions = [
-      {
-        width: '850px',
-        height: '500px',
-        thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Slide
-      },
-      // max-width 800
-      {
-        breakpoint: 800,
-        width: '100%',
-        height: '600px',
-        imagePercent: 80,
-        thumbnailsPercent: 20,
-        thumbnailsMargin: 20,
-        thumbnailMargin: 20
-      },
-      // max-width 400
-      {
-        breakpoint: 400,
-        preview: false
-      }
-    ];
-
   }
 
   showViewModal(propertyId): void {
-    this.viewPropertyModal.show();
-
-    console.log(propertyId);
-    this._propertyService.getPropertyInfoById(propertyId).subscribe(
-      data => this.propertyData = data,
-      error => alert(error),
-      () => {
-        console.log(this.propertyData);
-        this.setFormatImages(this.propertyData);
-      }
-    );
-  }
-
-  setFormatImages(property) {
-
-    let images: any = [];
-    let image: any = {};
-
-    this.galleryImages = [];
-
-    (this.propertyData.images).forEach((item) => {
-      image = {
-        small: item.src,
-        medium: item.src,
-        big: item.src
-      };
-      this.galleryImages.push(image);
-    });
-
-    console.log(this.galleryImages);
+    this._propertyService.callShowViewModalService(propertyId);
   }
 
   hideViewModal(): void {
@@ -116,6 +62,7 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
 
   showSendPropertyModal(): void {
     this.dataSendProperty.property_id = this.property.id;
+    this.selected = '';
     this.sendPropertyModal.show();
   }
 
@@ -168,6 +115,16 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
         this.dataSendProperty = {property_id: '', customer_id: '', customer_email: '', message: ''};
         this.loadingIcon = false;
         this.hideSendPropertyModal();
+      }
+    );
+  }
+
+  onDeleteProperty(propertyId) {
+    this._propertyService.deleteProperty(propertyId).subscribe(
+      (error) => alert(error),
+      () => {
+        this._propertyService.callReloadListProperty();
+        this.hidePropertyDeleteModal();
       }
     );
   }
@@ -288,13 +245,18 @@ export class PropertiesListComponent implements  OnInit {
   minimumPrice: number;
   maximumPrice: number;
 
-  constructor(private _propertyService: PropertyService, private _userService: UserService, private _http: Http) {}
+  constructor(private _propertyService: PropertyService, private _userService: UserService, private _http: Http) {
+
+    this._propertyService.componentMethodCallProperty$.subscribe(
+      () => {
+        this.getPropertiesByUser();
+      }
+    );
+  }
 
   ngOnInit() {
 
     this.userData = JSON.parse(localStorage.getItem('userData'));
-
-    console.log('Init property component');
 
     this.getPropertiesByUser();
     this.getAllUsers();
@@ -306,6 +268,7 @@ export class PropertiesListComponent implements  OnInit {
   }
 
   getPropertiesByUser() {
+
     this._propertyService.getPropertiesByUser(this.userData.id).subscribe(
       data => this.properties = (data),
       error => alert(error),
