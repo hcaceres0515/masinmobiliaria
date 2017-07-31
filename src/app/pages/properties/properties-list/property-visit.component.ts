@@ -322,7 +322,7 @@ export class PropertyVisitComponent implements  OnInit{
             setTimeout(function() {
               this.invalidProperty = false;
             }.bind(this), 3000);
-
+            this.loadingIcon = false;
             this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
           } else {
             this.propertyVisit.property_id = this.propertyData.id;

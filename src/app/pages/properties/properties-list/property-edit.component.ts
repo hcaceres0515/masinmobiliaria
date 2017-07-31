@@ -239,6 +239,12 @@ export class PropertyEditComponent implements  OnInit {
     }
   }
 
+  onCustomerSelected(customer) {
+    this.selectedCustomer = customer;
+    this.propertyData.customer_id = customer.id;
+  }
+
+
   handleUpload(data): void {
     this.uploadFile = data;
     this.zone.run(() => {
