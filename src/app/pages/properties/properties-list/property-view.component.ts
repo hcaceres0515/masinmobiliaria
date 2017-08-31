@@ -4,6 +4,7 @@ import { ModalDirective } from 'ng2-bootstrap';
 import { PropertyService } from '../property.service';
 import { Property } from '../property';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-gallery';
+import {CONFIG_ENV} from "../../../app.config";
 
 @Component({
   selector: 'property-view',
@@ -14,7 +15,10 @@ export class PropertyViewComponent {
 
   @ViewChild('viewPropertyModal') viewPropertyModal: ModalDirective;
 
+  PATH_SERVER = CONFIG_ENV._SERVER;
   propertyData: Property;
+
+  public userData: any;
 
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
@@ -22,6 +26,7 @@ export class PropertyViewComponent {
   constructor(private _propertyService: PropertyService){
 
     this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
+    this.userData = JSON.parse(localStorage.getItem('userData'));
     let propertyId;
     this._propertyService.componentMethodCalled$.subscribe(
       data => {
@@ -86,5 +91,16 @@ export class PropertyViewComponent {
       };
       this.galleryImages.push(image);
     });
+  }
+
+  downloadImages(propertyId) {
+
+    window.open(this.PATH_SERVER  + '&c=property&m=download_property_images&property_id=' + propertyId);
+
+  }
+
+  downloadPdf(propertyId) {
+
+    window.open(this.PATH_SERVER  + '&c=property&m=download_property_pdf&property_id=' + propertyId + '&user_id=' + this.userData.id);
   }
 }

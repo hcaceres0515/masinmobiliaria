@@ -1,12 +1,12 @@
 <!-- View modal -->
-<div bsModal #viewPropertyModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+<div bsModal #viewPropertyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close pull-right" aria-label="Close" (click)="hideViewModal()">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Ver Propiedad</h4>
+        <h4 class="modal-title">Ver Propiedad - Codigo {{propertyData.id}}</h4>
       </div>
       <div class="modal-body">
 
@@ -14,6 +14,13 @@
           <tab heading="Informacion basica">
 
             <form #customerEditForm="ngForm" novalidate>
+
+              <div class="form-group" style="text-align: right">
+                <button type="button" class="btn btn-primary btn-sm" (click)="downloadPdf(propertyData.id)"> <i class="ion-clipboard"></i> Descargar PDF</button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="downloadImages(propertyData.id)" [disabled]="propertyData.images.length === 0">
+                  <i class="ion-clipboard"></i> Descargar Imágenes
+                </button>
+              </div>
 
               <div class="form-group">
                 <label for="username">Agente: </label>
@@ -91,6 +98,12 @@
               <div class="form-group">
                 <label for="title">Nombre: </label>
                 <input type="text" class="form-control"  id="title" name="title" [(ngModel)]="propertyData.title" disabled>
+              </div>
+
+              <div class="form-group">
+                <label for="title">Descripción: </label>
+                <div [innerHTML]="propertyData.description"></div>
+                <!--<textarea class="form-control"  id="description" name="description" [(ngModel)]="propertyData.description" disabled></textarea>-->
               </div>
 
               <div class="col-md-4">
@@ -204,6 +217,7 @@
             <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
 
           </tab>
+
 
         </tabset>
 

@@ -1,6 +1,7 @@
 import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
 import * as GoogleMapsLoader from 'google-maps';
 import {PropertyService} from '../property.service';
+import {CONFIG_ENV} from "../../../app.config";
 
 @Component({
   selector: 'properties-map',
@@ -11,6 +12,8 @@ export class PropertiesMapComponent implements  OnInit{
 
   public mymap;
   public mymarkers: any = [];
+
+  PATH_SERVER = CONFIG_ENV._SERVER;
 
   constructor(private _elementRef: ElementRef, private _propertyService: PropertyService, public _ngZone: NgZone) {
 
@@ -115,7 +118,7 @@ export class PropertiesMapComponent implements  OnInit{
 
       function addMarker(feature) {
 
-        let icon = 'http://www.villas-vacations.com/htpics/gmapicons/v2yel.png';
+        let icon = 'https://www.masinmobiliaria.pe/resources/tools/marker_map.png';
         let position = new google.maps.LatLng(parseFloat(feature.lat), parseFloat(feature.lng));
         let marker = new google.maps.Marker({
           position: position,

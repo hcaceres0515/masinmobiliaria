@@ -81,14 +81,14 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
 
   observableSource = (keyword: any): Observable<any[]> => {
     let url: string =
-      this.PATH_SERVER + '&c=customer&m=get_customer_by_keyword&user_id=' + this.userData.id + '&keyword=' + keyword
+      this.PATH_SERVER + '&c=customer&m=get_customer_by_keyword&user_id=' + this.userData.id + '&keyword=' + keyword;
     if (keyword) {
       let json;
       return this._http.get(url)
         .map(res => {
           let json = res.json();
           return json;
-        })
+        });
     } else {
       return Observable.of([]);
     }
@@ -245,6 +245,11 @@ export class PropertiesListComponent implements  OnInit {
   minimumPrice: number;
   maximumPrice: number;
 
+  totalProperties: number;
+  propertyId: any; //For search input
+  invalidProperty: boolean = false;
+  invalidPropertyMessage: string = '';
+
   constructor(private _propertyService: PropertyService, private _userService: UserService, private _http: Http) {
 
     this._propertyService.componentMethodCallProperty$.subscribe(
@@ -276,6 +281,7 @@ export class PropertiesListComponent implements  OnInit {
         // console.log(this.properties);
         let propertiesfilter = this.properties.filter( property => property.user_id === '2');
         // console.log(propertiesfilter);
+        this.totalProperties = this.properties.length;
         this.properties = this.sourceLoadTable(this.properties);
         this.source.load(this.properties);
         this.loadingIcon = false;
@@ -368,6 +374,7 @@ export class PropertiesListComponent implements  OnInit {
       (data) => this.properties = data,
       (error) => alert(error),
       () => {
+        this.totalProperties = this.properties.length;
         this.source.load(this.sourceLoadTable(this.properties));
       }
     );
@@ -379,6 +386,7 @@ export class PropertiesListComponent implements  OnInit {
         data => this.properties = (data),
         error => alert(error),
         () => {
+          this.totalProperties = this.properties.length;
           this.source.load(this.sourceLoadTable(this.properties));
         }
       );
@@ -387,6 +395,7 @@ export class PropertiesListComponent implements  OnInit {
         data => this.properties = (data),
         error => alert(error),
         () => {
+          this.totalProperties = this.properties.length;
           this.source.load(this.sourceLoadTable(this.properties));
         }
       );
@@ -410,6 +419,7 @@ export class PropertiesListComponent implements  OnInit {
     this.loadingIcon = false;
     this.maximumPrice = null;
     this.minimumPrice = null;
+    this.propertyId = '';
   }
 
 
@@ -564,5 +574,41 @@ export class PropertiesListComponent implements  OnInit {
     }
 
     this.source.load(propertiesFilter);
+  }
+
+  onlyNumberKey(event) {
+
+    return (event.charCode === 8 || event.charCode === 0) ? null : event.charCode >= 48 && event.charCode <= 57;
+  }
+
+  searchProperty() {
+    // console.log(this.propertyId);
+
+    let propertyData: any = [];
+
+    if (this.propertyId != null) {
+      this.loadingIcon = true;
+
+      this._propertyService.getPropertyInfoById(this.propertyId).subscribe(
+        data => {
+                  propertyData.push(data);
+                },
+        (error) => {
+          this.invalidProperty = true;
+          this.invalidPropertyMessage = 'El código de la propiedad no existe';
+          this.loadingIcon = false;
+          setTimeout(function() {
+            this.invalidProperty = false;
+          }.bind(this), 3000);
+        },
+        () => {
+          this.totalProperties = propertyData.length;
+          this.properties = this.sourceLoadTable(propertyData);
+          this.source.load(propertyData);
+          this.loadingIcon = false;
+          console.log(propertyData);
+        }
+      );
+    }
   }
 }

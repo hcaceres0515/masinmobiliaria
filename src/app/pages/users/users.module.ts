@@ -13,6 +13,7 @@ import { UsersComponent } from'./users.component';
 import { ActionsUsersTableComponent, UsersListComponent } from './users-list/users-list.component';
 import { UserService } from './user.service';
 import { MyCommonModule } from '../../mycommon.module';
+import {PropertyService} from "../properties/property.service";
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { MyCommonModule } from '../../mycommon.module';
     // UPLOAD_DIRECTIVES
   ],
   providers: [
-    UserService
+    UserService,
+    PropertyService
   ]
 
 })

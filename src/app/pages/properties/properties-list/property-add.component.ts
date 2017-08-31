@@ -6,6 +6,10 @@ import { Property } from '../property';
 import { CONFIG_ENV } from '../../../app.config';
 import * as GoogleMapsLoader from 'google-maps';
 
+import '../../editors/components/ckeditor/ckeditor.loader';
+import 'ckeditor';
+import 'style-loader!../../editors/components/ckeditor/ckeditor.scss';
+
 @Component({
   selector: 'property-add',
   templateUrl: 'property-add.html',
@@ -50,6 +54,12 @@ export class PropertyAddComponent implements  OnInit{
   zone: NgZone;
 
   options: any;
+
+  // public ckeditorContent: string = '';
+  public config = {
+    uiColor: '#F0F3F4',
+    height: '600',
+  };
 
   constructor(private _propertyService: PropertyService, private _http: Http, private _elementRef: ElementRef) {
     this.zone = new NgZone({ enableLongStackTrace: false });
@@ -420,6 +430,22 @@ export class PropertyAddComponent implements  OnInit{
         this.selectedDistrict = this.districts[0];
       }
     );
+  }
+
+  onChangePropertyType(type) {
+
+    if (type.slug === 'terreno') {
+      this.propertyData.bedrooms = '0';
+      this.propertyData.bathrooms = '0';
+      this.propertyData.floors = '0';
+      this.propertyData.parkings = '0';
+
+    } else {
+      this.propertyData.bedrooms = '';
+      this.propertyData.bathrooms = '';
+      this.propertyData.floors = '';
+      this.propertyData.parkings = '';
+    }
   }
 
 };

@@ -37,9 +37,22 @@
             <div class="form-group">
               <label class="col-sm-3 form-control-label">Busqueda</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" placeholder="Buscar propiedad...">
+
+                <div class="input-group">
+                  <input class="form-control with-primary-addon" name='property_id' placeholder="Codigo de la propiedad ..." type="text" [(ngModel)]="propertyId" (keypress)="onlyNumberKey($event)" required #property_id="ngModel">
+                  <span class="input-group-btn">
+                      <button class="btn btn-primary btn-with-icon" type="button" [disabled]="propertyId == null || propertyId == ''" (click)="searchProperty()"><i class="ion-search"></i> Buscar</button>
+                    </span>
+                </div>
+
+                <div *ngIf="invalidProperty" class="alert alert-danger">
+                  {{invalidPropertyMessage}}
+                </div>
+
               </div>
             </div>
+
+
 
           </div>
 
@@ -205,6 +218,8 @@
       </fieldset>
 
     <br><br>
+
+    <label><strong>Cantidad de propiedades:</strong> {{totalProperties}}</label>
 
     <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
 

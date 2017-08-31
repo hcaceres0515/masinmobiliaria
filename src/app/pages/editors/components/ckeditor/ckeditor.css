@@ -1,4 +1,7 @@
 .cke_source {
   color: #7d7d7d !important; }
 
+div#cke_1_contents {
+  height: 250px !important; }
+
 /*# sourceMappingURL=ckeditor.css.map */

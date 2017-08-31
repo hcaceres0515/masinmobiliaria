@@ -32,9 +32,14 @@
 
             <div class="form-group row">
 
+
+
               <label for="description" class="col-sm-2 form-control-label">Descripción: *</label>
               <div class="col-sm-10">
-                <textarea class="form-control"  name="description" id="description" cols="30" rows="3" [(ngModel)]="propertyData.description" required #description="ngModel"></textarea>
+
+                <ckeditor [(ngModel)]="propertyData.description" [config]="config" name="description" id="description" required #description="ngModel"></ckeditor>
+
+                <!--<textarea class="form-control"  name="description" id="description" cols="30" rows="3" [(ngModel)]="propertyData.description" required #description="ngModel"></textarea>-->
 
                 <div *ngIf="!description.valid && submitted" class="alert alert-danger">
                   * Descripcion es requerido
@@ -128,7 +133,7 @@
             <div class="form-group row">
               <label for="propertyType" class="col-sm-2 form-control-label">Tipo:</label>
               <div class="col-sm-10">
-                <select class="form-control" id="propertyType" name="propertyType" [(ngModel)]="selectedPropertyType">
+                <select class="form-control" id="propertyType" name="propertyType" [(ngModel)]="selectedPropertyType" (ngModelChange)="onChangePropertyType($event)">
                   <option *ngFor="let item of propertyType" [ngValue]="item">{{item.name}}</option>
                 </select>
               </div>
@@ -214,7 +219,7 @@
               <div class="form-group row">
                 <label for="parkings" class="col-sm-4 form-control-label">Estacionamientos:</label>
                 <div class="col-sm-6">
-                  <input type="number" class="form-control" name="years" id="parkings" placeholder="1 - 2 - 3" min="0" [(ngModel)]="propertyData.parkins" required #parkings="ngModel">
+                  <input type="number" class="form-control" name="parkings" id="parkings" placeholder="1 - 2 - 3" min="0" [(ngModel)]="propertyData.parkings" required #parkings="ngModel">
 
                   <div *ngIf="!parkings.valid && submitted" class="alert alert-danger">
                     * Campo requerido

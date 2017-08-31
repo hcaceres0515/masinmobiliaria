@@ -21,9 +21,10 @@ import { ValuationComponent } from './properties-list/valuation.component';
 import {
   ActionsPropertyVisitTableComponent, PropertyVisitComponent,
   PropertyVisitDeleteComponent, PropertyVisitEditComponent, PropertyVisitViewComponent
-} from "./properties-list/property-visit.component";
-import {PropertiesMapComponent} from "./properties-list/properties-map.component";
-import {PropertyViewComponent} from "./properties-list/property-view.component";
+} from './properties-list/property-visit.component';
+import { PropertiesMapComponent } from './properties-list/properties-map.component';
+import { PropertyViewComponent } from './properties-list/property-view.component';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import {PropertyViewComponent} from "./properties-list/property-view.component";
     TabsModule.forRoot(),
     MyCommonModule,
     NgxGalleryModule,
+    CKEditorModule,
     routing
   ],
   entryComponents: [

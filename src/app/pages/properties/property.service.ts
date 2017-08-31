@@ -171,4 +171,17 @@ export  class PropertyService {
     return this._http.post(this.PATH_SERVER + '&c=property&m=delete_property_visit', propertyVisitData, options)
       .map(res => res.json());
   }
+
+  downloadPropertyImages(propertyId) {
+    return this._http.get(this.PATH_SERVER + '&c=property&m=download_property_images&property_id=' + propertyId)
+      .map(res => res.json());
+  }
+
+  transferProperties(userFrom, userTo) {
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
+    let options = new RequestOptions({ headers: headers, method: 'post' });
+    let propertyTransferData = JSON.stringify({user_from_id: userFrom, user_to_id: userTo});
+    return this._http.post(this.PATH_SERVER + '&c=property&m=transfer_properties', propertyTransferData, options)
+      .map(res => res.json());
+  }
 };

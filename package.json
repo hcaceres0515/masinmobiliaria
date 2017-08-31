@@ -1,8 +1,8 @@
 {
   "name": "ng2-admin",
   "version": "0.9.0",
-  "description": "Angular 2 and Bootstrap 4 Admin Template.",
-  "author": "akveo",
+  "description": "Software - Más Inmobiliaria",
+  "author": "Harold Caceres",
   "homepage": "http://akveo.github.io/ng2-admin/",
   "license": "MIT",
   "dependencies": {

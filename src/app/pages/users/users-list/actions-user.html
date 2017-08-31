@@ -45,7 +45,7 @@
 
             <div class="form-group">
               <label for="phone1">Telefono:</label>
-              <input type="text" class="form-control" name='phone1' [(ngModel)]="userData.phone" disabled>
+              <input type="text" class="form-control" name='phone1' id='phone1' [(ngModel)]="userData.phone" disabled>
             </div>
 
             <div class="form-group">
@@ -152,7 +152,7 @@
 
 <!-- Delete modal -->
 <div bsModal #userDeleteModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
-  <div class="modal-dialog modal-sm">
+  <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
         <button class="close" aria-label="Close" (click)="hideUserDeleteModal()">
@@ -162,10 +162,43 @@
       </div>
       <div class="modal-body">
         ¿Esta seguro que desea eliminar a <strong>{{userData.name}}</strong>?
+        <hr>
+
+        <div class="container">
+          <div class="alert alert-warning">
+            <strong>Atención!</strong> Puede transferir las propiedades antes de eliminar el usuario.
+          </div>
+
+          <div class="form-group">
+
+            <label class="col-sm-3 form-control-label" name="allUusers">Transferir a:</label>
+
+            <div class="col-sm-6">
+              <select class="form-control" id="allUusers" [(ngModel)]="selectedUser">
+                <option *ngFor="let item of users" [ngValue]="item"> {{item.name}} </option>
+              </select>
+            </div>
+
+            <div class="col-sm-3">
+              <button class="btn btn-primary btn-sm" (click)="transferProperties(userData.id)"> <i class="ion-shuffle"></i> Transferir</button>
+            </div>
+
+            <div class="col-sm-12">
+              <br>
+              <div class="alert alert-success" *ngIf="showtransferMessage">
+                <strong>Exito!</strong> Las propiedades se han transferido exitosamente.
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
+
       <div class="modal-footer">
 
-        <button class="btn btn-success" (click)="onDeleteUser(userData.id)">Aceptar</button>
+        <button class="btn btn-success" (click)="onDeleteUser(userData.id)">Eliminar</button>
         <button class="btn btn-danger confirm-btn" (click)="hideUserDeleteModal()">Cancelar</button>
 
       </div>

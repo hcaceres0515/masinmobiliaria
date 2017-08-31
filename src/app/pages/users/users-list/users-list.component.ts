@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user';
 import { CONFIG_ENV } from '../../../app.config';
+import { PropertyService } from '../../properties/property.service';
 
 @Component({
   selector: 'actions-user-table',
@@ -23,12 +24,16 @@ export class ActionsUsersTableComponent implements ViewCell, OnInit {
   PATH_SERVER = CONFIG_ENV._SERVER;
 
   userData: User;
+  users: any[];
+  selectedUser: any;
+
+  public showtransferMessage: boolean = false;
 
   options: Object;
 
   loadingIcon: boolean = false; // For show loading icon
 
-  constructor(private _userService: UserService, private _router: Router) {
+  constructor(private _userService: UserService, private _propertyService: PropertyService, private _router: Router) {
 
   }
 
@@ -39,6 +44,7 @@ export class ActionsUsersTableComponent implements ViewCell, OnInit {
       url: this.PATH_SERVER + '&c=user&m=upload_image',
       params: { 'user_id': this.userData.id }
     };
+
 
   }
 
@@ -60,6 +66,7 @@ export class ActionsUsersTableComponent implements ViewCell, OnInit {
 
   showUserDeleteModal(): void {
     this.userDeleteModal.show();
+    this.getAllUsers(); //Cargar todos los agentes
   }
 
   hideUserDeleteModal(): void {
@@ -126,6 +133,34 @@ export class ActionsUsersTableComponent implements ViewCell, OnInit {
     }
   }
 
+  getAllUsers() {
+    this._userService.getAllUsers().subscribe(
+      (data) => this.users = data,
+      (error) => alert(error),
+      () => {
+        let userFilter = this.users.filter( user => user.id !== this.userData.id);
+        this.users = userFilter;
+        this.selectedUser = this.users[0];
+      }
+    );
+  }
+
+  transferProperties(userId) {
+    let userToId = this.selectedUser.id;
+    console.log(this.selectedUser);
+    console.log(userId);
+
+    this._propertyService.transferProperties(userId, userToId).subscribe(
+      error => {},
+      () => {
+        this.showtransferMessage = true;
+
+        setTimeout(function() {
+          this.showtransferMessage = false;
+        }.bind(this), 3000);
+      }
+    );
+  }
 }
 
 @Component({
