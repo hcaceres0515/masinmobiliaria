@@ -4,7 +4,7 @@ import {BaThemeConfigProvider, colorHelper} from '../../../theme';
 @Injectable()
 export class PieChartService {
 
-  constructor(private _baConfig:BaThemeConfigProvider) {
+  constructor(private _baConfig: BaThemeConfigProvider) {
   }
 
   getData() {
@@ -12,23 +12,23 @@ export class PieChartService {
     return [
       {
         color: pieColor,
-        description: 'New Visits',
-        stats: '57,820',
+        description: 'Tus Propiedades',
+        stats: '12',
         icon: 'person',
       }, {
         color: pieColor,
-        description: 'Purchases',
-        stats: '$ 89,745',
+        description: 'Tus Ventas',
+        stats: '$ 2000',
         icon: 'money',
       }, {
         color: pieColor,
-        description: 'Active Users',
-        stats: '178,391',
+        description: 'Tus clientes',
+        stats: '20',
         icon: 'face',
       }, {
         color: pieColor,
-        description: 'Returned',
-        stats: '32,592',
+        description: 'Tus visitas',
+        stats: '10',
         icon: 'refresh',
       }
     ];

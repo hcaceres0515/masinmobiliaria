@@ -7,12 +7,9 @@
       <span class="sr-only">Loading...</span>
     </div>
 
-    <div class="row">
-      <div class="col-md-12">
-
-        <fieldset>
-
-          <legend>Informacion Basica</legend>
+    <ba-card  baCardClass="feed-panel" title="Información Básica">
+      <div class="row">
+        <div class="col-md-12">
 
           <div class="col-md-12">
 
@@ -83,9 +80,9 @@
 
               </div>
 
-              <label for="commission" class="col-sm-1 form-control-label">Comision(%): *</label>
+              <label for="commission" class="col-sm-1 form-control-label">Comision: *</label>
               <div class="col-sm-1">
-                <input type="text" class="form-control" name="commission_percentage" id="commission" placeholder="4" [(ngModel)]="propertyData.commission_percentage" (ngModelChange)="updateCommisionAmmount()" required #commissionPercentage="ngModel">
+                <input type="text" class="form-control" name="commission_percentage" id="commission" placeholder="%" [(ngModel)]="propertyData.commission_percentage" (ngModelChange)="updateCommisionAmmount()" required #commissionPercentage="ngModel">
 
                 <div *ngIf="!commissionPercentage.valid && submitted" class="alert alert-danger">
                   * Campo requerido
@@ -248,15 +245,14 @@
 
           </div>
 
-        </fieldset>
-
+        </div>
       </div>
-    </div>
-    <br><br>
-    <div class="row">
-      <div class="col-md-12">
-        <fieldset>
-          <legend> Ubicacion    </legend>
+    </ba-card>
+
+    <ba-card  baCardClass="feed-panel" title="Ubicación">
+      <div class="row">
+        <div class="col-md-12">
+
 
           <div class="col-md-4">
             <div class="form-group row">
@@ -324,16 +320,17 @@
             * Seleccione una ubicacion en el mapa
           </div>
 
-        </fieldset>
+
+        </div>
       </div>
-    </div>
 
-    <br><br>
+    </ba-card>
 
-    <div class="row">
-      <div class="col-md-12">
-        <fieldset>
-          <legend> Informacion del propietario </legend>
+    <br>
+
+    <ba-card  baCardClass="feed-panel" title="Información del propietario">
+      <div class="row">
+        <div class="col-md-12">
 
           <div class="col-md-12">
             <div class="form-group row">
@@ -420,10 +417,10 @@
 
           </div>
 
-        </fieldset>
 
+        </div>
       </div>
-    </div>
+    </ba-card>
 
     <br>
     <div class="row">

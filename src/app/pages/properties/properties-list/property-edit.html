@@ -1,10 +1,41 @@
 <div class="widgets">
 
+  <confirm-modal [id]="'confirm_remove_id'" [confirmMessage]="confirmModalTitle"  (ok)="this[confirmModalAction]()"></confirm-modal>
+
   <form class="form-horizontal" #propertyEditForm="ngForm" (keydown.enter)="$event.preventDefault()" novalidate style="position: relative">
 
     <div class="overlayDiv" *ngIf="loadingIcon">
       <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
       <span class="sr-only">Loading...</span>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <ba-card  baCardClass="feed-panel" title="Acciones">
+
+          <div class="row">
+
+            <div class="form-group" style="text-align: right">
+              <button type="button" class="btn" [ngClass]="{'btn-success': propertyData.status == '1', 'btn-primary': propertyData.status == '2', 'btn-danger': propertyData.status == '3' }" [disabled]="propertyData.status != 1" (click)="confirmModal('closeProperty')"> <i class="ion-arrow-down-c"></i> {{propertyCloseStatus.name}}</button>
+
+            </div>
+
+            <div *ngIf="propertyData.status == '2' && propertyData.office_id === userData.office_id && userData.rol_id == '1'" class="form-group" style="text-align: right">
+
+              <button type="button" class="btn btn-success" (click)="confirmModal('approveCloseProperty')"> <i class="ion-checkmark"></i> Confirmar Cierre</button>
+
+              <button type="button" class="btn btn-danger" (click)="confirmModal('deniedCloseProperty')"> <i class="ion-close-round"></i> Cancelar Cierre</button>
+
+            </div>
+
+          </div>
+
+          <div class="alert alert-success" role="alert" *ngIf="actionsShow">{{actionsMessage}}</div>
+
+        </ba-card>
+
+      </div>
     </div>
 
     <div class="row">
@@ -80,9 +111,9 @@
 
               </div>
 
-              <label for="commission" class="col-sm-1 form-control-label">Comision(%): *</label>
+              <label for="commission" class="col-sm-1 form-control-label">Comision: *</label>
               <div class="col-sm-1">
-                <input type="text" class="form-control" name="commission_percentage" id="commission" placeholder="4" [(ngModel)]="propertyData.commission_percentage" (ngModelChange)="updateCommisionAmmount()" required #commissionPercentage="ngModel">
+                <input type="text" class="form-control" name="commission_percentage" id="commission" placeholder="%" [(ngModel)]="propertyData.commission_percentage" (ngModelChange)="updateCommisionAmmount()" required #commissionPercentage="ngModel">
 
                 <div *ngIf="!commissionPercentage.valid && submitted" class="alert alert-danger">
                   * Campo requerido

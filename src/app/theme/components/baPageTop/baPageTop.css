@@ -54,15 +54,15 @@
       .al-msg-center li > a:hover {
         color: #f95372; }
         .al-msg-center li > a:hover.msg {
-          color: #dab42d; }
+          color: #ed8700; }
       .al-msg-center li > a.msg span {
-        background-color: #dab42d; }
+        background-color: #ed8700; }
       .al-msg-center li > a.msg .notification-ring {
-        border-color: #dab42d; }
+        border-color: #ed8700; }
     .al-msg-center li.open > a {
       color: #f95372; }
       .al-msg-center li.open > a.msg {
-        color: #dab42d; }
+        color: #ed8700; }
 
 @media (max-width: 435px) {
   .al-msg-center {
@@ -208,7 +208,7 @@
     .top-dropdown-menu i.dropdown-arr {
       right: 75px; } }
 .page-top {
-  background-color: #282828;
+  background-color: #464646;
   position: fixed;
   z-index: 904;
   box-shadow: 2px 0 3px rgba(0, 0, 0, 0.5);
@@ -232,10 +232,10 @@ a.al-logo {
   outline: none !important;
   line-height: 60px; }
   a.al-logo span {
-    color: #dab42d; }
+    color: #ed8700; }
 
 a.al-logo:hover {
-  color: #dab42d; }
+  color: #ed8700; }
 
 .user-profile {
   float: right;

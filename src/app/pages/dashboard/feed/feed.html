@@ -1,4 +1,4 @@
-<div class="feed-messages-container">
+<!--<div class="feed-messages-container">
   <div class="feed-message" *ngFor="let message of feed" (click)="expandMessage(message)">
     <div class="message-icon" *ngIf="message.type == 'text-message'">
       <img class="photo-icon" src="{{ ( message.author | baProfilePicture ) }}">
@@ -27,6 +27,29 @@
           {{ message.ago }}
         </div>
       </div>
+    </div>
+  </div>
+</div>
+-->
+
+
+<div class="feed-messages-container">
+  <div class="feed-message" *ngFor="let message of feed" (click)="expandMessage(message)">
+    <div class="message-icon" *ngIf="message.type == 'text-message'">
+      <img class="photo-icon" src="{{ ( message.author | baProfilePicture ) }}">
+    </div>
+    <div class="message-icon" *ngIf="message.type != 'text-message'">
+      <img class="photo-icon" src="{{ ( message.author | baProfilePicture ) }}">
+      <span class="sub-photo-icon" [ngClass]="message.type"></span>
+    </div>
+    <div class="text-block text-message">
+      <div class="message-header">
+        <span class="author">{{ message.author }} {{ message.surname}}</span>
+      </div>
+      <div class="message-content line-clamp" [ngClass]="{'line-clamp-2' : !message.expanded}">
+        {{ message.text }}
+      </div>
+
     </div>
   </div>
 </div>

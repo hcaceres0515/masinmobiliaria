@@ -216,8 +216,8 @@ div.blurCalendar {
   display: block;
   font-size: .85em;
   line-height: 1.3;
-  border: 1px solid #dab42d;
-  background-color: #dab42d;
+  border: 1px solid #ed8700;
+  background-color: #ed8700;
   font-weight: 400; }
 
 .fc-event,
@@ -520,7 +520,7 @@ a.fc-more {
 
 .fc-head {
   color: black;
-  background-color: #dab42d; }
+  background-color: #ed8700; }
   .fc-head td, .fc-head th {
     border: none; }
   .fc-head div.fc-widget-header {

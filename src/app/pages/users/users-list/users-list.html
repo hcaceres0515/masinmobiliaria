@@ -1,33 +1,36 @@
 <div class="widgets">
 
-  <div class="row">
+  <ba-card  baCardClass="feed-panel">
 
-    <div class="col-md-10">
+    <div class="row">
 
-      <div class="form-group">
-        <label class="col-sm-3 form-control-label">Busqueda</label>
-        <div class="col-sm-9">
-          <input #search class="form-control" type="text" placeholder="Buscar..." (keyup)="onSearch(search.value)">
+      <div class="col-md-10">
+
+        <div class="form-group">
+          <label class="col-sm-3 form-control-label">Busqueda</label>
+          <div class="col-sm-9">
+            <input #search class="form-control" type="text" placeholder="Buscar..." (keyup)="onSearch(search.value)">
+          </div>
         </div>
+
+      </div>
+
+      <div class="col-md-2">
+
+        <button class="btn btn-success" (click)="showUserAddModal()">
+          <i class="ion-plus-round"></i>  Agregar usuario
+        </button>
       </div>
 
     </div>
 
-    <div class="col-md-2">
+    <br>
 
-      <button class="btn btn-success" (click)="showUserAddModal()">
-        <i class="ion-plus-round"></i>  Agregar usuario
-      </button>
+    <div class="row">
+      <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
     </div>
 
-  </div>
-
-  <br>
-
-  <div class="row">
-    <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
-  </div>
-
+  </ba-card>
 
 
   <!-- User Add Modal -->

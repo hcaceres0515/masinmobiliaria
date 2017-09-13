@@ -4,7 +4,7 @@ import { ModalDirective } from 'ng2-bootstrap';
 import { PropertyService } from '../property.service';
 import { Property } from '../property';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-gallery';
-import {CONFIG_ENV} from "../../../app.config";
+import { CONFIG_ENV } from '../../../app.config';
 
 @Component({
   selector: 'property-view',
@@ -25,7 +25,7 @@ export class PropertyViewComponent {
 
   constructor(private _propertyService: PropertyService){
 
-    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
+    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, null, []);
     this.userData = JSON.parse(localStorage.getItem('userData'));
     let propertyId;
     this._propertyService.componentMethodCalled$.subscribe(

@@ -225,7 +225,7 @@ export class PropertyVisitComponent implements  OnInit{
   public properties: any[] = [];
 
   constructor(private _propertyService: PropertyService, private _http: Http) {
-    this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
+    this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, null, []);
     this.userData = JSON.parse(localStorage.getItem('userData'));
     this.propertyVisit.user_id = this.userData.id;
 
@@ -257,7 +257,7 @@ export class PropertyVisitComponent implements  OnInit{
 
   hideVisitAddModal(): void {
     this.propertyId = '';
-    this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
+    this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, null, []);
     this.visitAddModal.hide();
   }
 
@@ -323,7 +323,7 @@ export class PropertyVisitComponent implements  OnInit{
               this.invalidProperty = false;
             }.bind(this), 3000);
             this.loadingIcon = false;
-            this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
+            this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, null, []);
           } else {
             this.propertyVisit.property_id = this.propertyData.id;
             this.loadingIcon = false;
@@ -384,7 +384,7 @@ export class PropertyVisitComponent implements  OnInit{
           this.hideVisitAddModal();
           this.propertyId = '';
           this.propertyVisit = {user_id: null, property_id: null, customer_id: null, comments: ''};
-          this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
+          this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, null, []);
           this.customerSelected = {id: '', name: '', email: '', first_phone: ''};
 
           this.getPropertyVisits(0, this.today, this.today);

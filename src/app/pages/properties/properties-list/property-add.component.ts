@@ -73,7 +73,7 @@ export class PropertyAddComponent implements  OnInit{
     this.getPropertyType();
     this.getPropertyCoin();
 
-    this.propertyData = new Property(1, this.userData.id, this.userData.office_id, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, 0, null, null, []);
+    this.propertyData = new Property(1, this.userData.id, this.userData.office_id, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, 0, null, null, null, []);
     this.propertyData.report_date = this.calculateNewDate('0'); // set date now
 
     this.options = {

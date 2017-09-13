@@ -1,0 +1,11 @@
+<div class="widgets">
+
+  <div class="row">
+    <ba-card title="Basic Example" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+    </ba-card>
+  </div>
+
+  <confirm-modal [id]="'confirm_remove_id'" [confirmMessage]="'Esta seguro de eliminar el cierre de propiedad'"  (ok)="deleteItem()"></confirm-modal>
+
+</div>

@@ -25,6 +25,9 @@ import {
 import { PropertiesMapComponent } from './properties-list/properties-map.component';
 import { PropertyViewComponent } from './properties-list/property-view.component';
 import { CKEditorModule } from 'ng2-ckeditor';
+import { ConfirmModalComponent } from './properties-list/confirm-modal.component';
+import { PropertyClosedComponent } from './properties-list/property-closed.component';
+
 
 @NgModule({
   imports: [
@@ -56,9 +59,11 @@ import { CKEditorModule } from 'ng2-ckeditor';
     PropertiesMapComponent,
     ValuationComponent,
     PropertyVisitComponent,
+    PropertyClosedComponent,
     PropertyViewComponent,
     PropertyVisitDeleteComponent,
-    PropertyVisitViewComponent
+    PropertyVisitViewComponent,
+    ConfirmModalComponent
   ],
   providers: [
     PropertyService,

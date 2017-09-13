@@ -1,62 +1,66 @@
 <div class="widgets">
 
-  <div class="row">
+  <ba-card  baCardClass="feed-panel">
 
-    <div class="col-md-7">
+    <div class="row">
 
-      <div class="form-group">
-        <label class="col-sm-3 form-control-label">Busqueda</label>
-        <div class="col-sm-9">
-          <input #search class="form-control" type="text" placeholder="Buscar..." (keyup)="onSearch(search.value)">
+      <div class="col-md-7">
+
+        <div class="form-group">
+          <label class="col-sm-3 form-control-label">Busqueda</label>
+          <div class="col-sm-9">
+            <input #search class="form-control" type="text" placeholder="Buscar..." (keyup)="onSearch(search.value)">
+          </div>
         </div>
+
+      </div>
+
+      <div class="col-md-3">
+
+        <div class="form-group">
+          <label class="col-sm-4 form-control-label" name="userType">Filtro</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="userType" (change)="onChangeUserFilter($event.target.value)">
+              <option value="1"> Mis clientes </option>
+              <option value="2" *ngIf="showPermissionFlag"> Todos </option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <!--
+      <div class="col-md-3">
+
+        <div class="form-group">
+          <label class="col-sm-4 form-control-label" name="userType">Tipo</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="userType" (change)="onChangeUserType($event.target.value)">
+              <option value=""> Todos </option>
+              <option value="1"> Vendedor </option>
+              <option value="2"> Comprador </option>
+            </select>
+          </div>
+        </div>
+
+      </div>-->
+
+      <div class="col-md-2">
+
+        <button class="btn btn-success" (click)="showAddModal()">
+          <i class="ion-plus-round"></i>  Agregar Cliente
+        </button>
       </div>
 
     </div>
 
-    <div class="col-md-3">
+    <br>
 
-      <div class="form-group">
-        <label class="col-sm-4 form-control-label" name="userType">Filtro</label>
-        <div class="col-sm-8">
-          <select class="form-control" id="userType" (change)="onChangeUserFilter($event.target.value)">
-            <option value="1"> Mis clientes </option>
-            <option value="2" *ngIf="showPermissionFlag"> Todos </option>
-          </select>
-        </div>
-      </div>
-
+    <div class="row">
+      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (userRowSelect)="onUserRowSelect($event)"></ng2-smart-table>
     </div>
 
-    <!--
-    <div class="col-md-3">
-
-      <div class="form-group">
-        <label class="col-sm-4 form-control-label" name="userType">Tipo</label>
-        <div class="col-sm-8">
-          <select class="form-control" id="userType" (change)="onChangeUserType($event.target.value)">
-            <option value=""> Todos </option>
-            <option value="1"> Vendedor </option>
-            <option value="2"> Comprador </option>
-          </select>
-        </div>
-      </div>
-
-    </div>-->
-
-    <div class="col-md-2">
-
-      <button class="btn btn-success" (click)="showAddModal()">
-        <i class="ion-plus-round"></i>  Agregar Cliente
-      </button>
-    </div>
-
-  </div>
-
-  <br>
-
-  <div class="row">
-    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (userRowSelect)="onUserRowSelect($event)"></ng2-smart-table>
-  </div>
+  </ba-card>
 
 </div>
 

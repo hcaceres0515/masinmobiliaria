@@ -11,14 +11,19 @@ $disabled: rgba(255, 255, 255, 0.4); // color for disabled state
 $disabled-bg: tint($disabled, 15%); // background color for disable state
 // $border: rgba(255, 255, 255, 0.5); // border color
 $border: #ccc; // border color
-$border-light: rgba(255, 255, 255, 0.3); // lighter version of border color (for hovers)
+//$border-light: rgba(255, 255, 255, 0.3); // lighter version of border color (for hovers)
+
+$border-light: silver; // lighter version of border color (for hovers)
+
 //$input-border: rgba(255, 255, 255, 0.6); // input border color
 $input-border: #ccc; // input border color
-$input-background: rgba(255, 255, 255, 0.1); // input border color for hover
+//$input-background: rgba(255, 255, 255, 0.1); // input border color for hover
+$input-background: white; // input border color for hover
 $dropdown-text: #7d7d7d; // dropdown text color
 
 // sidebar colors
-$sidebar: #282828;
+//$sidebar: #282828;
+$sidebar: #464646;
 $sidebar-text: #ffffff;
 
 // specific components colors
@@ -36,7 +41,7 @@ $bootstrap-panel-header-border: 1px solid $border-light;
 $bootstrap-panel-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
 
 // color scheme
-$primary: #dab42d !default;
+$primary: #ed8700 !default;
 $info: #40daf1 !default;
 $success: #8bd22f !default;
 $warning: #e7ba08 !default;
@@ -78,7 +83,7 @@ $hoverlink: darken($activelink, 20%);
     top: 0;
     left: 0;
     // background: url($mainBgUrl) no-repeat center center;
-    background: #ffffff;
+    background: rgba(237, 135, 0, 0.08);
     background-size: cover;
     will-change: transform;
     z-index: 0;

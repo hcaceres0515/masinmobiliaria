@@ -63,6 +63,13 @@ export class PropertyEditComponent implements  OnInit {
   public edited: boolean = false;
   public notificationsConfig: boolean = false;
 
+  public propertyCloseStatus: any = {id: null, name: ''};
+  public actionsMessage: string;
+  public actionsShow: boolean = false;
+
+  public confirmModalTitle: string = '';
+  public confirmModalAction: string;
+
   public uploadFile: any;
   public uploadProgress: number;
   public uploadResponse: Object;
@@ -88,7 +95,7 @@ export class PropertyEditComponent implements  OnInit {
     this.uploadResponse = {};
     this.zone = new NgZone({ enableLongStackTrace: false });
 
-    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
+    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, null, []);
 
     this._propertyService.getPropertyInfoById(this.propertyId).subscribe(
       data => this.propertyData = data,
@@ -113,6 +120,10 @@ export class PropertyEditComponent implements  OnInit {
           this.getPropertyStatus();
           this.getPropertyType();
           this.getPropertyCoin();
+
+          this.propertyCloseStatus = this._propertyService.propertyStatus.filter(
+            status => status.id === Number(this.propertyData.status))[0];
+
           console.log(this.propertyData);
         }
       }
@@ -135,12 +146,7 @@ export class PropertyEditComponent implements  OnInit {
       let latitude;
       let longitude;
 
-      // let infoWindow = new google.maps.InfoWindow({map: map});
-
-      // Bias the SearchBox results towards current map's viewport.
-      map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds());
-      });
+      let searchBox;
 
       let marker = new google.maps.Marker({
         position: myLatlng,
@@ -164,7 +170,7 @@ export class PropertyEditComponent implements  OnInit {
 
       // Create the search box and link it to the UI element.
       let input = document.getElementById('pac-input');
-      let searchBox = new google.maps.places.SearchBox(input);
+      searchBox = new google.maps.places.SearchBox(input);
       map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
       // Bias the SearchBox results towards current map's viewport.
@@ -266,6 +272,16 @@ export class PropertyEditComponent implements  OnInit {
     } else {
       // this.propertyData.report_days = '0';
       this.notificationsConfig = false;
+    }
+  }
+
+  updateCommisionAmmount() {
+
+    if (this.propertyData.price !== '' && this.propertyData.commission_percentage !== '') {
+
+      this.propertyData.commission_amount = (parseFloat(this.propertyData.price) * (parseFloat(this.propertyData.commission_percentage) / 100)).toString();
+    } else {
+      this.propertyData.commission_amount = '';
     }
   }
 
@@ -425,6 +441,94 @@ export class PropertyEditComponent implements  OnInit {
         }
       );
     }
+  }
+
+  closeProperty() {
+
+    this.actionsShow = true;
+    this.propertyData.status = 2;
+
+    this.propertyCloseStatus = this._propertyService.propertyStatus.filter(
+      status => status.id === Number(this.propertyData.status))[0];
+
+    this.actionsMessage = 'La propiedad ha pasado a un estado pendiente de aprobación.';
+
+    this._propertyService.changeStatusProperty(this.propertyData.id, 2, this.propertyData.office_id, this.propertyData.user_id).subscribe(
+      (error) => { console.log(error); },
+      () => {}
+    );
+
+    setTimeout(function() {
+      this.actionsShow = false;
+      this.actionsMessage = '';
+    }.bind(this), 3000);
+
+  }
+
+  approveCloseProperty() {
+
+    this.actionsShow = true;
+
+    this._propertyService.changeStatusProperty(this.propertyData.id, 3, this.propertyData.office_id, this.userData.id).subscribe(
+      (error) => { console.log(error); },
+      () => {
+
+        this.propertyData.status = 3;
+
+        this.propertyCloseStatus = this._propertyService.propertyStatus.filter(
+          status => status.id === Number(this.propertyData.status))[0];
+
+        this.actionsMessage = 'La solicitud de cierre de la propiedad ha sido aceptada.';
+        setTimeout(function() {
+          this.actionsShow = false;
+          this.actionsMessage = '';
+        }.bind(this), 3000);
+      }
+    );
+  }
+
+  deniedCloseProperty() {
+
+    this._propertyService.changeStatusProperty(this.propertyData.id, 1, this.propertyData.office_id, this.userData.id).subscribe(
+      (error) => { console.log(error); },
+      () => {
+        this.actionsMessage = 'La solicitud de cierre de la propiedad ha sido cancelada.';
+
+        this.propertyData.status = 1;
+
+        this.propertyCloseStatus = this._propertyService.propertyStatus.filter(
+          status => status.id === Number(this.propertyData.status))[0];
+
+        setTimeout(function() {
+          this.actionsShow = false;
+          this.actionsMessage = '';
+        }.bind(this), 3000);
+      }
+    );
+
+
+  }
+
+  confirmModal(modal) {
+
+    if (modal === 'closeProperty') {
+
+      this.confirmModalAction = 'closeProperty'; // Nombre de la funcion, que va hacer llamada
+      this.confirmModalTitle = 'Esta seguro de cerrar la propiedad'; // Mensaje para el modal de confirmacion
+
+    } else if (modal === 'approveCloseProperty') {
+
+      this.confirmModalAction = 'approveCloseProperty'; // Nombre de la funcion, que va hacer llamada
+      this.confirmModalTitle = 'Esta seguro de aprobar el cierre propiedad'; // Mensaje para el modal de confirmacion
+
+    } else if (modal === 'deniedCloseProperty') {
+
+      this.confirmModalAction = 'deniedCloseProperty'; // Nombre de la funcion, que va hacer llamada
+      this.confirmModalTitle = 'Esta seguro de cancelar el cierre propiedad'; // Mensaje para el modal de confirmacion
+    }
+
+
+    this._propertyService.callShowConfirmModalService();
   }
 
 }

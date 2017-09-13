@@ -5,7 +5,7 @@
   z-index: 1001;
   display: block;
   min-height: 100%;
-  background-color: #282828;
+  background-color: #464646;
   height: 100%;
   position: fixed; }
 
@@ -27,7 +27,7 @@
   float: none;
   padding: 0; }
   .al-sidebar-list-item.selected:not(.with-sub-menu) {
-    background-color: #dab42d; }
+    background-color: #ed8700; }
     .al-sidebar-list-item.selected:not(.with-sub-menu) a.al-sidebar-list-link {
       color: #ffffff; }
       .al-sidebar-list-item.selected:not(.with-sub-menu) a.al-sidebar-list-link b {
@@ -54,9 +54,9 @@ a.al-sidebar-list-link {
   overflow: hidden;
   cursor: pointer; }
   a.al-sidebar-list-link:hover {
-    color: #dab42d; }
+    color: #ed8700; }
     a.al-sidebar-list-link:hover b {
-      color: #dab42d; }
+      color: #ed8700; }
   a.al-sidebar-list-link i {
     margin-right: 18px;
     width: 16px;
@@ -105,16 +105,16 @@ a.al-sidebar-list-link {
       height: auto;
       line-height: 29px; }
       .al-sidebar-sublist > ba-menu-item > li a:hover {
-        color: #dab42d; }
+        color: #ed8700; }
     .al-sidebar-sublist > ba-menu-item > li.selected:not(.with-sub-menu) > a {
       border: none;
-      background-color: #dab42d; }
+      background-color: #ed8700; }
       .al-sidebar-sublist > ba-menu-item > li.selected:not(.with-sub-menu) > a:hover {
         color: #ffffff; }
 
 .sidebar-hover-elem {
   width: 4px;
-  background: #dab42d;
+  background: #ed8700;
   position: absolute;
   top: -150px;
   left: 176px;
@@ -204,10 +204,10 @@ a.al-sidebar-list-link {
           height: auto;
           line-height: 29px; }
           .al-sidebar .al-sidebar-sublist > ba-menu-item > li a:hover {
-            color: #dab42d; }
+            color: #ed8700; }
         .al-sidebar .al-sidebar-sublist > ba-menu-item > li.selected:not(.with-sub-menu) > a {
           border: none;
-          background-color: #dab42d; }
+          background-color: #ed8700; }
           .al-sidebar .al-sidebar-sublist > ba-menu-item > li.selected:not(.with-sub-menu) > a:hover {
             color: #ffffff; }
     .al-sidebar .sidebar-hover-elem, .al-sidebar .sidebar-select-elem {

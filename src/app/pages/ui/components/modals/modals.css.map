@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAEA,MAAO;EACL,WAAW,EAAE,KAAK;EAElB,qBAAe;IACb,KAAK,ECWO,OAAO;IDTnB,mCAAc;MACZ,MAAM,EAAE,IAAI;IAGd,mCAAc;MACZ,MAAM,EAAE,IAAI;IAGd,4BAAO;MACL,OAAO,EAAE,IAAI;;AAKnB,mBAAoB;EAClB,YAAY,EAAE,IAAI",
+"mappings": "AAEA,MAAO;EACL,WAAW,EAAE,KAAK;EAElB,qBAAe;IACb,KAAK,ECeO,OAAO;IDbnB,mCAAc;MACZ,MAAM,EAAE,IAAI;IAGd,mCAAc;MACZ,MAAM,EAAE,IAAI;IAGd,4BAAO;MACL,OAAO,EAAE,IAAI;;AAKnB,mBAAoB;EAClB,YAAY,EAAE,IAAI",
 "sources": ["modals.scss","../../../../theme/sass/conf/colorSchemes/_ng2.scss"],
 "names": [],
 "file": "modals.css"

@@ -44,6 +44,7 @@ export class Property {
     public report_visits: number,
     public report_days: string,
     public report_date: string,
+    public status: number,
     public images: PropertyImage[]
   ){}
 

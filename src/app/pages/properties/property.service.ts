@@ -13,14 +13,27 @@ export  class PropertyService {
   public componentMethodCallSourcePropertyVisit = new Subject<any>();
   public componentMethodCallSourceProperty = new Subject<any>();
   public methodCallSourcePropertyVisitEdit = new Subject<any>();
+  public methodCallSourcePropertyModalConfirm = new Subject<any>();
 
   // Observable string streams
   componentMethodCalled$ = this.componentMethodCallSource.asObservable();
   componentMethodCallPropertyVisit$ = this.componentMethodCallSourcePropertyVisit.asObservable();
   componentMethodCallProperty$ = this.componentMethodCallSourceProperty.asObservable();
   methodCallPropertyVisitEdit$ = this.methodCallSourcePropertyVisitEdit.asObservable();
+  methodCallPropertyModalConfirm$ = this.methodCallSourcePropertyModalConfirm.asObservable();
+
+  public propertyStatus = [
+    {id: 1, name: 'Cerrar Propiedad'},
+    {id: 2, name: 'Cierre Pendiente'},
+    {id: 3, name: 'Propiedad Cerrada'}
+  ];
 
   constructor(private _http: Http) {}
+
+  // Service message commands
+  callShowConfirmModalService() {
+    this.methodCallSourcePropertyModalConfirm.next();
+  }
 
   // Service message commands
   callShowViewModalService(propertyId) {
@@ -184,4 +197,14 @@ export  class PropertyService {
     return this._http.post(this.PATH_SERVER + '&c=property&m=transfer_properties', propertyTransferData, options)
       .map(res => res.json());
   }
+
+  changeStatusProperty(propertyId, statusId, officeId, userId) {
+
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
+    let options = new RequestOptions({ headers: headers, method: 'post' });
+    let propertyData = JSON.stringify({property_id: propertyId, office_id: officeId, user_id: userId, status: statusId});
+    return this._http.post(this.PATH_SERVER + '&c=property&m=change_property_status', propertyData, options)
+      .map(res => res.json());
+  }
+
 };

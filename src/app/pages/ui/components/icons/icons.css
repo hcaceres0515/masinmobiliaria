@@ -6,7 +6,7 @@
   font-size: 18px;
   cursor: pointer; }
 .icons-list.primary i:hover {
-  color: #dab42d; }
+  color: #ed8700; }
 .icons-list.success i:hover {
   color: #8bd22f; }
 .icons-list.warning i:hover {
@@ -71,6 +71,6 @@ a.see-all-icons {
   .with-round-bg.info img {
     background: #40daf1; }
   .with-round-bg.primary img {
-    background: #dab42d; }
+    background: #ed8700; }
 
 /*# sourceMappingURL=icons.css.map */

@@ -22,9 +22,9 @@
     text-decoration: none;
     outline: none;
     transition: all 0.2s ease;
-    color: #dab42d; }
+    color: #ed8700; }
     .auth-block a:hover {
-      color: #b99926; }
+      color: #c97300; }
   .auth-block .control-label {
     padding-top: 11px;
     color: #ffffff; }

@@ -10,6 +10,7 @@ import { CONFIG_ENV } from '../../../app.config';
 import { AuthService } from '../../auth-service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { UserService } from '../../users/user.service';
+import 'style-loader!../../tables/components/smartTables/smartTables.scss';
 
 @Component({
   selector: 'actions-property-table',
@@ -38,7 +39,7 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
   dataSendProperty = {property_id: '', customer_id: '', customer_email: '', message: ''};
 
   constructor(private _http: Http, private _customerService: CustomerService, private _propertyService: PropertyService, private _authService: AuthService) {
-    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, []);
+    this.propertyData = new Property(1, 1, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, null, []);
 
     this.userData = this._authService.getUserData();
   }

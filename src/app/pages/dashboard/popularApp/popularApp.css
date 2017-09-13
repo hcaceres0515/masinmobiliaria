@@ -20,8 +20,8 @@
 .card.popular-app .popular-app-cost {
   font-size: 20px;
   padding: 20px 22px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  border-top: 1px solid rgba(255, 255, 255, 0.3); }
+  border-bottom: 1px solid silver;
+  border-top: 1px solid silver; }
 .card.popular-app .popular-app-info {
   padding: 20px 22px;
   font-size: 20px;
