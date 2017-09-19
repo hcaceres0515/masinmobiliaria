@@ -4,6 +4,7 @@ import {PieChartService} from './pieChart.service';
 
 import 'easy-pie-chart/dist/jquery.easypiechart.js';
 import 'style-loader!./pieChart.scss';
+import {AuthService} from '../../auth-service';
 
 @Component({
   selector: 'pie-chart',
@@ -12,18 +13,32 @@ import 'style-loader!./pieChart.scss';
 // TODO: move easypiechart to component
 export class PieChart {
 
-  public charts: Array<Object>;
+  public charts: any;
+  public userCharts: Array<Object>;
+  public userData: any;
   private _init = false;
 
-  constructor(private _pieChartService: PieChartService) {
-    this.charts = this._pieChartService.getData();
+  constructor(private _pieChartService: PieChartService, private _authService: AuthService) {
+    this.userData = this._authService.getUserData();
+    // this.charts = this._pieChartService.getUserData(1, 1);
+    // this.charts = this._pieChartService.getData();
+    // this._loadPieCharts();
+    // console.log(this.charts);
+    this.loadPieChart();
+
+
+
   }
 
   ngAfterViewInit() {
     if (!this._init) {
-      this._loadPieCharts();
-      this._updatePieCharts();
-      this._init = true;
+      setTimeout(() => {
+        this._loadPieCharts();
+        // this.loadPieChart();
+        // this._updatePieCharts();
+        this._init = true;
+      }, 1000);
+
     }
   }
 
@@ -53,5 +68,17 @@ export class PieChart {
     jQuery('.pie-charts .chart').each(function(index, chart) {
       jQuery(chart).data('easyPieChart').update(getRandomArbitrary(55, 90));
     });
+  }
+
+  private loadPieChart() {
+    let userId = this.userData.id;
+    let officeId = this.userData.office_id;
+
+    this._pieChartService.getUserData(officeId, userId).subscribe(
+      (data) => { this.charts = data; },
+      (error) => {},
+      () => {
+      }
+    );
   }
 }

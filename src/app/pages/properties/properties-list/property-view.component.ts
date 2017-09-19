@@ -16,6 +16,7 @@ export class PropertyViewComponent {
   @ViewChild('viewPropertyModal') viewPropertyModal: ModalDirective;
 
   PATH_SERVER = CONFIG_ENV._SERVER;
+  BASE_URL = CONFIG_ENV._BASE_URL;
   propertyData: Property;
 
   public userData: any;

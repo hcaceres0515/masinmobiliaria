@@ -3,6 +3,7 @@ import {Component} from '@angular/core';
 import {FeedService} from './feed.service';
 
 import 'style-loader!./feed.scss';
+import {AuthService} from '../../auth-service';
 
 @Component({
   selector: 'feed',
@@ -10,13 +11,19 @@ import 'style-loader!./feed.scss';
 })
 export class Feed {
 
-  public feed:Array<Object>;
+  public feed: Array<Object>;
 
-  constructor(private _feedService:FeedService) {
+  public usersBest: Array<Object>;
+  public userData: any;
+
+  constructor(private _feedService: FeedService, private _authService: AuthService) {
+
+    this.userData = this._authService.getUserData();
   }
 
   ngOnInit() {
-    this._loadFeed();
+
+    this.getUsersBest();
   }
 
   expandMessage (message){
@@ -25,5 +32,16 @@ export class Feed {
 
   private _loadFeed() {
     this.feed = this._feedService.getData();
+  }
+
+  private getUsersBest() {
+    let officeId = this.userData.office_id;
+    this._feedService.getUsersBest(officeId).subscribe(
+      (data) => { this.usersBest = data; },
+      (error) => {},
+      () => {
+        console.log(this.usersBest);
+      }
+    );
   }
 }

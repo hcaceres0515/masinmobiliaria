@@ -231,6 +231,9 @@ a.al-logo {
   float: left;
   outline: none !important;
   line-height: 60px; }
+  @media screen and (max-width: 420px) {
+    a.al-logo {
+      font-size: 12px; } }
   a.al-logo span {
     color: #ed8700; }
 

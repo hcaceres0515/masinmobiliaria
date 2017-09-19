@@ -47,6 +47,7 @@ export class PropertyAddComponent implements  OnInit{
   uploadImageFlag: boolean = false;
   addFormFlag: boolean = true;
   selectedLocationFlag: boolean = false;
+  selectedCustomerFlag: boolean = false;
   notificationsConfig: boolean = false;
 
   uploadFiles: any[];
@@ -73,7 +74,7 @@ export class PropertyAddComponent implements  OnInit{
     this.getPropertyType();
     this.getPropertyCoin();
 
-    this.propertyData = new Property(1, this.userData.id, this.userData.office_id, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, 0, null, null, null, []);
+    this.propertyData = new Property(1, this.userData.id, this.userData.office_id, '', 0, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, 0, null, null, null, []);
     this.propertyData.report_date = this.calculateNewDate('0'); // set date now
 
     this.options = {
@@ -249,6 +250,13 @@ export class PropertyAddComponent implements  OnInit{
   onCustomerSelected(customer) {
     this.selectedCustomer = customer;
     this.propertyData.customer_id = customer.id;
+
+    if ( this.propertyData.customer_id == null){
+      this.selectedCustomerFlag = false;
+    } else {
+      this.selectedCustomerFlag = true;
+    }
+
   }
 
   addProperty(addForm) {
@@ -268,7 +276,7 @@ export class PropertyAddComponent implements  OnInit{
 
     // console.log(this.propertyData);
 
-    if (addForm.valid && this.selectedLocationFlag) {
+    if (addForm.valid && this.selectedLocationFlag && this.selectedCustomerFlag) {
 
       this.propertyData.report_date = this.calculateNewDate(this.propertyData.report_days);
       this.loadingIcon = true;

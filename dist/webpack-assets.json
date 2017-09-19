@@ -1,12 +1,12 @@
 {
   "vendor": {
-    "js": "vendor.7bc1a5092a2ce9059789.bundle.js"
+    "js": "vendor.e1da3d6e327e3f04331e.bundle.js"
   },
   "main": {
-    "js": "main.d58d534be082a9902abc.bundle.js",
+    "js": "main.c583b76867a1241c37da.bundle.js",
     "css": "initial.css"
   },
   "polyfills": {
-    "js": "polyfills.e1321cefde2a4f9ee9b1.bundle.js"
+    "js": "polyfills.d05dc4ffd8258781fdb2.bundle.js"
   }
 }

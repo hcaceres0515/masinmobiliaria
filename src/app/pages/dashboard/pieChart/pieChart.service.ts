@@ -1,20 +1,28 @@
 import {Injectable} from '@angular/core';
 import {BaThemeConfigProvider, colorHelper} from '../../../theme';
+import { CONFIG_ENV } from '../../../app.config';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class PieChartService {
 
-  constructor(private _baConfig: BaThemeConfigProvider) {
+  PATH_SERVER = CONFIG_ENV._SERVER;
+
+  constructor(private _baConfig: BaThemeConfigProvider, private _http: Http) {
   }
 
   getData() {
-    let pieColor = this._baConfig.get().colors.custom.dashboardPieChart;
+    // let pieColor = this._baConfig.get().colors.custom.dashboardPieChart;
+    let pieColor = '#ec8600';
+    console.log('load chart');
     return [
       {
-        color: pieColor,
+        color: 'red',
         description: 'Tus Propiedades',
+        number: '0',
+        percentage: 0,
         stats: '12',
-        icon: 'person',
+        icon: 'home',
       }, {
         color: pieColor,
         description: 'Tus Ventas',
@@ -32,5 +40,10 @@ export class PieChartService {
         icon: 'refresh',
       }
     ];
+  }
+
+  getUserData(officeId, userId) {
+    return this._http.get(this.PATH_SERVER + '&c=user&m=get_pie_chart_dashboard&office_id=' + officeId + '&user_id=' + userId)
+      .map(res => res.json());
   }
 }

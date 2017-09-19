@@ -14,6 +14,7 @@ export  class PropertyService {
   public componentMethodCallSourceProperty = new Subject<any>();
   public methodCallSourcePropertyVisitEdit = new Subject<any>();
   public methodCallSourcePropertyModalConfirm = new Subject<any>();
+  public methodCallSourcePropertyModalConfirmParam = new Subject<any>();
 
   // Observable string streams
   componentMethodCalled$ = this.componentMethodCallSource.asObservable();
@@ -21,6 +22,7 @@ export  class PropertyService {
   componentMethodCallProperty$ = this.componentMethodCallSourceProperty.asObservable();
   methodCallPropertyVisitEdit$ = this.methodCallSourcePropertyVisitEdit.asObservable();
   methodCallPropertyModalConfirm$ = this.methodCallSourcePropertyModalConfirm.asObservable();
+  methodCallPropertyModalConfirmParam$ = this.methodCallSourcePropertyModalConfirmParam.asObservable();
 
   public propertyStatus = [
     {id: 1, name: 'Cerrar Propiedad'},
@@ -29,6 +31,11 @@ export  class PropertyService {
   ];
 
   constructor(private _http: Http) {}
+
+  // Service message commands
+  callShowConfirmModalServiceParam(event) {
+    this.methodCallSourcePropertyModalConfirmParam.next(event);
+  }
 
   // Service message commands
   callShowConfirmModalService() {
@@ -180,7 +187,6 @@ export  class PropertyService {
     let headers = new Headers({ 'Content-Type': 'text/plain' });
     let options = new RequestOptions({ headers: headers, method: 'post' });
     let propertyVisitData = JSON.stringify({property_visit_id: propertyVisitId});
-    console.log(propertyVisitData);
     return this._http.post(this.PATH_SERVER + '&c=property&m=delete_property_visit', propertyVisitData, options)
       .map(res => res.json());
   }
@@ -204,6 +210,24 @@ export  class PropertyService {
     let options = new RequestOptions({ headers: headers, method: 'post' });
     let propertyData = JSON.stringify({property_id: propertyId, office_id: officeId, user_id: userId, status: statusId});
     return this._http.post(this.PATH_SERVER + '&c=property&m=change_property_status', propertyData, options)
+      .map(res => res.json());
+  }
+
+  getPropertiesClosedByOffice(officeId) {
+    return this._http.get(this.PATH_SERVER + '&c=property&m=get_properties_closed_by_office&office_id=' + officeId)
+      .map(res => res.json());
+  }
+
+  getPropertiesClosedByUser(userId) {
+    return this._http.get(this.PATH_SERVER + '&c=property&m=get_properties_closed_by_user&user_id=' + userId)
+      .map(res => res.json());
+  }
+
+  deletePropertyClosed(propertyClosedId) {
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
+    let options = new RequestOptions({ headers: headers, method: 'post' });
+    let propertyClosedData = JSON.stringify({property_closed_id: propertyClosedId});
+    return this._http.post(this.PATH_SERVER + '&c=property&m=delete_property_closed', propertyClosedData, options)
       .map(res => res.json());
   }
 

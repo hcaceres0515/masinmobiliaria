@@ -23,25 +23,27 @@
     position: relative; }
     .pie-charts .pie-chart-item .chart-icon {
       position: absolute;
-      right: 0;
+      right: -20px;
       top: 3px; }
-  @media screen and (min-width: 1325px) and (max-width: 1650px), (min-width: 700px) and (max-width: 830px), (max-width: 400px) {
+  @media screen and (min-width: 700px) and (max-width: 830px), (max-width: 400px) {
     .pie-charts .chart-icon {
       display: none; } }
   .pie-charts .chart {
     position: relative;
     display: inline-block;
-    width: 84px;
-    height: 84px;
+    width: 75px;
+    height: 75px;
     text-align: center;
     float: left; }
   .pie-charts .chart canvas {
     position: absolute;
     top: 0;
-    left: 0; }
+    left: 0;
+    height: 75px;
+    width: 75px; }
   .pie-charts .percent {
     display: inline-block;
-    line-height: 84px;
+    line-height: 75px;
     z-index: 2;
     font-size: 16px; }
   .pie-charts .percent:after {
@@ -51,7 +53,7 @@
   .pie-charts .description {
     display: inline-block;
     padding: 20px 0 0 20px;
-    font-size: 18px;
+    font-size: 15px;
     opacity: 0.9; }
     .pie-charts .description .description-stats {
       padding-top: 8px;

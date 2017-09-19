@@ -168,7 +168,7 @@ export class PropertyVisitComponent implements  OnInit{
   public customerSelected: any = {id: '', name: '', email: '', first_phone: ''};
   public propertyData: Property;
   public userData: any;
-  public propertyVisit: any = {user_id: null, property_id: null, customer_id: null, comments: ''};
+  public propertyVisit: any = {user_id: null, office_id: null, property_id: null, customer_id: null, comments: ''};
   public loadingIcon: boolean = false;
   public invalidProperty: boolean = false;
   public invalidPropertyVisit: boolean = false;
@@ -326,6 +326,7 @@ export class PropertyVisitComponent implements  OnInit{
             this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, null, []);
           } else {
             this.propertyVisit.property_id = this.propertyData.id;
+            this.propertyVisit.office_id = this.propertyData.office_id;
             this.loadingIcon = false;
           }
         }
@@ -383,7 +384,7 @@ export class PropertyVisitComponent implements  OnInit{
           this.loadingIcon = false;
           this.hideVisitAddModal();
           this.propertyId = '';
-          this.propertyVisit = {user_id: null, property_id: null, customer_id: null, comments: ''};
+          this.propertyVisit = {user_id: null, office_id: null, property_id: null, customer_id: null, comments: ''};
           this.propertyData = new Property(null, null, null, '', 1, 1, 1, 1, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', null, null, '', null, null, null, null, null, []);
           this.customerSelected = {id: '', name: '', email: '', first_phone: ''};
 

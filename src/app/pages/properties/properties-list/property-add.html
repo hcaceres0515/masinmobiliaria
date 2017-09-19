@@ -17,7 +17,7 @@
 
               <label for="title" class="col-sm-2 form-control-label">Título: *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="title" name="title" placeholder="Titulo de la propiedad" [(ngModel)]="propertyData.title" required #title="ngModel">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Titulo de la propiedad" [(ngModel)]="propertyData.title" [maxlength]="45" required #title="ngModel">
 
                 <div *ngIf="!title.valid && submitted" class="alert alert-danger">
                   * Titulo es requerido
@@ -357,6 +357,11 @@
               <label for="customerEmail" class="col-sm-2 form-control-label">Email: </label>
               <div class="col-sm-10">
                 <input  type="text" class="form-control" name="customerEmail" id="customerEmail" disabled [(ngModel)]="selectedCustomer.email"/>
+
+                <div *ngIf="!selectedCustomerFlag" class="alert alert-danger">
+                  * Tiene que asociar la propiedad a un cliente
+                </div>
+
               </div>
             </div>
           </div>
@@ -369,6 +374,8 @@
               </div>
             </div>
           </div>
+
+
 
           <div class="col-md-12">
             <hr>

@@ -1,7 +1,11 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { CONFIG_ENV } from '../../../app.config';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class FeedService {
+
+  PATH_SERVER = CONFIG_ENV._SERVER;
 
   private _data = [
     {
@@ -58,7 +62,14 @@ export class FeedService {
     }
   ];
 
+  constructor(private _http: Http) {}
+
   getData() {
     return this._data;
+  }
+
+  getUsersBest(officeId) {
+    return this._http.get(this.PATH_SERVER + '&c=property&m=get_list_total_properties_by_user&office_id=' + officeId)
+      .map(res => res.json());
   }
 }

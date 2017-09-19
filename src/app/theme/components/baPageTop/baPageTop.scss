@@ -32,6 +32,10 @@ a.al-logo {
   outline: none !important;
   line-height: 60px;
 
+  @media screen and (max-width: 420px) {
+    font-size: 12px;
+  }
+
   span {
     color: $primary;
   }

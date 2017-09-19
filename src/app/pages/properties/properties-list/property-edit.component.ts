@@ -63,6 +63,8 @@ export class PropertyEditComponent implements  OnInit {
   public edited: boolean = false;
   public notificationsConfig: boolean = false;
 
+  public selectedCustomerFlag: boolean = true;
+
   public propertyCloseStatus: any = {id: null, name: ''};
   public actionsMessage: string;
   public actionsShow: boolean = false;
@@ -248,6 +250,13 @@ export class PropertyEditComponent implements  OnInit {
   onCustomerSelected(customer) {
     this.selectedCustomer = customer;
     this.propertyData.customer_id = customer.id;
+
+    if ( this.propertyData.customer_id == null){
+      this.selectedCustomerFlag = false;
+    } else {
+      this.selectedCustomerFlag = true;
+    }
+
   }
 
 
@@ -424,9 +433,10 @@ export class PropertyEditComponent implements  OnInit {
     this.propertyData.district_id = this.selectedDistrict.id;
     this.propertyData.property_coin_id = this.selectedPropertyCoin.id;
     this.submitted = true;
-    console.log(this.propertyData);
 
-    if (addForm.valid) {
+    // console.log(this.propertyData);
+
+    if (addForm.valid && this.selectedCustomerFlag) {
 
       this.loadingIcon = true;
       this.edited = true;
@@ -474,6 +484,7 @@ export class PropertyEditComponent implements  OnInit {
       () => {
 
         this.propertyData.status = 3;
+        this.selectedPropertyContract = this.propertyContract[1];
 
         this.propertyCloseStatus = this._propertyService.propertyStatus.filter(
           status => status.id === Number(this.propertyData.status))[0];
@@ -505,8 +516,29 @@ export class PropertyEditComponent implements  OnInit {
         }.bind(this), 3000);
       }
     );
+  }
 
+  activateProperty() {
 
+    this.actionsShow = true;
+
+    this._propertyService.changeStatusProperty(this.propertyData.id, 1, this.propertyData.office_id, this.userData.id).subscribe(
+      (error) => { console.log(error); },
+      () => {
+
+        this.propertyData.status = 1;
+        this.selectedPropertyContract = this.propertyContract[0]; // active
+
+        this.propertyCloseStatus = this._propertyService.propertyStatus.filter(
+          status => status.id === Number(this.propertyData.status))[0];
+
+        this.actionsMessage = 'La propiedad ha sido activada, ahora estara visible en la pagina web.';
+        setTimeout(function() {
+          this.actionsShow = false;
+          this.actionsMessage = '';
+        }.bind(this), 3000);
+      }
+    );
   }
 
   confirmModal(modal) {
@@ -525,6 +557,11 @@ export class PropertyEditComponent implements  OnInit {
 
       this.confirmModalAction = 'deniedCloseProperty'; // Nombre de la funcion, que va hacer llamada
       this.confirmModalTitle = 'Esta seguro de cancelar el cierre propiedad'; // Mensaje para el modal de confirmacion
+
+    } else if (modal === 'activateProperty') {
+
+      this.confirmModalAction = 'activateProperty'; // Nombre de la funcion, que va hacer llamada
+      this.confirmModalTitle = 'Esta seguro de activar la propiedad'; // Mensaje para el modal de confirmacion
     }
 
 

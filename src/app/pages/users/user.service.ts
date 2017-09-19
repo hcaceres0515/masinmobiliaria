@@ -1,7 +1,7 @@
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { CONFIG_ENV } from '../../app.config';
 import { Injectable } from '@angular/core';
-import {Subject} from "rxjs";
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class UserService {

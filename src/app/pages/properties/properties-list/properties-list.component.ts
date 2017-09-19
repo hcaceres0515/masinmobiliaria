@@ -34,6 +34,8 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
   actionPermission: boolean = false;
   loadingIcon: boolean = false;
 
+  selectedCustomerFlag: boolean = false;
+
   selected: any;
 
   dataSendProperty = {property_id: '', customer_id: '', customer_email: '', message: ''};
@@ -99,25 +101,34 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
     console.log(event);
     this.dataSendProperty.customer_id = event.id;
     this.dataSendProperty.customer_email = event.email;
+
+    if ( this.dataSendProperty.customer_id == null){
+      this.selectedCustomerFlag = false;
+    } else {
+      this.selectedCustomerFlag = true;
+    }
   }
 
   onSendProperty() {
-
-    this.loadingIcon = true;
 
     let propertyId = this.dataSendProperty.property_id;
     let customerId = this.dataSendProperty.customer_id;
     let userId = this.userData.id;
     let message = this.dataSendProperty.message;
 
-    this._propertyService.sendPropertyByEmail(propertyId, customerId, userId, message).subscribe(
-      error => alert(error),
-      () => {
-        this.dataSendProperty = {property_id: '', customer_id: '', customer_email: '', message: ''};
-        this.loadingIcon = false;
-        this.hideSendPropertyModal();
-      }
-    );
+    if (this.selectedCustomerFlag) {
+      this.loadingIcon = true;
+
+      this._propertyService.sendPropertyByEmail(propertyId, customerId, userId, message).subscribe(
+        error => alert(error),
+        () => {
+          this.dataSendProperty = {property_id: '', customer_id: '', customer_email: '', message: ''};
+          this.loadingIcon = false;
+          this.hideSendPropertyModal();
+        }
+      );
+    }
+
   }
 
   onDeleteProperty(propertyId) {

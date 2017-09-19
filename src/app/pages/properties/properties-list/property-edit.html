@@ -14,7 +14,7 @@
 
         <ba-card  baCardClass="feed-panel" title="Acciones">
 
-          <div class="row">
+          <div class="section-block" *ngIf="propertyData.property_contract_id == 1">
 
             <div class="form-group" style="text-align: right">
               <button type="button" class="btn" [ngClass]="{'btn-success': propertyData.status == '1', 'btn-primary': propertyData.status == '2', 'btn-danger': propertyData.status == '3' }" [disabled]="propertyData.status != 1" (click)="confirmModal('closeProperty')"> <i class="ion-arrow-down-c"></i> {{propertyCloseStatus.name}}</button>
@@ -26,6 +26,12 @@
               <button type="button" class="btn btn-success" (click)="confirmModal('approveCloseProperty')"> <i class="ion-checkmark"></i> Confirmar Cierre</button>
 
               <button type="button" class="btn btn-danger" (click)="confirmModal('deniedCloseProperty')"> <i class="ion-close-round"></i> Cancelar Cierre</button>
+
+            </div>
+
+            <div *ngIf="propertyData.status == '3' && propertyData.office_id === userData.office_id && userData.rol_id == '1'" class="form-group" style="text-align: right">
+
+              <button type="button" class="btn btn-success" (click)="confirmModal('activateProperty')"> <i class="ion-checkmark"></i> Activar Propiedad</button>
 
             </div>
 
@@ -51,7 +57,7 @@
 
               <label for="title" class="col-sm-2 form-control-label">Título: *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="title" name="title" placeholder="Titulo de la propiedad" [(ngModel)]="propertyData.title" required #title="ngModel">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Titulo de la propiedad" [(ngModel)]="propertyData.title" [maxlength]="45" required #title="ngModel">
 
                 <div *ngIf="!title.valid && submitted" class="alert alert-danger">
                   * Titulo es requerido
@@ -135,7 +141,7 @@
             <div class="form-group row">
               <label for="propertyContract" class="col-sm-2 form-control-label">Situacion:</label>
               <div class="col-sm-10">
-                <select class="form-control" id="propertyContract" name="propertyContract" [(ngModel)]="selectedPropertyContract">
+                <select class="form-control" id="propertyContract" name="propertyContract" [(ngModel)]="selectedPropertyContract" [disabled]="propertyData.status != 1">
                   <option *ngFor="let item of propertyContract" [ngValue]="item">{{item.name}}</option>
                 </select>
               </div>
@@ -384,6 +390,11 @@
               <label for="customerEmail" class="col-sm-2 form-control-label">Email: </label>
               <div class="col-sm-10">
                 <input  type="text" class="form-control" name="customerEmail" id="customerEmail" disabled [(ngModel)]="selectedCustomer.email"/>
+
+                <div *ngIf="!selectedCustomerFlag" class="alert alert-danger">
+                  * Tiene que asociar la propiedad a un cliente
+                </div>
+
               </div>
             </div>
           </div>
