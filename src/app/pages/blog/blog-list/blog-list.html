@@ -1,0 +1,116 @@
+<div class="widgets">
+
+  <div class="row">
+
+    <div class="col-md-12 ">
+      <button class="btn btn-success pull-right" (click)="showBlogPostAddModal()">
+        <i class="ion-plus-round"></i>  Agregar post
+      </button>
+
+    </div>
+
+  </div>
+
+  <br>
+
+  <ba-card baCardClass="feed-panel" title="Blog Posts">
+
+    <div class="table-responsive">
+      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+    </div>
+
+  </ba-card>
+
+  <confirm-modal-blog [id]="'confirm_remove_id'" [confirmMessage]="'Esta seguro de eliminar la publicacion'"  (ok)="deleteBlogPost($event)"></confirm-modal-blog>
+
+</div>
+
+
+
+<!-- Blog post Add Modal -->
+
+<div bsModal #blogPostAddModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideBlogPostAddModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Agregar Post</h4>
+      </div>
+      <div class="modal-body">
+
+        <form #blogPostAddForm="ngForm" novalidate style="position: relative" *ngIf="!showUploadImageBox">
+
+          <div class="form-group">
+
+            <label for="title">Titulo: *</label>
+            <input type="text" class="form-control"  id="title" placeholder="Titulo del post" name="title" [(ngModel)]="blogPostData.title" required #title="ngModel">
+
+            <div *ngIf="title.errors && (title.dirty || title.touched)" class="alert alert-danger">
+              * Titulo es requerido
+            </div>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="overview">Resumen: *</label>
+            <input type="text" class="form-control"  id="overview" placeholder="Titulo del post" name="overview" [(ngModel)]="blogPostData.overview" required #overview="ngModel">
+
+            <div *ngIf="overview.errors && (overview.dirty || overview.touched)" class="alert alert-danger">
+              * Resumen es requerido
+            </div>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="content">Descripción: *</label>
+
+            <ckeditor [(ngModel)]="blogPostData.content" [config]="config" name="content" id="content" required #content="ngModel"></ckeditor>
+
+            <div *ngIf="!content.valid && submitted" class="alert alert-danger">
+              * Contenido es requerido
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="postCategory" class="col-sm-2 form-control-label">Categoria: *</label>
+            <div class="col-sm-10">
+              <select class="form-control" id="postCategory" name="postCategory" [(ngModel)]="selectedPostCategory">
+                <option *ngFor="let item of blogPostCategories" [ngValue]="item">{{item.name}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+
+            <label for="tags">Tags: </label>
+            <input type="text" class="form-control"  id="tags" placeholder="construccion,consejos,decoracion" name="tags" [(ngModel)]="blogPostData.tags">
+
+          </div>
+
+
+
+          <div class="form-group">
+            <button type="button" class="btn btn-success confirm-btn" [disabled]="!blogPostAddForm.form.valid" (click)="onAddBlogPost()">Guardar</button>
+            <button type="button" class="btn btn-danger" (click)="hideBlogPostAddModal()">Cancelar</button>
+          </div>
+
+        </form>
+
+        <ba-card title="Imagen del Post" baCardClass="with-scroll" *ngIf="showUploadImageBox">
+          <ba-picture-uploader [picture]="profile.picture" [defaultPicture]="defaultPicture" [uploaderOptions]="uploaderOptions" (onUploadCompleted)="uploadCompleted()"></ba-picture-uploader>
+          <br>
+          <div class="alert alert-info">
+            <strong>Recuerde!</strong> La imagen debe ser minimo de 767 * 412.
+          </div>
+        </ba-card>
+
+      </div>
+
+    </div>
+  </div>
+</div>

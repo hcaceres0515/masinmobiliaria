@@ -51,11 +51,11 @@
 
   <br>
 
-  <div class="row">
-    <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
-  </div>
-
-
+  <ba-card  baCardClass="feed-panel">
+    <div class="table-responsive">
+      <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+    </div>
+  </ba-card>
 
   <!-- Visit Property Add Modal -->
 
@@ -125,15 +125,19 @@
                               required #customerName="ngModel"/>
                     </div>
 
+                    <div *ngIf="!selectedCustomerFlag" class="alert alert-danger">
+                      * Tiene que seleccionar un cliente de la lista
+                    </div>
+
                   </div>
 
                   <div class="col-md-4">
 
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                        <button class="btn btn-success btn-with-icon" type="button"><i class="ion-plus-round"></i> Nuevo cliente </button>
-                      </span>
-                    </div>
+                    <!--<div class="input-group">-->
+                      <!--<span class="input-group-btn">-->
+                        <!--<button class="btn btn-success btn-with-icon" type="button"><i class="ion-plus-round"></i> Nuevo cliente </button>-->
+                      <!--</span>-->
+                    <!--</div>-->
 
                   </div>
 
@@ -165,7 +169,7 @@
             <hr>
 
             <div class="form-group">
-              <button type="button" class="btn btn-success confirm-btn" [disabled]="!visitAddForm.form.valid" (click)="addPropertyVisit()">Guardar</button>
+              <button type="button" class="btn btn-success confirm-btn" [disabled]="!visitAddForm.form.valid && (!selectedCustomerFlag && !selectedPropertyFlag)" (click)="addPropertyVisit()">Guardar</button>
               <button type="button" class="btn btn-danger" (click)="hideVisitAddModal()">Cancelar</button>
             </div>
 

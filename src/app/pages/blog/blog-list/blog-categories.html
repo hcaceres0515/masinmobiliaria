@@ -1,0 +1,13 @@
+<div class="widgets">
+
+  <ba-card baCardClass="feed-panel" title="Blog - Categorias">
+
+    <div class="table-responsive">
+      <ng2-smart-table [settings]="settings" [source]="source" (createConfirm)="saveCategory($event)" (editConfirm)="editCategory($event)" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+    </div>
+
+  </ba-card>
+
+  <confirm-modal-blog [id]="'confirm_remove_id'" [confirmMessage]="'Esta seguro de eliminar la categoria del blog'"  (ok)="deleteCategory()"></confirm-modal-blog>
+
+</div>

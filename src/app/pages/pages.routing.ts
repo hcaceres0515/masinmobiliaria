@@ -33,7 +33,9 @@ export const routes: Routes = [
       { path: 'maps', loadChildren: 'app/pages/maps/maps.module#MapsModule' },
       { path: 'customers', loadChildren: 'app/pages/customers/customers.module#CustomerModule'},
       { path: 'properties', loadChildren: 'app/pages/properties/properties.module#PropertiesModule'},
-      { path: 'users', loadChildren: 'app/pages/users/users.module#UsersModule'}
+      { path: 'users', loadChildren: 'app/pages/users/users.module#UsersModule'},
+      { path: 'blog', loadChildren: 'app/pages/blog/blog.module#BlogModule'},
+      { path: 'web', loadChildren: 'app/pages/web/web.module#WebModule'}
     ]
   }
 ];

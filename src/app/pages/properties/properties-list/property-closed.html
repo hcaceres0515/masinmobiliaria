@@ -29,7 +29,9 @@
 
   <div class="row">
     <ba-card title="Cierre de Propiedades" baCardClass="with-scroll">
-      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+      <div class="table-responsive">
+        <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+      </div>
     </ba-card>
   </div>
 

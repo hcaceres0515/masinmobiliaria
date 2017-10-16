@@ -226,7 +226,11 @@
   <ba-card  baCardClass="feed-panel">
     <label><strong>Cantidad de propiedades:</strong> {{totalProperties}}</label>
 
-    <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+    <div class="table-responsive">
+
+      <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+
+    </div>
 
   </ba-card>
 

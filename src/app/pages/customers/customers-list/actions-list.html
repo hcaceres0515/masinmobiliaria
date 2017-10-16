@@ -1,13 +1,13 @@
 
-<button class="btn btn-success btn-icon" type="button" tooltip="Ver" (click)="showViewModal(customerData)">
+<button class="btn btn-success btn-icon btn-sm" type="button" tooltip="Ver" (click)="showViewModal(customerData)">
   <i class="ion-search"></i>
 </button>
 
-<button *ngIf='showPermissionFlag' class="btn btn-info btn-icon" type="button" tooltip="Editar" (click)="showEditModal(customerData)">
+<button *ngIf='showPermissionFlag' class="btn btn-info btn-icon btn-sm" type="button" tooltip="Editar" (click)="showEditModal(customerData)">
   <i class="ion-edit"></i>
 </button>
 
-<button *ngIf='showPermissionFlag' class="btn btn-danger btn-icon" type="button" tooltip="Eliminar" (click)="showDeleteModal()">
+<button *ngIf='showPermissionFlag' class="btn btn-danger btn-icon btn-sm" type="button" tooltip="Eliminar" (click)="showDeleteModal()">
   <i class="ion-trash-a"></i>
 </button>
 

@@ -8,18 +8,18 @@ import { NgUploaderOptions } from 'ngx-uploader';
 })
 export class BaPictureUploader {
 
-  @Input() defaultPicture:string = '';
-  @Input() picture:string = '';
+  @Input() defaultPicture: string = '';
+  @Input() picture: string = '';
 
-  @Input() uploaderOptions:NgUploaderOptions = { url: '' };
-  @Input() canDelete:boolean = true;
+  @Input() uploaderOptions: NgUploaderOptions = { url: '', data: {} };
+  @Input() canDelete: boolean = true;
 
   @Output() onUpload = new EventEmitter<any>();
   @Output() onUploadCompleted = new EventEmitter<any>();
 
-  @ViewChild('fileUpload') public _fileUpload:ElementRef;
+  @ViewChild('fileUpload') public _fileUpload: ElementRef;
 
-  public uploadInProgress:boolean;
+  public uploadInProgress: boolean;
 
   constructor(private renderer: Renderer) {
   }
@@ -39,38 +39,41 @@ export class BaPictureUploader {
     }
   }
 
-  bringFileSelector():boolean {
+  bringFileSelector(): boolean {
     this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
     return false;
   }
 
-  removePicture():boolean {
+  removePicture(): boolean {
     this.picture = '';
     return false;
   }
 
-  _changePicture(file:File):void {
+  _changePicture(file: File): void {
     const reader = new FileReader();
-    reader.addEventListener('load', (event:Event) => {
+    reader.addEventListener('load', (event: Event) => {
       this.picture = (<any> event.target).result;
     }, false);
     reader.readAsDataURL(file);
+    // console.log(file);
   }
 
-  _onUpload(data):void {
+  _onUpload(data): void {
     if (data['done'] || data['abort'] || data['error']) {
       this._onUploadCompleted(data);
     } else {
       this.onUpload.emit(data);
     }
+    // console.log('uploading');
+    // console.log(data);
   }
 
-  _onUploadCompleted(data):void {
+  _onUploadCompleted(data): void {
     this.uploadInProgress = false;
     this.onUploadCompleted.emit(data);
   }
 
-  _canUploadOnServer():boolean {
+  _canUploadOnServer(): boolean {
     return !!this.uploaderOptions['url'];
   }
 }

@@ -97,7 +97,7 @@ export class Pages {
           }
         });
 
-        ROL_MENU.push({
+        /*ROL_MENU.push({
           path: '',
             data: {
           menu: {
@@ -118,7 +118,7 @@ export class Pages {
               }
             }
           ]
-        });
+        });*/
         // console.log(ROL_MENU);
         // console.log(PAGES_MENU);
         this._menuService.updateMenuByRoutes(<Routes>ROL_MENU);

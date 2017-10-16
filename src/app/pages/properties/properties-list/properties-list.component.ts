@@ -98,7 +98,7 @@ export class ActionsPropertyTableComponent implements ViewCell, OnInit {
   }
 
   onCustomerSelected(event) {
-    console.log(event);
+    // console.log(event);
     this.dataSendProperty.customer_id = event.id;
     this.dataSendProperty.customer_email = event.email;
 

@@ -415,7 +415,7 @@ export class PropertyEditComponent implements  OnInit {
 
     this.loadingIcon = true;
     this._propertyService.deletePropertyImage(imageId).subscribe(
-      (error) => alert(error),
+      (error) => {},
       () => {
         let index = this.propertyData.images.map(function(e) { return e.id; }).indexOf(imageId);
         this.propertyData.images.splice(index, 1);

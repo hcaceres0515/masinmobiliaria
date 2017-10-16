@@ -1,0 +1,144 @@
+<div class="widgets">
+
+  <ba-card baCardClass="feed-panel" title="Lista de Sliders">
+
+    <div class="table-responsive">
+      <table class="table">
+        <tr>
+          <th>Cod. Propiedad</th>
+          <th>Título</th>
+          <th>Mensaje</th>
+          <th>Botón</th>
+          <th>Prioridad</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+        <tr *ngFor="let slider of sliderData">
+          <td>{{slider.property_id}}</td>
+          <td>{{slider.title}}</td>
+          <td>{{slider.message}}</td>
+          <td>{{slider.button_link}}</td>
+          <td>{{slider.priority}}</td>
+
+          <td>
+            <code *ngIf="slider.status == 1"> Activo</code>
+            <code *ngIf="slider.status == -1"> Desactivo</code>
+          </td>
+
+          <td>
+
+            <button class="btn btn-info btn-icon btn-sm" type="button" tooltip="Editar" (click)="selectEditSlider(slider)">
+              <i class="ion-edit"></i>
+            </button>
+
+          </td>
+        </tr>
+
+      </table>
+    </div>
+  </ba-card>
+
+  <ba-card baCardClass="feed-panel" title="Slider - Front Page" *ngIf="showEditSliderBox">
+
+    <form class="form-horizontal ">
+
+
+      <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+          <div class="checkbox">
+            <ba-checkbox [(ngModel)]="isProperty" [label]="'El slider es una propiedad'" [ngModelOptions]="{standalone: true}" (ngModelChange)="changeIsPropperty()"></ba-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+
+        <div class="form-group row col-md-12">
+          <label for="priority" class="col-sm-2 form-control-label">Prioridad</label>
+          <div class="col-sm-2">
+            <input type="number" class="form-control" id="priority" name="priority" [(ngModel)]="sliderSelected.priority" >
+          </div>
+        </div>
+
+        <div class="form-group row col-md-12">
+          <label for="status" class="col-sm-2 form-control-label">Estado</label>
+          <div class="col-sm-2">
+            <select class="form-control" name="status" id="status" [(ngModel)]="sliderSelected.status">
+              <option value="1">Activo</option>
+              <option value="-1">Desactivo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row col-md-12" *ngIf="isProperty">
+          <label for="propertyId" class="col-sm-2 form-control-label">Cod. propiedad</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" id="propertyId" name="propertyId" [(ngModel)]="sliderSelected.property_id">
+          </div>
+        </div>
+
+        <div  class="col-md-12" *ngIf="!isProperty">
+          <div class="form-group row">
+            <label for="title" class="col-sm-2 form-control-label">Titulo</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" id="title" placeholder="Titulo del slider" name="title" [(ngModel)]="sliderSelected.title" [maxlength]="45">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="message" class="col-sm-2 form-control-label">Mensaje</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="message" placeholder="Mensaje del slider" name="message" [(ngModel)]="sliderSelected.message" [maxlength]="200">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="buttonLink" class="col-sm-2 form-control-label">Link del boton</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="buttonLink" placeholder="https://www.masinmobiliaria.pe/lista_propiedades" name="buttonLink" [(ngModel)]="sliderSelected.button_link">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-4">
+
+        <div class="row">
+          <div class="col-md-6">
+            <ba-picture-uploader [picture]="sliderSelected.img_src" [defaultPicture]="defaultPicture" [uploaderOptions]="uploaderOptions" (onUploadCompleted)="uploadCompleted($event)"></ba-picture-uploader>
+            <br>
+            <div class="alert alert-info">
+              <strong>Recuerde!</strong> La imagen debe ser minimo de 1900 * 830.
+            </div>
+
+          </div>
+        </div>
+
+        <!--<div class="row">-->
+
+        <!--<div class="form-group">-->
+        <!--<label for="imageUpload" class="btn btn-success labelFileContainer">Seleccionar imagen-->
+
+        <!--<input type="file" id="imageUpload"-->
+        <!--[ng-file-select]="options"-->
+        <!--(onUpload)="handleUpload($event)">-->
+
+        <!--</label>-->
+        <!--</div>-->
+
+        <!--</div>-->
+
+      </div>
+
+      <div class="form-group row">
+        <div class="offset-sm-5 col-sm-7">
+          <button type="submit" class="btn btn-warning" (click)="editSlider()"> <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+        </div>
+      </div>
+    </form>
+
+  </ba-card>
+
+</div>

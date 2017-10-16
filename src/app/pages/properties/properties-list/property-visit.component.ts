@@ -173,6 +173,9 @@ export class PropertyVisitComponent implements  OnInit{
   public invalidProperty: boolean = false;
   public invalidPropertyVisit: boolean = false;
 
+  public selectedCustomerFlag: boolean = false;
+  public selectedPropertyFlag: boolean = false;
+
   settings = {
     noDataMessage: 'No se encontraron registros.',
     actions: {
@@ -328,6 +331,8 @@ export class PropertyVisitComponent implements  OnInit{
             this.propertyVisit.property_id = this.propertyData.id;
             this.propertyVisit.office_id = this.propertyData.office_id;
             this.loadingIcon = false;
+            this.selectedPropertyFlag = true;
+            // console.log(this.selectedCustomerFlag);
           }
         }
       );
@@ -357,7 +362,14 @@ export class PropertyVisitComponent implements  OnInit{
   }
 
   onCustomerSelected(customer) {
+
     this.propertyVisit.customer_id = customer.id;
+
+    if (this.propertyVisit.customer_id == null || this.propertyVisit.customer_id === ''){
+      this.selectedCustomerFlag = false;
+    } else {
+      this.selectedCustomerFlag = true;
+    }
   }
 
   addPropertyVisit() {
@@ -369,10 +381,9 @@ export class PropertyVisitComponent implements  OnInit{
       this.invalidPropertyVisitMessage = '*Seleccione una propiedad';
     }
 
-    if (this.propertyVisit.customer_id === null || this.propertyVisit.customer_id === '') {
+    if (!this.selectedCustomerFlag) {
       this.invalidPropertyVisit = true;
       this.invalidPropertyVisitMessage = this.invalidPropertyVisitMessage + '  ----  *Seleccione un cliente';
-
     }
 
     if (!this.invalidPropertyVisit){

@@ -18,7 +18,8 @@
     display: none;
     position: absolute;
     font-size: 32px;
-    background: black;
+    /*background: $default;*/
+    background: white;
     cursor: pointer;
     color: #ed8700;
     top: -11px;
@@ -34,7 +35,8 @@
     width: 202px;
     background: rgba(0, 0, 0, 0.7);
     transition: all 200ms ease-in-out;
-    color: black;
+    /*color: $default-text;*/
+    color: white;
     text-decoration: none;
     position: absolute;
     bottom: -1px;
