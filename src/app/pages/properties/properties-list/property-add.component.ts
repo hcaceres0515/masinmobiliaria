@@ -261,6 +261,7 @@ export class PropertyAddComponent implements  OnInit{
 
   addProperty(addForm) {
 
+    this.propertyData.title = this.propertyData.title.toUpperCase();
     this.propertyData.property_type_id = this.selectedPropertyType.id;
     this.propertyData.property_status_id = this.selectedPropertyStatus.id;
     this.propertyData.property_contract_id = this.selectedPropertyContract.id;

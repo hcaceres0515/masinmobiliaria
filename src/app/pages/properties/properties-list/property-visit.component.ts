@@ -114,7 +114,7 @@ export class PropertyVisitDeleteComponent implements OnInit {
 
     let propertyVisitId;
 
-    this._propertyService.componentMethodCalled$.subscribe(
+    this._propertyService.componentDeleteVisitSource$.subscribe(
       data => {
         propertyVisitId = data;
         this.propertyVisit.id = propertyVisitId;
@@ -341,7 +341,7 @@ export class PropertyVisitComponent implements  OnInit{
 
   observableSource = (keyword: any): Observable<any[]> => {
     let url: string =
-      this.PATH_SERVER + '&c=customer&m=get_customer_by_keyword&user_id=' + this.userData.id + '&keyword=' + keyword
+      this.PATH_SERVER + '&c=customer&m=get_customer_by_keyword&office_id=' + this.userData.office_id + '&keyword=' + keyword
     if (keyword) {
       let json;
       return this._http.get(url)

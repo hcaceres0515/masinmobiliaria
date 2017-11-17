@@ -11,6 +11,8 @@ import { AuthService } from '../../auth-service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { UserService } from '../../users/user.service';
 import 'style-loader!../../tables/components/smartTables/smartTables.scss';
+import 'rxjs/Rx' ;
+import {saveAs as importedSaveAs} from "file-saver";
 
 @Component({
   selector: 'actions-property-table',
@@ -204,18 +206,8 @@ export class PropertiesListComponent implements  OnInit {
         type: 'string',
         filter: false
       },
-      price: {
+      symbol_price: {
         title: 'Precio',
-        type: 'string',
-        filter: false
-      },
-      commission_amount: {
-        title: 'Comision',
-        type: 'string',
-        filter: false
-      },
-      createdAt: {
-        title: 'Fecha de registro',
         type: 'string',
         filter: false
       },
@@ -262,7 +254,11 @@ export class PropertiesListComponent implements  OnInit {
   invalidProperty: boolean = false;
   invalidPropertyMessage: string = '';
 
+  currentDate: Date;
+
   constructor(private _propertyService: PropertyService, private _userService: UserService, private _http: Http) {
+
+    this.currentDate = new Date();
 
     this._propertyService.componentMethodCallProperty$.subscribe(
       () => {
@@ -305,6 +301,7 @@ export class PropertiesListComponent implements  OnInit {
 
     Object(data).forEach((value) => {
      value.item = { id: value.id, user_id: value.user_id, title: value.title };
+     value.symbol_price = value.coin_symbol + value.price;
     });
 
     this.propertiesByLocationFilter = data;
@@ -320,9 +317,11 @@ export class PropertiesListComponent implements  OnInit {
         this.departments.unshift({id: 0, name: 'TODOS'});
         this.selectedDepartment = this.departments[0];
 
+        this.provinces = [];
         this.provinces.push({id: 0, name: 'TODOS'});
         this.selectedProvince = this.provinces[0];
 
+        this.districts = [];
         this.districts.push({id: 0, name: 'TODOS'});
         this.selectedDistrict = this.districts[0];
       }
@@ -382,17 +381,23 @@ export class PropertiesListComponent implements  OnInit {
   }
 
   onChangeUser(user) {
+
+    this.loadingIcon = true;
     this._propertyService.getPropertiesByUser(user.id).subscribe(
       (data) => this.properties = data,
       (error) => alert(error),
       () => {
+
         this.totalProperties = this.properties.length;
         this.source.load(this.sourceLoadTable(this.properties));
+        this.loadingIcon = false;
       }
     );
   }
 
   onChangeUserFilter(opt) {
+
+    this.loadingIcon = true;
     if (opt === '1') {
       this._propertyService.getPropertiesByUser(this.userData.id).subscribe(
         data => this.properties = (data),
@@ -400,6 +405,7 @@ export class PropertiesListComponent implements  OnInit {
         () => {
           this.totalProperties = this.properties.length;
           this.source.load(this.sourceLoadTable(this.properties));
+          this.loadingIcon = false;
         }
       );
     } else {
@@ -409,6 +415,7 @@ export class PropertiesListComponent implements  OnInit {
         () => {
           this.totalProperties = this.properties.length;
           this.source.load(this.sourceLoadTable(this.properties));
+          this.loadingIcon = false;
         }
       );
     }
@@ -422,12 +429,12 @@ export class PropertiesListComponent implements  OnInit {
   resetFilters() {
     this.getPropertiesByUser();
     this.getDepartments();
+    this.getCoinType();
     this.filterOption = '1'; // Select first option
     this.selectedPropertyType = {id: ''}; //Ya no se consume el servicio, solo se deselecciona la opcion
     this.selectedPropertyStatus = {id: ''};
     this.selectedPropertyContract = {id: ''};
     this.selectedUser = null;
-    this.selectedPropertyCoin = null;
     this.loadingIcon = false;
     this.maximumPrice = null;
     this.minimumPrice = null;
@@ -525,6 +532,8 @@ export class PropertiesListComponent implements  OnInit {
 
   onLocationFilter() {
 
+    this.loadingIcon = true;
+
     let propertiesFilter;
 
     if ((this.selectedDepartment.id !== 0) && (this.selectedProvince.id !== 0) && (this.selectedDistrict.id !== 0)) {
@@ -553,6 +562,8 @@ export class PropertiesListComponent implements  OnInit {
 
     this.propertiesByLocationFilter = propertiesFilter;
 
+    this.loadingIcon = false;
+
     /*
     this.source.getElements().then(function (result) {
       this.properties = result;
@@ -569,12 +580,12 @@ export class PropertiesListComponent implements  OnInit {
     if (this.minimumPrice != null && this.maximumPrice != null) {
 
       propertiesFilter = propertiesData.filter(
-        property => (parseFloat(property.price) > this.minimumPrice && parseFloat(property.price) <= this.maximumPrice) && property.property_coin_id === coinId);
+        property => (parseFloat(property.price) >= this.minimumPrice && parseFloat(property.price) <= this.maximumPrice) && property.property_coin_id === coinId);
 
     } else if (this.minimumPrice != null && this.maximumPrice == null) {
 
       propertiesFilter = propertiesData.filter(
-        property => (parseFloat(property.price) > this.minimumPrice) && property.property_coin_id === coinId);
+        property => (parseFloat(property.price) >= this.minimumPrice) && property.property_coin_id === coinId);
 
     } else if (this.minimumPrice == null && this.maximumPrice != null) {
 
@@ -623,4 +634,69 @@ export class PropertiesListComponent implements  OnInit {
       );
     }
   }
+
+  exportCurrentTable() {
+
+    let newTableData;
+    this.source.getElements().then(tableData => {
+
+      this.loadingIcon = true;
+      newTableData = this.formatTableExport(tableData);
+      this._propertyService.downloadPropertyTableExcel(newTableData).subscribe(
+        blob => {
+          importedSaveAs(blob, 'reporte-propiedades.xls');
+        },
+        error => console.log('Error'),
+        () => {
+          this.loadingIcon = false;
+          // console.log(newTableData, 'export all table');
+        },
+      );
+    });
+  }
+
+  exportAllTable() {
+
+    let newTableData;
+    this.source.getAll().then(tableData => {
+
+      this.loadingIcon = true;
+      newTableData = this.formatTableExport(tableData);
+      this._propertyService.downloadPropertyTableExcel(newTableData).subscribe(
+        blob => {
+          importedSaveAs(blob, 'reporte-propiedades.xls');
+        },
+        error => console.log('Error'),
+        () => {
+          this.loadingIcon = false;
+          // console.log(newTableData, 'export all table');
+        },
+      );
+    });
+  }
+
+  formatTableExport(tableData) {
+
+    let newTableData: any[] = [];
+
+    Object(tableData).forEach((value) => {
+      let property = {
+        codigo: value.id,
+        titulo: value.title,
+        departamento: value.department_name,
+        provincia: value.province_name,
+        distrito: value.district_name,
+        precio: value.symbol_price,
+        estado: value.property_status_name,
+        tipo: value.property_type_name,
+        cliente: value.customer_name,
+        agente: value.username
+      }
+      newTableData.push(property);
+    });
+
+    return newTableData;
+  }
+
+
 }

@@ -1,48 +1,20 @@
-<div class="widgets">
-
-  <div class="row">
-
-    <div class="col-md-12 ">
-      <button class="btn btn-success pull-right" (click)="showBlogPostAddModal()">
-        <i class="ion-plus-round"></i>  Agregar post
-      </button>
-
-    </div>
-
-  </div>
-
-  <br>
-
-  <ba-card baCardClass="feed-panel" title="Blog Posts">
-
-    <div class="table-responsive">
-      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
-    </div>
-
-  </ba-card>
-
-  <confirm-modal-blog [id]="'confirm_remove_id'" [confirmMessage]="'Esta seguro de eliminar la publicacion'"  (ok)="deleteBlogPost($event)"></confirm-modal-blog>
-
-  <blog-edit-post></blog-edit-post>
-
-</div>
 
 
 
-<!-- Blog post Add Modal -->
+<!-- Blog post Edit Modal -->
 
-<div bsModal #blogPostAddModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
+<div bsModal #blogPostEditModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="line-height: initial;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="hideBlogPostAddModal()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideBlogPostEditModal()">
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title">Agregar Post</h4>
       </div>
       <div class="modal-body">
 
-        <form #blogPostAddForm="ngForm" novalidate style="position: relative" *ngIf="!showUploadImageBox">
+        <form #blogPostAddForm="ngForm" novalidate style="position: relative" >
 
           <div class="form-group">
 
@@ -94,26 +66,24 @@
 
           </div>
 
+          <ba-card title="Imagen del Post" baCardClass="with-scroll">
+            <ba-picture-uploader [picture]="profile.picture" [defaultPicture]="defaultPicture" [uploaderOptions]="uploaderOptions"></ba-picture-uploader>
+            <br>
+            <div class="alert alert-info">
+              <strong>Recuerde!</strong> La imagen debe ser minimo de 767 * 412.
+            </div>
+          </ba-card>
 
 
           <div class="form-group">
-            <button type="button" class="btn btn-success confirm-btn" [disabled]="!blogPostAddForm.form.valid" (click)="onAddBlogPost()">Guardar</button>
-            <button type="button" class="btn btn-danger" (click)="hideBlogPostAddModal()">Cancelar</button>
+            <button type="button" class="btn btn-success confirm-btn" [disabled]="!blogPostAddForm.form.valid" (click)="onUpdateBlogPost()">Guardar</button>
+            <button type="button" class="btn btn-danger" (click)="hideBlogPostEditModal()">Cancelar</button>
           </div>
 
         </form>
-
-        <ba-card title="Imagen del Post" baCardClass="with-scroll" *ngIf="showUploadImageBox">
-          <ba-picture-uploader [picture]="profile.picture" [defaultPicture]="defaultPicture" [uploaderOptions]="uploaderOptions" (onUploadCompleted)="uploadCompleted()"></ba-picture-uploader>
-          <br>
-          <div class="alert alert-info">
-            <strong>Recuerde!</strong> La imagen debe ser minimo de 767 * 412.
-          </div>
-        </ba-card>
 
       </div>
 
     </div>
   </div>
 </div>
-

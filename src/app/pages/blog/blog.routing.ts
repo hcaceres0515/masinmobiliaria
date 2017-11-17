@@ -10,9 +10,9 @@ const routes: Routes = [
     component: BlogComponent,
     canActivate: [AccessGuard],
     children: [
-      { path: '', component: BlogListComponent, data: { userRole: ['admin'] } },
-      { path: 'blog_list', component: BlogListComponent, data: { userRole: ['admin'] } },
-      { path: 'blog_categories', component: BlogCategoriesComponent, data: { userRole: ['admin'] } }
+      { path: '', component: BlogListComponent, data: { userRole: ['admin', 'editor'] } },
+      { path: 'blog_list', component: BlogListComponent, data: { userRole: ['admin', 'editor'] } },
+      { path: 'blog_categories', component: BlogCategoriesComponent, data: { userRole: ['admin', 'editor'] } }
     ]
   }
 ];

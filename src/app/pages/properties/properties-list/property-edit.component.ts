@@ -72,6 +72,8 @@ export class PropertyEditComponent implements  OnInit {
   public confirmModalTitle: string = '';
   public confirmModalAction: string;
 
+  public disabledBtnSave: boolean = false;
+
   public uploadFile: any;
   public uploadProgress: number;
   public uploadResponse: Object;
@@ -425,6 +427,8 @@ export class PropertyEditComponent implements  OnInit {
   }
 
   editProperty(addForm) {
+
+    this.propertyData.title = this.propertyData.title.toUpperCase();
     this.propertyData.property_type_id = this.selectedPropertyType.id;
     this.propertyData.property_status_id = this.selectedPropertyStatus.id;
     this.propertyData.property_contract_id = this.selectedPropertyContract.id;
@@ -438,6 +442,8 @@ export class PropertyEditComponent implements  OnInit {
 
     if (addForm.valid && this.selectedCustomerFlag) {
 
+      this.disabledBtnSave = true;
+
       this.loadingIcon = true;
       this.edited = true;
 
@@ -445,6 +451,7 @@ export class PropertyEditComponent implements  OnInit {
         (error) => alert(error),
         () => {
           this.loadingIcon = false;
+          this.disabledBtnSave = false;
           setTimeout(function() {
             this.edited = false;
           }.bind(this), 3000);

@@ -9,8 +9,13 @@ export class BlogService {
   PATH_SERVER = CONFIG_ENV._SERVER;
 
   public methodCallSourceBlogModalConfirm = new Subject<any>();
+  public methodCallEditPostShowEditModal = new Subject<any>();
+
+  public componentMethodCallSourceBlogPost = new Subject<any>();
 
   methodCallBlogModalConfirm$ = this.methodCallSourceBlogModalConfirm.asObservable();
+  editPostShowEditModal$ = this.methodCallEditPostShowEditModal.asObservable();
+  componentMethodCallSourceBlogPost$ = this.componentMethodCallSourceBlogPost.asObservable();
 
   public headers: Headers;
   public options: RequestOptions;
@@ -32,6 +37,14 @@ export class BlogService {
     this.methodCallSourceBlogModalConfirm.next(data);
   }
 
+  callShowEditModalService(postId) {
+    this.methodCallEditPostShowEditModal.next(postId);
+  }
+
+
+  callReloadListBlogPost(){
+    this.componentMethodCallSourceBlogPost.next();
+  }
   /* Blog Category Functions */
 
   getAllBlogCategories() {
@@ -72,11 +85,23 @@ export class BlogService {
       .map(res => res.json());
   }
 
+  updateBlogPost(post) {
+    let blogPost = JSON.stringify(post);
+    return this._http.post(this.PATH_SERVER + '&c=blog&m=update_blog_post', blogPost, this.options)
+      .map(res => res.json());
+  }
+
   deleteBlogPost(postId) {
     let blogPostId = JSON.stringify({post_id: postId});
     return this._http.post(this.PATH_SERVER + '&c=blog&m=delete_blog_post', blogPostId, this.options)
       .map(res => res.json());
   }
+
+  getBlogPostById(postId){
+    return this._http.get(this.PATH_SERVER + '&c=blog&m=get_blog_post_by_id&post_id=' + postId)
+      .map(res => res.json());
+  }
+
 
   /* --------- */
 }

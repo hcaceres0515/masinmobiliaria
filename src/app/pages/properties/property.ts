@@ -52,9 +52,11 @@ export class Property {
 
 export class PropertyImage {
 
+  //noinspection TsLint
   constructor(
     public id: number,
     public src: string,
+    public src_thumb: string,
     public description: string
   ){}
 }

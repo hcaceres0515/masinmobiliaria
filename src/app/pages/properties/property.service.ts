@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Headers } from '@angular/http';
+import {Http, RequestOptions, Headers, ResponseContentType} from '@angular/http';
 import { CONFIG_ENV } from '../../app.config';
 import {Subject} from "rxjs";
 
@@ -10,6 +10,7 @@ export  class PropertyService {
 
   // Observable string sources
   public componentMethodCallSource = new Subject<any>();
+  public componentDeleteVisitSource = new Subject<any>();
   public componentMethodCallSourcePropertyVisit = new Subject<any>();
   public componentMethodCallSourceProperty = new Subject<any>();
   public methodCallSourcePropertyVisitEdit = new Subject<any>();
@@ -18,6 +19,7 @@ export  class PropertyService {
 
   // Observable string streams
   componentMethodCalled$ = this.componentMethodCallSource.asObservable();
+  componentDeleteVisitSource$ = this.componentDeleteVisitSource.asObservable();
   componentMethodCallPropertyVisit$ = this.componentMethodCallSourcePropertyVisit.asObservable();
   componentMethodCallProperty$ = this.componentMethodCallSourceProperty.asObservable();
   methodCallPropertyVisitEdit$ = this.methodCallSourcePropertyVisitEdit.asObservable();
@@ -49,7 +51,7 @@ export  class PropertyService {
 
   // Service message commands
   callShowDeleteModalPropertyVisit(visitId) {
-    this.componentMethodCallSource.next(visitId);
+    this.componentDeleteVisitSource.next(visitId);
   }
 
   callShowEditPropertyVisit(visitId) {
@@ -231,4 +233,11 @@ export  class PropertyService {
       .map(res => res.json());
   }
 
+  downloadPropertyTableExcel(tableData) {
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
+    let options = new RequestOptions({ headers: headers, method: 'post', responseType: ResponseContentType.Blob});
+    let propertiesData = JSON.stringify(tableData);
+    return this._http.post(this.PATH_SERVER + '&c=property&m=download_table_excel', propertiesData, options)
+      .map(res => res.blob());
+  }
 };

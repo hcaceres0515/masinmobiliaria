@@ -226,7 +226,16 @@
   <ba-card  baCardClass="feed-panel">
     <label><strong>Cantidad de propiedades:</strong> {{totalProperties}}</label>
 
+    <div class="col-md-12">
+
+      <button class="btn btn-info btn-xs pull-right" (click)="exportAllTable()"> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar - Completa </button>
+      <button class="btn btn-success btn-xs pull-right" style="margin-right: 10px;" (click)="exportCurrentTable()"> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar - Actual </button>
+
+    </div>
+
+
     <div class="table-responsive">
+      <br>
 
       <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
 

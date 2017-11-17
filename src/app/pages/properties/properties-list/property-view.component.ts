@@ -8,7 +8,8 @@ import { CONFIG_ENV } from '../../../app.config';
 
 @Component({
   selector: 'property-view',
-  templateUrl: '/property-view.html'
+  templateUrl: '/property-view.html',
+  styles: ['tab-content { text-align: center; }']
 })
 
 export class PropertyViewComponent {
@@ -38,21 +39,21 @@ export class PropertyViewComponent {
 
     this.galleryOptions = [
       {
-        width: '850px',
-        height: '500px',
+        // width: '667px',
+        // height: '621px',
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Slide
       },
       // max-width 800
-      {
-        breakpoint: 800,
-        width: '100%',
-        height: '600px',
-        imagePercent: 80,
-        thumbnailsPercent: 20,
-        thumbnailsMargin: 20,
-        thumbnailMargin: 20
-      },
+      // {
+      //   breakpoint: 600,
+      //   width: '751px',
+      //   height: '451px',
+      //   imagePercent: 80,
+      //   thumbnailsPercent: 20,
+      //   thumbnailsMargin: 20,
+      //   thumbnailMargin: 20
+      // },
       // max-width 400
       {
         breakpoint: 400,
@@ -86,7 +87,7 @@ export class PropertyViewComponent {
 
     (this.propertyData.images).forEach((item) => {
       image = {
-        small: item.src,
+        small: item.src_thumb,
         medium: item.src,
         big: item.src
       };

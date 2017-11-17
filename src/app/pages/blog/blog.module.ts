@@ -15,6 +15,7 @@ import { BlogCategoriesComponent } from './blog-list/blog-categories.component';
 import { BlogService } from './blog.service';
 import { ConfirmModalBlogComponent } from './blog-list/confirm-modal-blog.component';
 import { CKEditorModule } from 'ng2-ckeditor';
+import {BlogEditPostComponent} from "./blog-list/blog-edit-post.component";
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
     BlogComponent,
     BlogListComponent,
     BlogCategoriesComponent,
-    ConfirmModalBlogComponent
+    ConfirmModalBlogComponent,
+    BlogEditPostComponent
   ],
   providers: [
     BlogService

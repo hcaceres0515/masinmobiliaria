@@ -7,20 +7,22 @@ import { ValuationComponent } from './properties-list/valuation.component';
 import {PropertyVisitComponent} from './properties-list/property-visit.component';
 import {PropertiesMapComponent} from './properties-list/properties-map.component';
 import {PropertyClosedComponent} from './properties-list/property-closed.component';
+import {AccessGuard} from '../access-guard';
 
 const routes: Routes = [
   {
     path: '',
     component: PropertiesComponent,
+    canActivate: [AccessGuard],
     children: [
-      { path: '', component: PropertiesListComponent },
-      { path: 'properties_list', component: PropertiesListComponent },
-      { path: 'add_property', component: PropertyAddComponent },
-      { path: 'edit_property/:property_id', component: PropertyEditComponent },
-      { path: 'valuation', component: ValuationComponent },
-      { path: 'map', component: PropertiesMapComponent },
-      { path: 'visits', component: PropertyVisitComponent },
-      { path: 'closed', component: PropertyClosedComponent}
+      { path: '', component: PropertiesListComponent, data: { userRole: ['admin', 'agent'] }},
+      { path: 'properties_list', component: PropertiesListComponent, data: { userRole: ['admin', 'agent'] }},
+      { path: 'add_property', component: PropertyAddComponent, data: { userRole: ['admin', 'agent'] } },
+      { path: 'edit_property/:property_id', component: PropertyEditComponent, data: { userRole: ['admin', 'agent'] } },
+      { path: 'valuation', component: ValuationComponent, data: { userRole: ['admin', 'agent'] } },
+      { path: 'map', component: PropertiesMapComponent, data: { userRole: ['admin', 'agent'] } },
+      { path: 'visits', component: PropertyVisitComponent, data: { userRole: ['admin', 'agent'] } },
+      { path: 'closed', component: PropertyClosedComponent, data: { userRole: ['admin', 'agent'] }}
     ]
   }
 ];

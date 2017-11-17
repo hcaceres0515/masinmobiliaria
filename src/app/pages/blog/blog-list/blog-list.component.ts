@@ -31,6 +31,10 @@ export class ActionsBlogPostTableComponent implements  OnInit {
   onDeleteBlogPost(blogPostId) {
     this._blogService.callShowConfirmModalServiceParam(blogPostId);
   }
+
+  showEditModal(postId): void {
+    this._blogService.callShowEditModalService(postId);
+  }
 }
 
 @Component({
@@ -56,9 +60,9 @@ export class BlogListComponent implements OnInit{
     height: '600',
   };
 
-  public defaultPicture = 'assets/img/theme/no-photo.png';
+  public defaultPicture = 'assets/img/theme/no-image.png';
   public profile: any = {
-    picture: 'assets/img/theme/no-photo.png'
+    picture: 'assets/img/theme/no-image.png'
   };
   public uploaderOptions: NgUploaderOptions = {
     url: this.PATH_SERVER + '&c=blog&m=upload_image_post',
@@ -114,6 +118,12 @@ export class BlogListComponent implements OnInit{
     this.blogPostData = new BlogPost(null, null, null, null, '', '', '', '', '', '', '', '', null);
 
     this.source = new LocalDataSource();
+
+    this._blogService.componentMethodCallSourceBlogPost$.subscribe(
+      () => {
+        this.getAllBlogPosts();
+      }
+    );
   }
 
   ngOnInit() {
@@ -122,6 +132,7 @@ export class BlogListComponent implements OnInit{
   }
 
   showBlogPostAddModal(): void {
+    this.showUploadImageBox = false;
     this.blogPostAddModal.show();
   }
 
@@ -192,6 +203,8 @@ export class BlogListComponent implements OnInit{
 
   uploadCompleted() {
     this.hideBlogPostAddModal();
+    this.showUploadImageBox = false;
+    this.blogPostData = new BlogPost(null, null, null, null, '', '', '', '', '', '', '', '', null);
   }
 
   deleteBlogPost(blogPostId) {

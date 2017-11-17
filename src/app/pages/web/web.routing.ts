@@ -9,8 +9,8 @@ const routes: Routes = [
     component: WebComponent,
     canActivate: [AccessGuard],
     children: [
-      { path: '', component: SliderComponent, data: { userRole: ['admin'] } },
-      { path: 'slider', component: SliderComponent, data: { userRole: ['admin'] } }
+      { path: '', component: SliderComponent, data: { userRole: ['admin', 'editor'] } },
+      { path: 'slider', component: SliderComponent, data: { userRole: ['admin', 'editor'] } }
     ]
   }
 ];
