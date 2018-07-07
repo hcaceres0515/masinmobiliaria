@@ -492,7 +492,7 @@
           <div class="photos" style="overflow: hidden;">
             <div id="images"  *ngFor='let item of propertyData.images'>
 
-              <img src="{{item.src}}" class="img-thumbnail" alt="" width="300" height="250">
+              <img src="{{item.src_thumb}}" class="img-thumbnail">
 
               <button class="btn btn-danger btn-xs del_photo" (click)="deletePropertyImage(item.id)">Eliminar</button>
 

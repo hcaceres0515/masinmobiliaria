@@ -13,10 +13,10 @@ import * as GoogleMapsLoader from 'google-maps';
   styles: [`
     #images {
       display: inline-block;      
-      width: 300px;
+      /*width: 300px;*/
       height: auto;
       position: relative;
-      max-height: 400px;
+      /*max-height: 400px;*/
     }
 
     .del_photo {
